@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1615BF329FEE92BE988202C6 /* Pods_Austria_Forum.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82969CFD493772CE9E53D0E8 /* Pods_Austria_Forum.framework */; };
+		3AEB3DF206B97415C4C22AE0 /* Pods_Austria_ForumTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFED165123D2DA9E8D40A37 /* Pods_Austria_ForumTests.framework */; };
 		5C9B18F11C197A2E0076B648 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F01C197A2E0076B648 /* AppDelegate.swift */; };
 		5C9B18F41C197A2E0076B648 /* Austria_Forum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F21C197A2E0076B648 /* Austria_Forum.xcdatamodeld */; };
 		5C9B18F61C197A2E0076B648 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F51C197A2E0076B648 /* MasterViewController.swift */; };
@@ -16,6 +18,8 @@
 		5C9B19001C197A2E0076B648 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C9B18FE1C197A2E0076B648 /* LaunchScreen.storyboard */; };
 		5C9B190B1C197A2E0076B648 /* Austria_ForumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B190A1C197A2E0076B648 /* Austria_ForumTests.swift */; };
 		5C9B19161C197A2E0076B648 /* Austria_ForumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B19151C197A2E0076B648 /* Austria_ForumUITests.swift */; };
+		5CEA75371C197E9E0069D333 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 5CEA75361C197E9E0069D333 /* Podfile */; };
+		A108609530D4D0B41EDB41CC /* Pods_Austria_ForumUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A35D5F46E878AC1045DD9FC /* Pods_Austria_ForumUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +40,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A3EB42CE86F6C55FC5D82F1 /* Pods-Austria-ForumTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Austria-ForumTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Austria-ForumTests/Pods-Austria-ForumTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0BDE6FD2502F5660FCE3182C /* Pods-Austria-Forum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Austria-Forum.release.xcconfig"; path = "Pods/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum.release.xcconfig"; sourceTree = "<group>"; };
+		2A35D5F46E878AC1045DD9FC /* Pods_Austria_ForumUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Austria_ForumUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3406D89BC28B8D59E22B6634 /* Pods-Austria-ForumTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Austria-ForumTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Austria-ForumTests/Pods-Austria-ForumTests.release.xcconfig"; sourceTree = "<group>"; };
+		4163B9A2438A022825CFF118 /* Pods-Austria-ForumUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Austria-ForumUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Austria-ForumUITests/Pods-Austria-ForumUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5C9B18ED1C197A2E0076B648 /* Austria-Forum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Austria-Forum.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C9B18F01C197A2E0076B648 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C9B18F31C197A2E0076B648 /* Austria_Forum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Austria_Forum.xcdatamodel; sourceTree = "<group>"; };
@@ -51,6 +60,11 @@
 		5C9B19111C197A2E0076B648 /* Austria-ForumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Austria-ForumUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C9B19151C197A2E0076B648 /* Austria_ForumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Austria_ForumUITests.swift; sourceTree = "<group>"; };
 		5C9B19171C197A2E0076B648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CEA75361C197E9E0069D333 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		82969CFD493772CE9E53D0E8 /* Pods_Austria_Forum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Austria_Forum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		882D9DE00F68AED894090D71 /* Pods-Austria-ForumUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Austria-ForumUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Austria-ForumUITests/Pods-Austria-ForumUITests.release.xcconfig"; sourceTree = "<group>"; };
+		A2FFD9B9FD39B1C1277712A8 /* Pods-Austria-Forum.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Austria-Forum.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum.debug.xcconfig"; sourceTree = "<group>"; };
+		FAFED165123D2DA9E8D40A37 /* Pods_Austria_ForumTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Austria_ForumTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1615BF329FEE92BE988202C6 /* Pods_Austria_Forum.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AEB3DF206B97415C4C22AE0 /* Pods_Austria_ForumTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +88,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A108609530D4D0B41EDB41CC /* Pods_Austria_ForumUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B2952BC3099C85F77DE6711 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A2FFD9B9FD39B1C1277712A8 /* Pods-Austria-Forum.debug.xcconfig */,
+				0BDE6FD2502F5660FCE3182C /* Pods-Austria-Forum.release.xcconfig */,
+				0A3EB42CE86F6C55FC5D82F1 /* Pods-Austria-ForumTests.debug.xcconfig */,
+				3406D89BC28B8D59E22B6634 /* Pods-Austria-ForumTests.release.xcconfig */,
+				4163B9A2438A022825CFF118 /* Pods-Austria-ForumUITests.debug.xcconfig */,
+				882D9DE00F68AED894090D71 /* Pods-Austria-ForumUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		5C9B18E41C197A2E0076B648 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +115,9 @@
 				5C9B19091C197A2E0076B648 /* Austria-ForumTests */,
 				5C9B19141C197A2E0076B648 /* Austria-ForumUITests */,
 				5C9B18EE1C197A2E0076B648 /* Products */,
+				5CEA75361C197E9E0069D333 /* Podfile */,
+				1B2952BC3099C85F77DE6711 /* Pods */,
+				8609DBF11F27DDCBA384AF99 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +164,16 @@
 			path = "Austria-ForumUITests";
 			sourceTree = "<group>";
 		};
+		8609DBF11F27DDCBA384AF99 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				82969CFD493772CE9E53D0E8 /* Pods_Austria_Forum.framework */,
+				FAFED165123D2DA9E8D40A37 /* Pods_Austria_ForumTests.framework */,
+				2A35D5F46E878AC1045DD9FC /* Pods_Austria_ForumUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -138,9 +181,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C9B191A1C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-Forum" */;
 			buildPhases = (
+				0B1562DC7472340E87E94977 /* Check Pods Manifest.lock */,
 				5C9B18E91C197A2E0076B648 /* Sources */,
 				5C9B18EA1C197A2E0076B648 /* Frameworks */,
 				5C9B18EB1C197A2E0076B648 /* Resources */,
+				927B0D8D74A20CF9BDA3C6ED /* Embed Pods Frameworks */,
+				8A7746B41B70ECF97F81703E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -155,9 +201,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C9B191D1C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumTests" */;
 			buildPhases = (
+				7DB0FD7E5A0D878F6537E54C /* Check Pods Manifest.lock */,
 				5C9B19021C197A2E0076B648 /* Sources */,
 				5C9B19031C197A2E0076B648 /* Frameworks */,
 				5C9B19041C197A2E0076B648 /* Resources */,
+				EF1C95721BEFD55FCE71F850 /* Embed Pods Frameworks */,
+				5111E2CEC916350C65AE0319 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -173,9 +222,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C9B19201C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumUITests" */;
 			buildPhases = (
+				4DC0AF2104109B576A14E25D /* Check Pods Manifest.lock */,
 				5C9B190D1C197A2E0076B648 /* Sources */,
 				5C9B190E1C197A2E0076B648 /* Frameworks */,
 				5C9B190F1C197A2E0076B648 /* Resources */,
+				620A228443ABF8EADDE3F43B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -237,6 +288,7 @@
 			files = (
 				5C9B19001C197A2E0076B648 /* LaunchScreen.storyboard in Resources */,
 				5C9B18FD1C197A2E0076B648 /* Assets.xcassets in Resources */,
+				5CEA75371C197E9E0069D333 /* Podfile in Resources */,
 				5C9B18FB1C197A2E0076B648 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,6 +308,129 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0B1562DC7472340E87E94977 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4DC0AF2104109B576A14E25D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5111E2CEC916350C65AE0319 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumTests/Pods-Austria-ForumTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		620A228443ABF8EADDE3F43B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumUITests/Pods-Austria-ForumUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7DB0FD7E5A0D878F6537E54C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8A7746B41B70ECF97F81703E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		927B0D8D74A20CF9BDA3C6ED /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EF1C95721BEFD55FCE71F850 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumTests/Pods-Austria-ForumTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5C9B18E91C197A2E0076B648 /* Sources */ = {
@@ -405,9 +580,11 @@
 		};
 		5C9B191B1C197A2E0076B648 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2FFD9B9FD39B1C1277712A8 /* Pods-Austria-Forum.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Austria-Forum/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-Forum";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -416,9 +593,11 @@
 		};
 		5C9B191C1C197A2E0076B648 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BDE6FD2502F5660FCE3182C /* Pods-Austria-Forum.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Austria-Forum/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-Forum";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -427,6 +606,7 @@
 		};
 		5C9B191E1C197A2E0076B648 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A3EB42CE86F6C55FC5D82F1 /* Pods-Austria-ForumTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "Austria-ForumTests/Info.plist";
@@ -439,6 +619,7 @@
 		};
 		5C9B191F1C197A2E0076B648 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3406D89BC28B8D59E22B6634 /* Pods-Austria-ForumTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "Austria-ForumTests/Info.plist";
@@ -451,6 +632,7 @@
 		};
 		5C9B19211C197A2E0076B648 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4163B9A2438A022825CFF118 /* Pods-Austria-ForumUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "Austria-ForumUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -463,6 +645,7 @@
 		};
 		5C9B19221C197A2E0076B648 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 882D9DE00F68AED894090D71 /* Pods-Austria-ForumUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "Austria-ForumUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -492,6 +675,7 @@
 				5C9B191C1C197A2E0076B648 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5C9B191D1C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumTests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +684,7 @@
 				5C9B191F1C197A2E0076B648 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5C9B19201C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumUITests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +693,7 @@
 				5C9B19221C197A2E0076B648 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
