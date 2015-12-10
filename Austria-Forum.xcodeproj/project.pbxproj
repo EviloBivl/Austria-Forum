@@ -1,0 +1,528 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5C9B18F11C197A2E0076B648 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F01C197A2E0076B648 /* AppDelegate.swift */; };
+		5C9B18F41C197A2E0076B648 /* Austria_Forum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F21C197A2E0076B648 /* Austria_Forum.xcdatamodeld */; };
+		5C9B18F61C197A2E0076B648 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F51C197A2E0076B648 /* MasterViewController.swift */; };
+		5C9B18F81C197A2E0076B648 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F71C197A2E0076B648 /* DetailViewController.swift */; };
+		5C9B18FB1C197A2E0076B648 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C9B18F91C197A2E0076B648 /* Main.storyboard */; };
+		5C9B18FD1C197A2E0076B648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C9B18FC1C197A2E0076B648 /* Assets.xcassets */; };
+		5C9B19001C197A2E0076B648 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C9B18FE1C197A2E0076B648 /* LaunchScreen.storyboard */; };
+		5C9B190B1C197A2E0076B648 /* Austria_ForumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B190A1C197A2E0076B648 /* Austria_ForumTests.swift */; };
+		5C9B19161C197A2E0076B648 /* Austria_ForumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B19151C197A2E0076B648 /* Austria_ForumUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5C9B19071C197A2E0076B648 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C9B18E51C197A2E0076B648 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C9B18EC1C197A2E0076B648;
+			remoteInfo = "Austria-Forum";
+		};
+		5C9B19121C197A2E0076B648 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C9B18E51C197A2E0076B648 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C9B18EC1C197A2E0076B648;
+			remoteInfo = "Austria-Forum";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5C9B18ED1C197A2E0076B648 /* Austria-Forum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Austria-Forum.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C9B18F01C197A2E0076B648 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5C9B18F31C197A2E0076B648 /* Austria_Forum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Austria_Forum.xcdatamodel; sourceTree = "<group>"; };
+		5C9B18F51C197A2E0076B648 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		5C9B18F71C197A2E0076B648 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		5C9B18FA1C197A2E0076B648 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5C9B18FC1C197A2E0076B648 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5C9B18FF1C197A2E0076B648 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5C9B19011C197A2E0076B648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C9B19061C197A2E0076B648 /* Austria-ForumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Austria-ForumTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C9B190A1C197A2E0076B648 /* Austria_ForumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Austria_ForumTests.swift; sourceTree = "<group>"; };
+		5C9B190C1C197A2E0076B648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C9B19111C197A2E0076B648 /* Austria-ForumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Austria-ForumUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C9B19151C197A2E0076B648 /* Austria_ForumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Austria_ForumUITests.swift; sourceTree = "<group>"; };
+		5C9B19171C197A2E0076B648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5C9B18EA1C197A2E0076B648 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9B19031C197A2E0076B648 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9B190E1C197A2E0076B648 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5C9B18E41C197A2E0076B648 = {
+			isa = PBXGroup;
+			children = (
+				5C9B18EF1C197A2E0076B648 /* Austria-Forum */,
+				5C9B19091C197A2E0076B648 /* Austria-ForumTests */,
+				5C9B19141C197A2E0076B648 /* Austria-ForumUITests */,
+				5C9B18EE1C197A2E0076B648 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5C9B18EE1C197A2E0076B648 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5C9B18ED1C197A2E0076B648 /* Austria-Forum.app */,
+				5C9B19061C197A2E0076B648 /* Austria-ForumTests.xctest */,
+				5C9B19111C197A2E0076B648 /* Austria-ForumUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5C9B18EF1C197A2E0076B648 /* Austria-Forum */ = {
+			isa = PBXGroup;
+			children = (
+				5C9B18F01C197A2E0076B648 /* AppDelegate.swift */,
+				5C9B18F51C197A2E0076B648 /* MasterViewController.swift */,
+				5C9B18F71C197A2E0076B648 /* DetailViewController.swift */,
+				5C9B18F91C197A2E0076B648 /* Main.storyboard */,
+				5C9B18FC1C197A2E0076B648 /* Assets.xcassets */,
+				5C9B18FE1C197A2E0076B648 /* LaunchScreen.storyboard */,
+				5C9B19011C197A2E0076B648 /* Info.plist */,
+				5C9B18F21C197A2E0076B648 /* Austria_Forum.xcdatamodeld */,
+			);
+			path = "Austria-Forum";
+			sourceTree = "<group>";
+		};
+		5C9B19091C197A2E0076B648 /* Austria-ForumTests */ = {
+			isa = PBXGroup;
+			children = (
+				5C9B190A1C197A2E0076B648 /* Austria_ForumTests.swift */,
+				5C9B190C1C197A2E0076B648 /* Info.plist */,
+			);
+			path = "Austria-ForumTests";
+			sourceTree = "<group>";
+		};
+		5C9B19141C197A2E0076B648 /* Austria-ForumUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5C9B19151C197A2E0076B648 /* Austria_ForumUITests.swift */,
+				5C9B19171C197A2E0076B648 /* Info.plist */,
+			);
+			path = "Austria-ForumUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5C9B18EC1C197A2E0076B648 /* Austria-Forum */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C9B191A1C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-Forum" */;
+			buildPhases = (
+				5C9B18E91C197A2E0076B648 /* Sources */,
+				5C9B18EA1C197A2E0076B648 /* Frameworks */,
+				5C9B18EB1C197A2E0076B648 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Austria-Forum";
+			productName = "Austria-Forum";
+			productReference = 5C9B18ED1C197A2E0076B648 /* Austria-Forum.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5C9B19051C197A2E0076B648 /* Austria-ForumTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C9B191D1C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumTests" */;
+			buildPhases = (
+				5C9B19021C197A2E0076B648 /* Sources */,
+				5C9B19031C197A2E0076B648 /* Frameworks */,
+				5C9B19041C197A2E0076B648 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5C9B19081C197A2E0076B648 /* PBXTargetDependency */,
+			);
+			name = "Austria-ForumTests";
+			productName = "Austria-ForumTests";
+			productReference = 5C9B19061C197A2E0076B648 /* Austria-ForumTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5C9B19101C197A2E0076B648 /* Austria-ForumUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C9B19201C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumUITests" */;
+			buildPhases = (
+				5C9B190D1C197A2E0076B648 /* Sources */,
+				5C9B190E1C197A2E0076B648 /* Frameworks */,
+				5C9B190F1C197A2E0076B648 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5C9B19131C197A2E0076B648 /* PBXTargetDependency */,
+			);
+			name = "Austria-ForumUITests";
+			productName = "Austria-ForumUITests";
+			productReference = 5C9B19111C197A2E0076B648 /* Austria-ForumUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5C9B18E51C197A2E0076B648 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Paul Neuhold";
+				TargetAttributes = {
+					5C9B18EC1C197A2E0076B648 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+					5C9B19051C197A2E0076B648 = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = 5C9B18EC1C197A2E0076B648;
+					};
+					5C9B19101C197A2E0076B648 = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = 5C9B18EC1C197A2E0076B648;
+					};
+				};
+			};
+			buildConfigurationList = 5C9B18E81C197A2E0076B648 /* Build configuration list for PBXProject "Austria-Forum" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5C9B18E41C197A2E0076B648;
+			productRefGroup = 5C9B18EE1C197A2E0076B648 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5C9B18EC1C197A2E0076B648 /* Austria-Forum */,
+				5C9B19051C197A2E0076B648 /* Austria-ForumTests */,
+				5C9B19101C197A2E0076B648 /* Austria-ForumUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5C9B18EB1C197A2E0076B648 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C9B19001C197A2E0076B648 /* LaunchScreen.storyboard in Resources */,
+				5C9B18FD1C197A2E0076B648 /* Assets.xcassets in Resources */,
+				5C9B18FB1C197A2E0076B648 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9B19041C197A2E0076B648 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9B190F1C197A2E0076B648 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5C9B18E91C197A2E0076B648 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C9B18F11C197A2E0076B648 /* AppDelegate.swift in Sources */,
+				5C9B18F41C197A2E0076B648 /* Austria_Forum.xcdatamodeld in Sources */,
+				5C9B18F61C197A2E0076B648 /* MasterViewController.swift in Sources */,
+				5C9B18F81C197A2E0076B648 /* DetailViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9B19021C197A2E0076B648 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C9B190B1C197A2E0076B648 /* Austria_ForumTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C9B190D1C197A2E0076B648 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C9B19161C197A2E0076B648 /* Austria_ForumUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5C9B19081C197A2E0076B648 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C9B18EC1C197A2E0076B648 /* Austria-Forum */;
+			targetProxy = 5C9B19071C197A2E0076B648 /* PBXContainerItemProxy */;
+		};
+		5C9B19131C197A2E0076B648 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C9B18EC1C197A2E0076B648 /* Austria-Forum */;
+			targetProxy = 5C9B19121C197A2E0076B648 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5C9B18F91C197A2E0076B648 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5C9B18FA1C197A2E0076B648 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5C9B18FE1C197A2E0076B648 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5C9B18FF1C197A2E0076B648 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5C9B19181C197A2E0076B648 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5C9B19191C197A2E0076B648 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5C9B191B1C197A2E0076B648 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Austria-Forum/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-Forum";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5C9B191C1C197A2E0076B648 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "Austria-Forum/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-Forum";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5C9B191E1C197A2E0076B648 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Austria-ForumTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-ForumTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Austria-Forum.app/Austria-Forum";
+			};
+			name = Debug;
+		};
+		5C9B191F1C197A2E0076B648 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "Austria-ForumTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-ForumTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Austria-Forum.app/Austria-Forum";
+			};
+			name = Release;
+		};
+		5C9B19211C197A2E0076B648 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Austria-ForumUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-ForumUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Austria-Forum";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		5C9B19221C197A2E0076B648 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Austria-ForumUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-ForumUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "Austria-Forum";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5C9B18E81C197A2E0076B648 /* Build configuration list for PBXProject "Austria-Forum" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9B19181C197A2E0076B648 /* Debug */,
+				5C9B19191C197A2E0076B648 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C9B191A1C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-Forum" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9B191B1C197A2E0076B648 /* Debug */,
+				5C9B191C1C197A2E0076B648 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5C9B191D1C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9B191E1C197A2E0076B648 /* Debug */,
+				5C9B191F1C197A2E0076B648 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5C9B19201C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9B19211C197A2E0076B648 /* Debug */,
+				5C9B19221C197A2E0076B648 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5C9B18F21C197A2E0076B648 /* Austria_Forum.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5C9B18F31C197A2E0076B648 /* Austria_Forum.xcdatamodel */,
+			);
+			currentVersion = 5C9B18F31C197A2E0076B648 /* Austria_Forum.xcdatamodel */;
+			path = Austria_Forum.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 5C9B18E51C197A2E0076B648 /* Project object */;
+}
