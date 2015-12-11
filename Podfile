@@ -6,15 +6,24 @@ use_frameworks!
 target 'Austria-Forum' do
 pod 'SwiftyJSON', '~> 2.3.1'
 pod 'Alamofire', '~> 3.0'
+pod 'Fabric'
+pod 'Crashlytics'
+pod 'Google/Analytics'
 end
 
 target 'Austria-ForumTests' do
 pod 'SwiftyJSON', '~> 2.3.1'
 pod 'Alamofire', '~> 3.0'
+pod 'Fabric'
+pod 'Crashlytics'
+pod 'Google/Analytics'
 end
 
 target 'Austria-ForumUITests' do
 pod 'SwiftyJSON', '~> 2.3.1'
 pod 'Alamofire', '~> 3.0'
+pod 'Fabric'
+pod 'Crashlytics'
+pod 'Google/Analytics'
 end
 
