@@ -11,13 +11,13 @@ import SwiftyJSON
 
 class FindPagesRequest : BaseRequest {
     
-    let method: String = "search.findPages"
+    let method: String = "search.findPagesMobile"
     var query : String?
     var numberOfMaxResults : Int?
     
     private override init(){
         super.init()
-        self.customInit()
+        self.customInitAfterSuperInit()
     }
     
     convenience init(query: String, numberOfMaxResults: Int) {
@@ -37,12 +37,20 @@ class FindPagesRequest : BaseRequest {
             //we won't find a endoint with false parameters - so just handle requestfailed
         }
         self.requestBody["params"] = paramsArray
-
+        
     }
     
     override func parseResponse(response: JSON) {
         print("Request : \(self.description)\nResponseData: \(response.description)")
         //do somthing usefull with the result
+        if let articles = response["result"]["list"].arrayObject {
+            for object in articles {
+                if let page = object["map"] {
+                    let result: SearchResult = SearchResult(title: page!["title"] as! String, name: page!["page"]! as! String, url: page!["url"]! as! String, score: page!["score"] as! Int)
+                    SearchHolder.sharedInstance.searchResults.append(result)
+                }
+            }
+        }
     }
     
     

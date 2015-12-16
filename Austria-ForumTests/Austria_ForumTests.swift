@@ -26,6 +26,37 @@ class Austria_ForumTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    
+    func testNSUserDefaultsSaving () {
+        //check if setting the properties results in persisting it do the UserDefaults
+        UserData.sharedInstance.lastVisitedString = "Something"
+        assert(UserData.sharedInstance.getValueForKey(UserDefaultKeys.kLastVisitedString) as! String == "Something", "saving lastVistedString failed")
+        
+        UserData.sharedInstance.optionsOne = "optionOne"
+        assert(UserData.sharedInstance.getValueForKey(UserDefaultKeys.kOptionOneString) as! String == "optionOne", "saving optionOne failed")
+        
+        UserData.sharedInstance.removeValueForKey(UserDefaultKeys.kLastMonthOfArticleOfTheMonthNSDate)
+        UserData.sharedInstance.removeValueForKey(UserDefaultKeys.kArticleOfTheMonthString)
+        
+        if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload() {
+            assert(true)
+        } else {
+            //we removed the values so we need to reload - if we are here just fail
+            assertionFailure("checkIfArticleOfTheMonthNeedsReload returns false although no values are set")
+        }
+        let url : String = "http://a.glorious.url"
+        UserData.sharedInstance.articleOfTheMonth = url
+        assert(UserData.sharedInstance.getValueForKey(UserDefaultKeys.kArticleOfTheMonthString) as! String == url, "saving articleOfTheMonth failed")
+        
+        if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload(){
+            assertionFailure("checkIfArticleOfTheMonthNeedsReload returns true although values are set")
+        }
+        
+        
+        
+        
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock {

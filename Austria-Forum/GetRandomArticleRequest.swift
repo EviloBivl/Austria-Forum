@@ -13,11 +13,16 @@ import SwiftyJSON
 class GetRandomArticleRequest: BaseRequest {
     
     var method: String = "search.getRandomPage"
+    var categories: [String] = []
     
-    
-    override init(){
+    private override init(){
         super.init()
-        self.customInit()
+        self.customInitAfterSuperInit()
+    }
+    
+    convenience init(categories: [String]) {
+        self.init()
+        self.categories.appendContentsOf(categories)
         self.addAdditionalRequestInfo()
     }
     
@@ -25,7 +30,12 @@ class GetRandomArticleRequest: BaseRequest {
     override func addAdditionalRequestInfo() {
         self.requestBody["method"] = self.method
         //provide a dummy paramter so that JSON-RPC can handle the incoming call
-        let paramsArray : Array<AnyObject> = ["1337"]
+        var paramsArray : Array<AnyObject> = [];
+        if (self.categories.count > 0){
+            paramsArray.append(self.categories)
+        } else {
+            paramsArray.append(NSNull())
+        }
         self.requestBody["params"] = paramsArray
     }
     
@@ -33,8 +43,24 @@ class GetRandomArticleRequest: BaseRequest {
         print("Request : \(self.description)\nResponseData: \(response.description)")
         //do somthing usefull with the result
         
+        if let articles = response["result"]["map"].dictionaryObject {
+            if articles["ResultCode"] as! String == "0"{
+                let name = articles["name"] as! String
+                let title = articles["title"] as! String
+                let url = articles["url"] as! String
+                let score = 100
+                let result : SearchResult = SearchResult(title: title, name: name, url: url, score: score)
+                SearchHolder.sharedInstance.selectedItem = result
+            } else {
+                super.handleResponseError(self.description, article: articles)
+            }
+            
+        }
+        
+        
+        
         
     }
-
+    
     
 }

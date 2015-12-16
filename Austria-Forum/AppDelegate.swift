@@ -11,18 +11,23 @@ import Fabric
 import Crashlytics
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-
+        
+        
+        
+        //start the Reachability Observer
+        let _ : ReachabilityHelper = ReachabilityHelper.sharedInstance
         //for crashlytics
         Fabric.with([Crashlytics.self])
         // TODO: Move this to where you establish a user session
         self.logUser()
+
 
         return true
     }
@@ -48,7 +53,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
+        
+        //remove the Observer
+        ReachabilityHelper.sharedInstance.removeObserver()
     }
+    
+    
 
     // MARK: - Crashlytics Logging
     func logUser() {

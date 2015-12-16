@@ -14,6 +14,7 @@ class BaseRequest : NSObject {
     
     //TODO: Change this to the live Url
     let urlAF: String = "http://192.168.178.21:8080/JSON-RPC"
+    static let urlAFStatic = "http://192.168.178.21:8080"
     //let urlAF : String = "http://www.austria-forum.org/JSON-RPC"
     var requestHeader : [String:String] = [:]
     var requestBody : [String:AnyObject] = [:]
@@ -24,7 +25,7 @@ class BaseRequest : NSObject {
     }
     
     
-    func customInit(){
+    func customInitAfterSuperInit(){
         self.requestHeader["Content-Type"] = "application/json"
         self.requestBody["id"] = requestID
         
@@ -36,6 +37,10 @@ class BaseRequest : NSObject {
     
     func parseResponse (response: JSON){
         fatalError("\(self.description) must override parseResponse(response: JSON)")
+    }
+    
+    func handleResponseError(errorFrom: String, article: [String:AnyObject]){
+        print("Error from \(errorFrom) with ResultCode: \(article["ResultCode"] as? String) and Message: \(article["ResultDescription"])")
     }
     
 }

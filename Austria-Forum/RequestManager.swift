@@ -26,8 +26,8 @@ class RequestManager : NSObject {
     }
     
     
-    func getRandomArticle(delegate: AnyObject? = nil){
-        let getRandomArticleRequest : GetRandomArticleRequest = GetRandomArticleRequest()
+    func getRandomArticle(delegate: AnyObject? = nil, categories: [String]){
+        let getRandomArticleRequest : GetRandomArticleRequest = GetRandomArticleRequest(categories: categories)
         performRequest(getRandomArticleRequest, delegate: delegate)
         
     }
@@ -56,8 +56,9 @@ class RequestManager : NSObject {
         
         
         print("====== STARTING REQUEST ========= FOR ID:  \(req.requestBody["id"]!)    =====");
+        //clear old SearchResults
+        SearchHolder.sharedInstance.searchResults.removeAll()
         
-
         self.alamo!.request(.POST, req.urlAF, parameters: req.requestBody, encoding: .JSON, headers: req.requestHeader ).responseJSON { jsonResp in
             
             
@@ -75,11 +76,17 @@ class RequestManager : NSObject {
             
             if let error = jsonResp.result.error {
                 print(error.debugDescription)
+                if delegate is NetworkDelegation {
+                    (delegate as! NetworkDelegation).onRequestFailed()
+                }
             }
             
             if jsonResp.result.isSuccess {
                 if let value = jsonResp.result.value {
                     req.parseResponse(JSON(value))
+                    if delegate is NetworkDelegation {
+                        (delegate as! NetworkDelegation).onRequestSuccess()
+                    }
                 }
             } else if jsonResp.result.isFailure {
                 print("For now we are failing in the alamo closures - later send it to delegate")
