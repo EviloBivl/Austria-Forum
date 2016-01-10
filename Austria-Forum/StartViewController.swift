@@ -17,18 +17,25 @@ class StartViewController: UIViewController {
     // MARK: - Properties
     var detailViewController: DetailViewController? = nil
     
+    @IBOutlet weak var lStart: UILabel!
     
     
     // MARK: - Override Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-      
-        // Do any additional setup after loading the view, typically from a nib.
-        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserData.sharedInstance.checkIfAppStartsTheFirstTime() {
+            self.performSegueWithIdentifier("toDetailView", sender: self)
+        } else {
+            self.rememberUserStartedAppTheFirstTime()
+        }
         
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -38,22 +45,22 @@ class StartViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-       // startRequestTesting()
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         
     }
     
     
     // MARK: - Custom Functions
-    
-    func startRequestTesting() {
-        
-        RequestManager.sharedInstance.getArticleFromMonthlyPool(self)
-        RequestManager.sharedInstance.getArticleFromMonthlyPool(self, month: "November", year: "2015")
-        RequestManager.sharedInstance.getRandomArticle(categories: ["AEIOU"])
-        RequestManager.sharedInstance.findPages(self, query: "Te", numberOfMaxResults: 20)
-        
-        
+    /*
+        just remeber the user started the app for the firsttime
+    */
+    func rememberUserStartedAppTheFirstTime(){
+        UserData.sharedInstance.setValueForKey("App already started once", key: UserDefaultKeys.kFirstTimeStartingAppString)
+       
     }
-
     
 }

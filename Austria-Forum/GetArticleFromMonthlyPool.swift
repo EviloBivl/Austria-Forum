@@ -53,6 +53,7 @@ class GetArticleFromMonthlyPool: BaseRequest {
                 let score = 100
                 let result : SearchResult = SearchResult(title: title, name: name, url: url, score: score)
                 SearchHolder.sharedInstance.selectedItem = result
+                UserData.sharedInstance.articleOfTheMonth = result
             } else {
                 super.handleResponseError(self.description, article: articles)
             }

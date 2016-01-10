@@ -14,6 +14,9 @@ class SearchHolder {
     
     var searchResults : [SearchResult] = []
     var selectedItem : SearchResult?
+    var currentTitle : String? 
+    var lastUrl: String?
+    
     
     private init(){}
     

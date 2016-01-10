@@ -6,6 +6,14 @@
 //  Copyright © 2015 Paul Neuhold. All rights reserved.
 //
 
+
+/* 
+
+Stuff to think about -
+Track users search words or better track the selected Article after searching with crashlytics ?
+
+*/
+
 import UIKit
 import CoreData
 import Fabric
@@ -16,36 +24,55 @@ protocol ArticleSelectionDelegate {
     func articleSelected(article: SearchResult);
 }
 
-class MasterViewController: UITableViewController, NetworkDelegation, UISearchBarDelegate  {
+class SearchTableViewController: UITableViewController, NetworkDelegation, UISearchResultsUpdating, UISearchBarDelegate  {
     
     
     // MARK: - Properties
     var myData : Array<String>= []
+    var categories : Array<String> = []
     var delegate: ArticleSelectionDelegate?
+    let searchController = UISearchController(searchResultsController: nil)
     
-    @IBOutlet var searchBar: UITableView!
+    
     // MARK: - Override Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.searchBar.delegate = self
-       
+        
       //  startRequestTesting()
       //  Answers.logContentViewWithName("MasterViewController", contentType: "Data", contentId: "1234", customAttributes: ["Favorites Count":20, "Screen Orientation":"Landscape"])
 
+        //set up searchcontroller properties and delegates
+        self.searchController.searchResultsUpdater = self
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.searchBar.delegate = self
+       
+        
+        self.definesPresentationContext = true
         
         
+        tableView.tableHeaderView = searchController.searchBar
+        
+        //Register Custom Cell
+        let nib = UINib(nibName: "afTableCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "afTableCell")
+        
+    }
     
-        
-        
-        
-        // TODO: Track the user action that is important for you.
-   
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = false
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillLayoutSubviews() {
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.hidesBottomBarWhenPushed = false
+        super.viewWillLayoutSubviews()
     }
     
     
@@ -74,17 +101,19 @@ class MasterViewController: UITableViewController, NetworkDelegation, UISearchBa
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell",forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel?.text = myData[indexPath.row]
+       
+        let afCell : afTableViewCell = tableView.dequeueReusableCellWithIdentifier("afTableCell") as! afTableViewCell
+        afCell.lTitleNameTVC.text = myData[indexPath.row]
+        afCell.lCategoryNameTVC.text = categories[indexPath.row]
         
-        return cell
+        return afCell
     }
     
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedArticle : SearchResult = SearchHolder.sharedInstance.searchResults[indexPath.row]
         SearchHolder.sharedInstance.selectedItem = selectedArticle
-   
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     //MARK: - Protocol Implementation
@@ -100,37 +129,52 @@ class MasterViewController: UITableViewController, NetworkDelegation, UISearchBa
         //delete previous results
         dispatch_async(dispatch_get_main_queue(), {
             self.myData.removeAll()
+            self.categories.removeAll()
             self.tableView.reloadData()
         })
         
         
         //add new results
         dispatch_async(dispatch_get_main_queue()) {
+            
+            
             for result in SearchHolder.sharedInstance.searchResults {
+                self.categories.append("\(result.score) - TODO: change af webservice to get Category")
                 self.myData.append(result.title)
                 let indexPath = NSIndexPath(forRow: self.myData.count - 1, inSection: 0)
                 self.tableView.beginUpdates()
                 self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                 self.tableView.endUpdates()
              }
+            
         }
         
     }
     
     
-    //MARK: - SearchBar Delegate
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String){
-        print("searchBar chenged text to: \(searchText)")
-        RequestManager.sharedInstance.findPages(self, query: searchText, numberOfMaxResults: 20)
+    //MARK: - UISearchResultsUpdating
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        print("Searchbar update with text \(searchController.searchBar.text!)");
+        RequestManager.sharedInstance.findPages(self, query: searchController.searchBar.text!, numberOfMaxResults: 4)
         
     }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        self.view.endEditing(true)
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+//        if self.respondsToSelector("edgesForExtendedLayout"){
+//            self.edgesForExtendedLayout = UIRectEdge.None
+//        }
     }
-    
     
     
     
 }
+
+//MARK: Extension
+extension SearchTableViewController
+: ReachabilityDelegate {
+    func noInternet() {
+        
+    }
+}
+
+
 

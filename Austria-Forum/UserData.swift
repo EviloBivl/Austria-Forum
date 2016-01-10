@@ -22,34 +22,61 @@ class UserData : NSObject {
     /**
      If you set this property it will also get stored as Object in the NSUserDefaults with the key UserDefaultKeys.kLastVisitedString
      */
-    var lastVisitedString : String? = nil {
-        didSet{
-            if let toSave = self.lastVisitedString {
-                self.setValueForKey(toSave, key: UserDefaultKeys.kLastVisitedString)
+    var lastVisitedString : String? {
+        get{
+            if let val = self.getValueForKey(UserDefaultKeys.kLastVisitedString) as? String {
+                return val
+            } else {
+                return "http://www.austria-forum.org"
             }
+        }
+        set{
+            self.setValueForKey(newValue!, key: UserDefaultKeys.kOptionAllowPushNotificationBool)
         }
     }
     
-    /**
-     If you set this property it will also get stored as Object in the NSUserDefaults with the key UserDefaultKeys.kLastVisitedString
-     */
-    var optionsOne : String?  = nil {
-        didSet{
-            if let toSave = self.optionsOne {
-                self.setValueForKey(toSave, key: UserDefaultKeys.kOptionOneString)
+    
+    var optionAllowPushNotification : Bool? {
+        get{
+            if let val = self.getValueForKey(UserDefaultKeys.kOptionAllowPushNotificationBool) as? Bool {
+                return val
+            } else {
+                return UserDefaultValues.allowPushNotifications
             }
+        }
+        set{
+            self.setValueForKey(newValue!, key: UserDefaultKeys.kOptionAllowPushNotificationBool)
+        }
+    }
+    
+    var optionLocationUpdateInterval : Int? {
+        get{
+            if let val = self.getValueForKey(UserDefaultKeys.kOptionLocationUpdateIntervalInt) as? Int {
+                return val
+            } else {
+                return UserDefaultValues.intervalTime
+            }
+        }
+        set{
+            self.setValueForKey(newValue!, key: UserDefaultKeys.kOptionLocationUpdateIntervalInt)
         }
         
     }
     
+    
     /**
      If we set this property, persist it
      */
-    var articleOfTheMonth : String? = nil {
-        didSet{
-            if let toSave = self.articleOfTheMonth{
-                self.persistArticleOfTheMonth(toSave)
+    var articleOfTheMonth : SearchResult?  {
+        get{
+            if let val = self.getValueForKey(UserDefaultKeys.kArticleOfTheMonthSearchResult) as? NSDictionary {
+                return SearchResult(title: val.valueForKey("title") as! String, name: val.valueForKey("name") as! String, url: val.valueForKey("url") as! String, score: 100)
+            } else{
+                return SearchResult(title: "", name: "", url: "default", score: 0)
             }
+        }
+        set{
+            self.persistArticleOfTheMonth(newValue!)
         }
     }
     
@@ -76,9 +103,10 @@ class UserData : NSObject {
     }
     
     
-    private func persistArticleOfTheMonth(article: String) {
+    private func persistArticleOfTheMonth(article: SearchResult) {
         if checkIfArticleOfTheMonthNeedsReload() {
-            setValueForKey(article, key: UserDefaultKeys.kArticleOfTheMonthString)
+            let dictFromSearchResult : NSDictionary = ["url":article.url, "title" : article.title, "name" : article.name, "score" : article.score]
+            setValueForKey(dictFromSearchResult, key: UserDefaultKeys.kArticleOfTheMonthSearchResult)
             setValueForKey(NSDate(), key: UserDefaultKeys.kLastMonthOfArticleOfTheMonthNSDate)
         }
     }
@@ -107,31 +135,53 @@ class UserData : NSObject {
     
     private func loadAllSavedValuesFromUserDefaults () {
         
-        self.lastVisitedString = getValueForKey(UserDefaultKeys.kLastVisitedString) as? String
-        self.optionsOne = getValueForKey(UserDefaultKeys.kOptionOneString) as? String
+       
         
+    }
+    /**
+     checks if the user starts the app for the first time
+     */
+    func checkIfAppStartsTheFirstTime() -> Bool{
+        if let val = self.getValueForKey(UserDefaultKeys.kFirstTimeStartingAppString) {
+            //the value is set, so its not the first time starting the app
+            print("we got val : \(val)")
+            return true
+        } else {
+            //no value is set we are starting it for the first time
+            print("we got no val")
+            return false
+        }
     }
     
     
     
 }
 
-
+/**
+ Class containing all used keys for saving/loading data to the NSUserdefaults
+ */
 
 class UserDefaultKeys {
     
     static let kLastVisitedString : String = "kLastVisited"
     static let kOptionOneString :   String = "kOptionOne"
     static let kOptionTwoString :   String = "kOptionTwo"
+    static let kOptionAllowPushNotificationBool : String = "kOptionAllowPushNotificationBool"
+    static let kOptionLocationUpdateIntervalInt : String = "kOptionLocationUpdateIntervalInt"
     static let kOptionThreeBool :   String = "kOptionThreeBool"
-    static let kArticleOfTheMonthString: String = "kArticleOfTheMonth"
+    static let kArticleOfTheMonthSearchResult: String = "kArticleOfTheMonth"
     static let kLastMonthOfArticleOfTheMonthNSDate: String = "kLastMonthOfArticleOfTheMonth"
-    
+    static let kFirstTimeStartingAppString : String = "kFirstTimeStartingAppString"
     
     private init(){
         
     }
     
+}
+
+struct UserDefaultValues {
+    static let intervalTime : Int = 10
+    static let allowPushNotifications : Bool = true
 }
 
 

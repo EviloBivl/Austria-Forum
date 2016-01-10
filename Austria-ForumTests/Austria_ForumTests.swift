@@ -32,8 +32,6 @@ class Austria_ForumTests: XCTestCase {
         UserData.sharedInstance.lastVisitedString = "Something"
         assert(UserData.sharedInstance.getValueForKey(UserDefaultKeys.kLastVisitedString) as! String == "Something", "saving lastVistedString failed")
         
-        UserData.sharedInstance.optionsOne = "optionOne"
-        assert(UserData.sharedInstance.getValueForKey(UserDefaultKeys.kOptionOneString) as! String == "optionOne", "saving optionOne failed")
         
         UserData.sharedInstance.removeValueForKey(UserDefaultKeys.kLastMonthOfArticleOfTheMonthNSDate)
         UserData.sharedInstance.removeValueForKey(UserDefaultKeys.kArticleOfTheMonthString)
@@ -53,9 +51,44 @@ class Austria_ForumTests: XCTestCase {
         }
         
         
+        UserData.sharedInstance.removeValueForKey(UserDefaultKeys.kFirstTimeStartingAppString)
+        if UserData.sharedInstance.checkIfAppStartsTheFirstTime() {
+            assert(true)
+        } else{
+            XCTAssert(false, "this should not be the case, since we have nothing set in the kFirstTimeStartingAppString")
+        }
+        UserData.sharedInstance.setValueForKey("its set", key: UserDefaultKeys.kFirstTimeStartingAppString)
+        if UserData.sharedInstance.checkIfAppStartsTheFirstTime() {
+            XCTAssert(false, "kFirstTimeStartingAppString was set, so we shouldn't be here")
+        }
         
         
     }
+    func testDictionaryExtension () {
+        
+        let dict : Dictionary = ["12":"12" , "aB!": "aB!" , "abc" : "abc"]
+        let dictShorter : Dictionary = ["12":"12" , "aB!": "aB!"]
+        let dictTwo = ["12":"12" , "aB!": "aB!" , "abc" : "abC"]
+        
+        XCTAssert(dict.isEqual(dict), "dict should be equal to it self")
+        XCTAssertFalse(dict.isEqual(dictTwo), "dict should not be equal to dictTwo ")
+        XCTAssertFalse(dict.isEqual(dictShorter), "dict should not be equal - due to less count")
+        
+        
+        
+        
+    }
+    
+    func testComputedProperties () {
+        
+        XCTAssert(UserData.sharedInstance.optionLocationUpdateInterval == 10)
+        UserData.sharedInstance.setValueForKey(15, key: UserDefaultKeys.kOptionLocationUpdateIntervalInt)
+        XCTAssert(UserData.sharedInstance.optionLocationUpdateInterval == 15)
+        UserData.sharedInstance.optionLocationUpdateInterval = 20
+        XCTAssert(UserData.sharedInstance.optionLocationUpdateInterval == 20)
+        
+    }
+    
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
