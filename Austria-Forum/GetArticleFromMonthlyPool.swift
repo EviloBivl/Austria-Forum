@@ -44,6 +44,7 @@ class GetArticleFromMonthlyPool: BaseRequest {
     
     override func parseResponse (response : JSON){
         print("Request : \(self.description)\nResponseData: \(response.description)")
+        var siteName = ""
         //do somthing usefull with the result
         if let articles = response["result"]["map"].dictionaryObject {
             if articles["ResultCode"] as! String == "0"{
@@ -54,9 +55,20 @@ class GetArticleFromMonthlyPool: BaseRequest {
                 let result : SearchResult = SearchResult(title: title, name: name, url: url, score: score)
                 SearchHolder.sharedInstance.selectedItem = result
                 UserData.sharedInstance.articleOfTheMonth = result
+                siteName = title
             } else {
                 super.handleResponseError(self.description, article: articles)
             }
+            let calendar = NSCalendar.init(calendarIdentifier: NSCalendarIdentifierGregorian)
+            let currentHour = (calendar?.component(NSCalendarUnit.Hour, fromDate: NSDate()))!
+            let currentMinute = (calendar?.component(NSCalendarUnit.Minute, fromDate: NSDate()))!
+            let currentSecond = (calendar?.component(NSCalendarUnit.Second, fromDate: NSDate()))!
+            let localNotification : UILocalNotification = UILocalNotification()
+            localNotification.fireDate = NSDate()
+            localNotification.alertBody = "Background \(currentHour):\(currentMinute):\(currentSecond) - \(siteName) - response from Monthly"
+            localNotification.timeZone = NSTimeZone.defaultTimeZone()
+            UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+
             
         }
     }

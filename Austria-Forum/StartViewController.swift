@@ -9,13 +9,14 @@
 import Foundation
 import UIKit
 import Crashlytics
-
+import CoreLocation
+import MapKit
 
 class StartViewController: UIViewController {
     
     
     // MARK: - Properties
-    var detailViewController: DetailViewController? = nil
+    
     
     @IBOutlet weak var lStart: UILabel!
     
@@ -33,7 +34,7 @@ class StartViewController: UIViewController {
         } else {
             self.rememberUserStartedAppTheFirstTime()
         }
-        
+   
     }
     
     

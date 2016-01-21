@@ -8,18 +8,24 @@
 
 import UIKit
 
-class OptionsTableViewController: UITableViewController {
+class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    let options = ["option1", "option2", "optione3" ]
+    let pickerOptions : [String] = ["1 Minute", "5 Minuten" , "10 Minuten" , "15 Minuten", "30 Minuten" , "60 Minuten"]
+    let pickerValues : [Int] = [1,5,10,15,30,60]
     
     @IBOutlet weak var switchAllowPushNotificationOutlet: UISwitch!
+    @IBOutlet weak var switchAllowBackgroundLocation: UISwitch!
+    @IBOutlet weak var switchAllowSignificantChange: UISwitch!
     
+    
+    @IBOutlet weak var intervalPicker: UIPickerView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBarHidden = false
         self.tableView.backgroundColor = UIColor(red: 243.0/255, green: 243.0/255, blue: 243.0/255, alpha: 1)
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
-        switchAllowPushNotificationOutlet.setOn(UserData.sharedInstance.optionAllowPushNotification!, animated: false)
+        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert, categories: nil))
+        switchAllowPushNotificationOutlet.setOn(UserData.sharedInstance.allowPushNotification!, animated: false)
+        self.navigationController?.navigationBarHidden = false
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -37,12 +43,35 @@ class OptionsTableViewController: UITableViewController {
     // MARK: - IBActions
     
     @IBAction func switchAllowPushNotificationsAction(sender: UISwitch) {
-        
-        UserData.sharedInstance.optionAllowPushNotification = sender.on
-        
+        UserData.sharedInstance.allowPushNotification = sender.on
     }
     
+    @IBAction func switchAllowBackgroundLocationAction(sender: UISwitch) {
+        UserData.sharedInstance.locationDistanceChangeAllowed = sender.on
+    }
+ 
+    @IBAction func switchAllowSignificantChangeAction(sender: UISwitch) {
+        UserData.sharedInstance.locationSignifacantChangeAllowed = sender.on
+    }
     
+   //MARK: Picker View Delegates
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        return self.pickerOptions.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        return pickerOptions[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        UserData.sharedInstance.notificationIntervalInMinutes = self.pickerValues[row]
+    }
 
     // MARK: - Table view data source
 /*

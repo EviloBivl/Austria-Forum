@@ -36,7 +36,7 @@ class UserData : NSObject {
     }
     
     
-    var optionAllowPushNotification : Bool? {
+    var allowPushNotification : Bool? {
         get{
             if let val = self.getValueForKey(UserDefaultKeys.kOptionAllowPushNotificationBool) as? Bool {
                 return val
@@ -63,6 +63,73 @@ class UserData : NSObject {
         
     }
     
+    var lastNotificationDate : NSDate? {
+        get{
+            if let val = self.getValueForKey(UserDefaultKeys.kLastNotificationMessageNSDate) as? NSDate {
+                return val
+            } else {
+                return NSDate()
+            }
+        }
+        set{
+            self.setValueForKey(newValue!, key: UserDefaultKeys.kLastNotificationMessageNSDate)
+        }
+        
+    }
+    
+    var locationChangeValue : Int? {
+        get{
+            if let val = self.getValueForKey(UserDefaultKeys.kLocationChangedValueInt) as? Int {
+                return val
+            } else {
+                return UserDefaultValues.locationChangedValue
+            }
+        }
+        set{
+            self.setValueForKey(newValue!, key: UserDefaultKeys.kLocationChangedValueInt)
+        }
+    }
+    
+    var locationSignifacantChangeAllowed : Bool? {
+        get{
+            if let val = self.getValueForKey(UserDefaultKeys.kLocationSignificantChangeAllowedBool) as? Bool {
+                return val
+            } else {
+                return UserDefaultValues.allowLocationSignificantChange
+            }
+        }
+        set{
+            self.setValueForKey(newValue!, key: UserDefaultKeys.kLocationSignificantChangeAllowedBool)
+        }
+    }
+    
+    var locationDistanceChangeAllowed : Bool? {
+        get{
+            if let val = self.getValueForKey(UserDefaultKeys.kLocationDistanceChangeAllowedBool) as? Bool {
+                return val
+            } else {
+                return UserDefaultValues.allowLocationDistanceChange
+            }
+        }
+        set{
+            self.setValueForKey(newValue!, key: UserDefaultKeys.kLocationDistanceChangeAllowedBool)
+        }
+
+    }
+    
+    var notificationIntervalInMinutes : Int? {
+        get{
+            if let val = self.getValueForKey(UserDefaultKeys.kNotificationIntervalInMinutesInt) as? Int {
+                return val
+            } else {
+                return UserDefaultValues.notificationIntervalMinutes
+            }
+        }
+        set{
+            self.setValueForKey(newValue!, key: UserDefaultKeys.kNotificationIntervalInMinutesInt)
+        }
+    }
+    
     
     /**
      If we set this property, persist it
@@ -79,6 +146,8 @@ class UserData : NSObject {
             self.persistArticleOfTheMonth(newValue!)
         }
     }
+    
+
     
     private override init(){
         super.init()
@@ -158,10 +227,10 @@ class UserData : NSObject {
 }
 
 /**
- Class containing all used keys for saving/loading data to the NSUserdefaults
+ Struct containing all used keys for saving/loading data to the NSUserdefaults
  */
 
-class UserDefaultKeys {
+struct UserDefaultKeys {
     
     static let kLastVisitedString : String = "kLastVisited"
     static let kOptionOneString :   String = "kOptionOne"
@@ -172,16 +241,24 @@ class UserDefaultKeys {
     static let kArticleOfTheMonthSearchResult: String = "kArticleOfTheMonth"
     static let kLastMonthOfArticleOfTheMonthNSDate: String = "kLastMonthOfArticleOfTheMonth"
     static let kFirstTimeStartingAppString : String = "kFirstTimeStartingAppString"
-    
-    private init(){
-        
-    }
+    static let kLastNotificationMessageNSDate : String = "kLastNotificationMessage"
+    static let kNotificationIntervalInMinutesInt : String = "kNotificationIntervalInMinutes"
+    static let kLocationChangedValueInt : String = "kLocationChangedValue"
+    static let kLocationSignificantChangeAllowedBool : String = "kSignificantChangeAllowed"
+    static let kLocationDistanceChangeAllowedBool : String = "kRegularLocationChange"
     
 }
 
+/**
+ Struct containing all Default Values for not set settings
+*/
 struct UserDefaultValues {
     static let intervalTime : Int = 10
-    static let allowPushNotifications : Bool = true
+    static let allowPushNotifications : Bool = false
+    static let allowLocationSignificantChange : Bool = false
+    static let allowLocationDistanceChange : Bool = false
+    static let locationChangedValue : Int = 50
+    static let notificationIntervalMinutes = 5
 }
 
 
