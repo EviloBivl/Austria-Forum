@@ -78,7 +78,8 @@ class FavouritesTableViewController: UITableViewController {
             noInternet()
         } else {
             let selectedFavourite = (FavouritesHolder.sharedInstance.favourites[indexPath.row])
-            let searchResult : SearchResult = SearchResult(title: selectedFavourite["title"]!, name: selectedFavourite["title"]!, url: selectedFavourite["url"]!, score: 100)
+            let searchResult : SearchResult = SearchResult(title: selectedFavourite["title"]!, name: selectedFavourite["title"]!, url: selectedFavourite["url"]!, score: 100,
+                license: selectedFavourite["license"] )
             SearchHolder.sharedInstance.selectedItem = searchResult
             self.navigationController?.popViewControllerAnimated(true)
         }

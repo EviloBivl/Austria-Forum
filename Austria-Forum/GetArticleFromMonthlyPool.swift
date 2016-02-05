@@ -51,7 +51,8 @@ class GetArticleFromMonthlyPool: BaseRequest {
                 let title = articles["title"] as! String
                 let url = articles["url"] as! String
                 let score = 100
-                let result : SearchResult = SearchResult(title: title, name: name, url: url, score: score)
+                let license = articles["license"] as! String?
+                let result : SearchResult = SearchResult(title: title, name: name, url: url, score: score, license: license)
                 SearchHolder.sharedInstance.selectedItem = result
                 UserData.sharedInstance.articleOfTheMonth = result
             } else {

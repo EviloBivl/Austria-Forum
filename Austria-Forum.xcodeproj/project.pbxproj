@@ -66,6 +66,7 @@
 		5CBBFABD1C63902E00C20437 /* Search_50.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CBBFAAF1C63902E00C20437 /* Search_50.png */; };
 		5CBBFABE1C63902E00C20437 /* Shuffle_50.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CBBFAB01C63902E00C20437 /* Shuffle_50.png */; };
 		5CBBFABF1C63902E00C20437 /* Upload_50.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CBBFAB11C63902E00C20437 /* Upload_50.png */; };
+		5CBBFAC11C64B74E00C20437 /* GetPageInfoFromUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBFAC01C64B74E00C20437 /* GetPageInfoFromUrls.swift */; };
 		5CCAECED1C23204100713BB7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CCAECEB1C23204100713BB7 /* Main.storyboard */; };
 		5CCC3F1F1C413B9C00ADBBDB /* FavouritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCC3F1E1C413B9C00ADBBDB /* FavouritesTableViewController.swift */; };
 		5CCC3F211C42542B00ADBBDB /* Extension+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCC3F201C42542B00ADBBDB /* Extension+Dictionary.swift */; };
@@ -164,6 +165,7 @@
 		5CBBFAAF1C63902E00C20437 /* Search_50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Search_50.png; sourceTree = "<group>"; };
 		5CBBFAB01C63902E00C20437 /* Shuffle_50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Shuffle_50.png; sourceTree = "<group>"; };
 		5CBBFAB11C63902E00C20437 /* Upload_50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Upload_50.png; sourceTree = "<group>"; };
+		5CBBFAC01C64B74E00C20437 /* GetPageInfoFromUrls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPageInfoFromUrls.swift; sourceTree = "<group>"; };
 		5CCAECEC1C23204100713BB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5CCC3F1E1C413B9C00ADBBDB /* FavouritesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesTableViewController.swift; sourceTree = "<group>"; };
 		5CCC3F201C42542B00ADBBDB /* Extension+Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Dictionary.swift"; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				5CE9EF001C19A1B70068825C /* GetRandomArticleRequest.swift */,
 				5C8F0BAB1C1F1358003E2895 /* ReachabilityHelper.swift */,
 				5C55A56D1C51493C00F86B37 /* GetArticlesByLocationRequest.swift */,
+				5CBBFAC01C64B74E00C20437 /* GetPageInfoFromUrls.swift */,
 			);
 			name = "Communication Classes";
 			sourceTree = "<group>";
@@ -769,6 +772,7 @@
 				5CCC3F1F1C413B9C00ADBBDB /* FavouritesTableViewController.swift in Sources */,
 				5C55A5701C514C9E00F86B37 /* LocationArticleHolder.swift in Sources */,
 				5C8F0BAE1C1F25BB003E2895 /* ReachabilityDelegate.swift in Sources */,
+				5CBBFAC11C64B74E00C20437 /* GetPageInfoFromUrls.swift in Sources */,
 				5CE9EF411C19D3FB0068825C /* StartViewController.swift in Sources */,
 				5C4A6AB21C3AB9E80010499B /* afTableViewCell.swift in Sources */,
 				5CE9EEFA1C1990CD0068825C /* GetArticleFromMonthlyPool.swift in Sources */,

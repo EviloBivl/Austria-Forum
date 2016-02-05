@@ -19,7 +19,7 @@ enum ScrollDirection : Int {
 }
 
 
-class DetailViewController: UIViewController, ReachabilityDelegate {
+class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDelegate {
     
     // MARK: - Properties
     @IBOutlet weak var webView: UIWebView!
@@ -104,8 +104,15 @@ class DetailViewController: UIViewController, ReachabilityDelegate {
         //webview
         self.configureWebView()
         
+        
         //toolbars
-        self.topToolBar.clipsToBounds = true
+        //self.topToolBar.clipsToBounds = true
+        //self.topToolBar.layer.borderColor = UIColor.blackColor().CGColor
+        //self.topToolBar.layer.borderWidth = 1
+        //self.topToolBar.layer.masksToBounds = true
+        
+        //set the toolbar delegate for the top to properly display the hairline
+        self.topToolBar.delegate = self
         
         
         //Please Wait ... Screen
@@ -134,6 +141,10 @@ class DetailViewController: UIViewController, ReachabilityDelegate {
         self.webView.scrollView.alwaysBounceHorizontal = false
         self.webView.scrollView.alwaysBounceVertical = false
         
+    }
+    
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+            return .Top
     }
     
     // MARK: - IBActions
@@ -421,8 +432,20 @@ extension DetailViewController : NetworkDelegation {
             self.webView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
         }
         
+        
+        
     }
 }
+//MARK: onPageInfoDelegation
+extension DetailViewController : PageInfoDelegate {
+    func onPageInfoSucces(){
+        self.refreshWebView()
+    }
+    
+    func onPageInfoFail(){
+    }
+}
+
 
 
 //MARK: - WebView Delegate
@@ -470,6 +493,10 @@ extension DetailViewController : UIWebViewDelegate {
         self.updateFavouriteIcon()
         UserData.sharedInstance.lastVisitedString = SearchHolder.sharedInstance.currentUrl
         
+    }
+    
+    func getPageInfoFromUrl(url: String){
+        RequestManager.sharedInstance.getPageInfoFromUrls(self, urls: [url])
     }
     
     func webView(webView: UIWebView, didFailLoadWithError error: NSError?){

@@ -104,7 +104,7 @@ class LocationTableViewController: UITableViewController {
         let selectedArticle : LocationArticleResult = LocationArticleHolder.sharedInstance.articles[indexPath.row]
         //convert the LocationResult to be a Searchresult for handling in the DetailViewController - this would be a good place for an Adapter ;)
         
-        SearchHolder.sharedInstance.selectedItem = SearchResult(title: selectedArticle.title, name: selectedArticle.name, url: selectedArticle.url, score: 100)
+        SearchHolder.sharedInstance.selectedItem = SearchResult(title: selectedArticle.title, name: selectedArticle.name, url: selectedArticle.url, score: 100, license: selectedArticle.license)
         self.navigationController?.popViewControllerAnimated(true)
     }
     

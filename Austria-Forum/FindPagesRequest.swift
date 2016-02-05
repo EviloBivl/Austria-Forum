@@ -48,7 +48,7 @@ class FindPagesRequest : BaseRequest {
             for object in articles {
                 if let page = object["map"] {
                     if page!["score"] as! Int > 1 {
-                        let result: SearchResult = SearchResult(title: page!["title"] as! String, name: page!["page"]! as! String, url: page!["url"]! as! String, score: page!["score"] as! Int)
+                        let result: SearchResult = SearchResult(title: page!["title"] as! String, name: page!["page"]! as! String, url: page!["url"]! as! String, score: page!["score"] as! Int, license: page!["license"] as! String? )
                         SearchHolder.sharedInstance.searchResults.append(result)
                     }
                 }

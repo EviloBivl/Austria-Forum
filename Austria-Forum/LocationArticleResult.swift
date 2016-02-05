@@ -15,18 +15,20 @@ class LocationArticleResult {
     private(set) var url: String = ""
     private(set) var distanceString : String = ""
     private(set) var distanceValue : Int = 0
+    private(set) var license : String?
     
     private init(){
         
     }
     
-    convenience init(title: String, name: String, url: String, distanceStr: String, distanceVal : Int) {
+    convenience init(title: String, name: String, url: String, distanceStr: String, distanceVal : Int, license: String?) {
         self.init()
         self.title = title
         self.name = name
         self.url = url
         self.distanceValue = distanceVal
         self.distanceString = distanceStr
+        self.license = license
     }
 
 }

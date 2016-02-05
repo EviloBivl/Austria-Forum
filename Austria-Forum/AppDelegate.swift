@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification{
                 if let sr = notification.userInfo{
                     print("started with url: \(sr["url"])")
-                    SearchHolder.sharedInstance.selectedItem = SearchResult(title: sr["title"] as! String , name: sr["name"] as! String , url: sr["url"] as! String, score: 100)
+                    SearchHolder.sharedInstance.selectedItem = SearchResult(title: sr["title"] as! String , name: sr["name"] as! String , url: sr["url"] as! String, score: 100, license: sr["license"] as! String?)
                 }
             }
         } else {
@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let sr = notification.userInfo{
             if let _ = sr["url"]{
                 print("started with url: \(sr["url"] as! String)")
-                SearchHolder.sharedInstance.selectedItem = SearchResult(title: sr["title"] as! String , name: sr["name"] as! String , url: sr["url"] as! String, score: 100)
+                SearchHolder.sharedInstance.selectedItem = SearchResult(title: sr["title"] as! String , name: sr["name"] as! String , url: sr["url"] as! String, score: 100, license: sr["license"] as! String? )
             }
         }
         

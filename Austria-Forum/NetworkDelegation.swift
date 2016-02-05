@@ -17,3 +17,9 @@ protocol NetworkDelegation {
     func onRequestSuccess();
 
 }
+
+protocol PageInfoDelegate {
+    func onPageInfoSucces();
+    func onPageInfoFail();
+
+}

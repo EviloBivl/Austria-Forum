@@ -48,6 +48,7 @@ class GetArticlesByLocationRequest: BaseRequest {
                     let title = page!["title"] as! String
                     let url = page!["url"] as! String
                     let distanceInt = page!["distance"] as! Int
+                    let license = page!["license"] as! String?
                     
                     var distString = ""
                     if  distanceInt <= 1000 {
@@ -65,7 +66,7 @@ class GetArticlesByLocationRequest: BaseRequest {
                         }
                     }
                     
-                    let result : LocationArticleResult = LocationArticleResult(title: title, name: name, url: url, distanceStr: distString, distanceVal: distanceInt)
+                    let result : LocationArticleResult = LocationArticleResult(title: title, name: name, url: url, distanceStr: distString, distanceVal: distanceInt, license: license)
                     LocationArticleHolder.sharedInstance.articles.append(result)
                 }
                 

@@ -53,17 +53,14 @@ class RequestManager : NSObject {
     }
     
     func getArticlesByLocation (delegate: AnyObject?  = nil, location: CLLocationCoordinate2D, numberOfResults: Int){
-        //for now till the webservice is completed
-        //just call the success delegate to trigger the Push Notification and fill some Data to the locationTable
-        //let result : LocationArticleResult = LocationArticleResult(title: "Link to Austria forum", name: "dummy name", url: "http://www.austria-forum.org", distance: 13.37)
-        //LocationArticleHolder.sharedInstance.articles.append(result)
-        //print("\n\n STARTED LOCATION REQUEST \n\n")
-        //(delegate as! NetworkDelegation).onRequestSuccess()
-        
-       // Activate this once the webservice is finished
         let getArticlesByLocationRequest : GetArticlesByLocationRequest = GetArticlesByLocationRequest(coordinates: location, numberOfResults: numberOfResults)
         performRequest(getArticlesByLocationRequest, delegate: delegate)
         
+    }
+    
+    func getPageInfoFromUrls(delegate : AnyObject? = nil, urls : [String]){
+        let pageInfoRequest : GetPageInfoFromUrls = GetPageInfoFromUrls(urls: urls)
+        performRequest(pageInfoRequest, delegate: delegate)
     }
 
 

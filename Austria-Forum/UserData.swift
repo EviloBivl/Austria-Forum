@@ -157,9 +157,9 @@ class UserData : NSObject {
     var articleOfTheMonth : SearchResult?  {
         get{
             if let val = self.getValueForKey(UserDefaultKeys.kArticleOfTheMonthSearchResult) as? NSDictionary {
-                return SearchResult(title: val.valueForKey("title") as! String, name: val.valueForKey("name") as! String, url: val.valueForKey("url") as! String, score: 100)
+                return SearchResult(title: val.valueForKey("title") as! String, name: val.valueForKey("name") as! String, url: val.valueForKey("url") as! String, score: 100, license: val.valueForKey("license") as? String )
             } else{
-                return SearchResult(title: "", name: "", url: self.lastVisitedString!, score: 0)
+                return SearchResult(title: "", name: "", url: self.lastVisitedString!, score: 0, license: nil)
             }
         }
         set{
@@ -194,7 +194,9 @@ class UserData : NSObject {
     
     private func persistArticleOfTheMonth(article: SearchResult) {
         if checkIfArticleOfTheMonthNeedsReload() {
-            let dictFromSearchResult : NSDictionary = ["url":article.url, "title" : article.title, "name" : article.name, "score" : article.score]
+            let emptyLicense : String? = ""
+            let license = article.license ?? emptyLicense
+            let dictFromSearchResult : NSDictionary = ["url":article.url, "title" : article.title, "name" : article.name, "score" : article.score, "license" : license! ]
             setValueForKey(dictFromSearchResult, key: UserDefaultKeys.kArticleOfTheMonthSearchResult)
             setValueForKey(NSDate(), key: UserDefaultKeys.kLastMonthOfArticleOfTheMonthNSDate)
         }
