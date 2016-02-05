@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import CoreLocation
 
 /** RequestManager Class
  
@@ -51,13 +52,32 @@ class RequestManager : NSObject {
         
     }
     
-    
-    private func performRequest(req: BaseRequest, delegate: AnyObject? = nil){
+    func getArticlesByLocation (delegate: AnyObject?  = nil, location: CLLocationCoordinate2D, numberOfResults: Int){
+        //for now till the webservice is completed
+        //just call the success delegate to trigger the Push Notification and fill some Data to the locationTable
+        //let result : LocationArticleResult = LocationArticleResult(title: "Link to Austria forum", name: "dummy name", url: "http://www.austria-forum.org", distance: 13.37)
+        //LocationArticleHolder.sharedInstance.articles.append(result)
+        //print("\n\n STARTED LOCATION REQUEST \n\n")
+        //(delegate as! NetworkDelegation).onRequestSuccess()
+        
+       // Activate this once the webservice is finished
+        let getArticlesByLocationRequest : GetArticlesByLocationRequest = GetArticlesByLocationRequest(coordinates: location, numberOfResults: numberOfResults)
+        performRequest(getArticlesByLocationRequest, delegate: delegate)
+        
+    }
+
+
+    private func performRequest(req: BaseRequest, delegate: AnyObject? = nil) -> Void{
+
+        if let reachable = delegate as? ReachabilityDelegate {
+            if ReachabilityHelper.sharedInstance.connection == ReachabilityType.NO_INTERNET{
+                reachable.noInternet()
+                return
+            }
+        }
         
         
         print("====== STARTING REQUEST ========= FOR ID:  \(req.requestBody["id"]!)    =====");
-        //clear old SearchResults
-        SearchHolder.sharedInstance.searchResults.removeAll()
         
         self.alamo!.request(.POST, req.urlAF, parameters: req.requestBody, encoding: .JSON, headers: req.requestHeader ).responseJSON { jsonResp in
             

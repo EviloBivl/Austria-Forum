@@ -26,16 +26,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // TODO: Move this to where you establish a user session
         self.logUser()
         
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert, categories: nil))
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert,  UIUserNotificationType.Badge , UIUserNotificationType.Sound], categories: nil))
+        application.applicationIconBadgeNumber = 0
         
-
         // Handle launching from a notification
         // TODO Here
-        //
-        
+        if let launchOptions = launchOptions {
+            if let _ = launchOptions[UIApplicationLaunchOptionsLocationKey]{
+                //once we are here the app got started from the system.
+                let pListWorker = ReadWriteToPList()
+                pListWorker.loadFavourites()
+                pListWorker.saveFavourite(["SignificantChange" : "SignificantChange"])
+                MyLocationManager.sharedInstance.startFromTerminated()
+            }
+            if let notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification{
+                if let sr = notification.userInfo{
+                    print("started with url: \(sr["url"])")
+                    SearchHolder.sharedInstance.selectedItem = SearchResult(title: sr["title"] as! String , name: sr["name"] as! String , url: sr["url"] as! String, score: 100)
+                }
+            }
+        } else {
+            MyLocationManager.sharedInstance.startIfAllowed()
+        }
         //Start the LocalizationManager
-       // MyLocationManager.sharedInstance.startFromRunningState()
-        
+        //    print("restarting locaiton Manager now")
+        //    MyLocationManager.sharedInstance.startFromTerminated()
+        print("APP STARTED")
         return true
     }
     
@@ -47,10 +63,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        print("Application state : \(application.applicationState.rawValue)" )
+        UserData.sharedInstance.lastNotificationDate = NSDate()
+        //set first Time
+        
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        application.applicationIconBadgeNumber = 0
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
@@ -66,17 +87,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("swiped to kill")
     }
     
+    
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         print("didRevieceLocalNotification")
-        let alert = UIAlertView(title: "App is Active", message: notification.alertBody!, delegate: self, cancelButtonTitle: "OK")
-        alert.show()
-        application.applicationIconBadgeNumber = 1
+        if let sr = notification.userInfo{
+            if let _ = sr["url"]{
+                print("started with url: \(sr["url"] as! String)")
+                SearchHolder.sharedInstance.selectedItem = SearchResult(title: sr["title"] as! String , name: sr["name"] as! String , url: sr["url"] as! String, score: 100)
+            }
+        }
+        
+        
+        
     }
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        print("recieved RegisterUserNotification")
+        print("recieved RegisterUserNotification   \(notificationSettings.types.rawValue)")
         let type = notificationSettings.types
-        if type == .Alert {
+        let requiredForPush = UIUserNotificationType.Alert.rawValue | UIUserNotificationType.Badge.rawValue | UIUserNotificationType.Sound.rawValue
+        
+        print("requiredForPush is \(requiredForPush)")
+        if type.rawValue == requiredForPush {
             UserData.sharedInstance.allowPushNotification = true
         } else {
             UserData.sharedInstance.allowPushNotification = false

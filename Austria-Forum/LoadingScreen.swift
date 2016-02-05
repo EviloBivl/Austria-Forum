@@ -25,7 +25,7 @@ class LoadingScreen: UIView {
         super.init(coder: aDecoder)
         print("init with coder")
         self.backgroundColor = UIColor(white: 1, alpha: 0.0)
-
+        
     }
     
     
@@ -40,6 +40,7 @@ class LoadingScreen: UIView {
     deinit {
         print("DEINIT Loading")
         self.activityIndicator.stopAnimating()
+        
         
     }
 }

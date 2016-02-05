@@ -11,5 +11,6 @@ import Foundation
 protocol ReachabilityDelegate {
     
     func noInternet();
+    func InternetBack();
     
 }

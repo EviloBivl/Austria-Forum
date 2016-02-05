@@ -26,15 +26,24 @@ class GetRandomArticleRequest: BaseRequest {
         self.addAdditionalRequestInfo()
     }
     
+    /*
+    //provide a dummy paramter so that JSON-RPC can handle the incoming call
+    var paramsArray : Array<AnyObject> = [];
+    if (self.categories.count > 0){
+    paramsArray.append(self.categories)
+    } else {
+    paramsArray.append(NSNull())
+    }
     
+    */
     override func addAdditionalRequestInfo() {
         self.requestBody["method"] = self.method
         //provide a dummy paramter so that JSON-RPC can handle the incoming call
         var paramsArray : Array<AnyObject> = [];
-        if (self.categories.count > 0){
-            paramsArray.append(self.categories)
-        } else {
+        if (self.categories[0] == "ALL"){
             paramsArray.append(NSNull())
+        } else {
+            paramsArray.append(self.categories)
         }
         self.requestBody["params"] = paramsArray
     }
@@ -53,6 +62,7 @@ class GetRandomArticleRequest: BaseRequest {
                 SearchHolder.sharedInstance.selectedItem = result
             } else {
                 super.handleResponseError(self.description, article: articles)
+                SearchHolder.sharedInstance.resultMessage = "Zur Zeit können leider keine Zufallsartikel vom Server generiert werden."
             }
             
         }

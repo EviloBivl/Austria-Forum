@@ -9,6 +9,16 @@
 import UIKit
 import WebKit
 
+enum ScrollDirection : Int {
+    case ScrollDirectionNone = 0
+    case ScrollDirectionRight
+    case ScrollDirectionLeft
+    case ScrollDirectionUp
+    case ScrollDirectionDown
+    case ScrollDirectionCrazy
+}
+
+
 class DetailViewController: UIViewController, ReachabilityDelegate {
     
     // MARK: - Properties
@@ -16,47 +26,62 @@ class DetailViewController: UIViewController, ReachabilityDelegate {
     @IBOutlet weak var topToolBar: UIToolbar!
     @IBOutlet weak var bottomToolBar: UIToolbar!
     @IBOutlet weak var progressBar: UIProgressView!
+
+    @IBOutlet weak var constraintTopToolBar: NSLayoutConstraint!
+    @IBOutlet weak var constraintBottomToolBar: NSLayoutConstraint!
+    
+    var scrollDirection : ScrollDirection?
+    var lastScrollOffset : CGPoint?
+    var loadingView : LoadingScreen?
+    var pListWorker : ReadWriteToPList?
+    var noInternetView : LoadingScreen?
+    let favouriteIconTag = 3
+    
+    var toolBarsHidden : Bool = false
     
     var detailItem: SearchResult? {
         didSet {
-            self.refreshUI()
+            self.refreshWebView()
         }
     }
-    
-    
-    var loadingView : LoadingScreen?
-    var pListWorker : ReadWriteToPList?
-    let favouriteIconTag = 3
-    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        //Always set the current controller as the delegate to ReachabilityHelper
-        ReachabilityHelper.sharedInstance.delegate = self
-        self.webView.delegate = self
-        self.webView.scrollView.delegate = self
-        self.webView.scrollView.backgroundColor = UIColor.whiteColor()
-        self.topToolBar.clipsToBounds = true
-        self.webView.clipsToBounds = true
+        //set up properties and view settings
+        self.configureViews()
         
-        self.loadingView = NSBundle.mainBundle().loadNibNamed("LoadingScreen", owner: self, options: nil)[0] as? LoadingScreen
+        //init the pListWorker to write to plist files
         self.pListWorker = ReadWriteToPList()
         
-        
-        self.progressBar.hidden = true
-        
+        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil, queue: NSOperationQueue.mainQueue(), usingBlock: {
+            notification in
+            print("recieved UIApplicationBecomeActive Notification")
+            self.setDetailItem()
+        })
+    }
+    
+    
+    
+    func setDetailItem(){
+        self.detailItem = SearchHolder.sharedInstance.selectedItem
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        //Always set the current controller as the delegate to ReachabilityHelper
+        ReachabilityHelper.sharedInstance.delegate = self
+        
         self.detailItem = SearchHolder.sharedInstance.selectedItem
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //hide navigationBar
         self.navigationController?.navigationBarHidden = true
     }
     
@@ -68,42 +93,82 @@ class DetailViewController: UIViewController, ReachabilityDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        //resize the loadingscreen frame to the current viewcontroller after layout is defined
         self.loadingView?.frame = self.view.frame
         
     }
     
+    //MARK: - Custom Functions
+    private func configureViews(){
+        //webview
+        self.configureWebView()
+        
+        //toolbars
+        self.topToolBar.clipsToBounds = true
+        
+        
+        //Please Wait ... Screen
+        self.loadingView = NSBundle.mainBundle().loadNibNamed("LoadingScreen", owner: self, options: nil)[0] as? LoadingScreen
+        
+        //hide progressbar if not needed
+        self.progressBar.hidden = true
+        
+        
+        
+    }
+    
+    func imageWithImage(image:UIImage, scaledToSize newSize: CGSize) -> UIImage{
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    private func configureWebView(){
+        self.webView.delegate = self
+        self.webView.scrollView.delegate = self
+        self.webView.scrollView.backgroundColor = UIColor.whiteColor()
+        self.webView.clipsToBounds = true
+        self.webView.scrollView.alwaysBounceHorizontal = false
+        self.webView.scrollView.alwaysBounceVertical = false
+        
+    }
     
     // MARK: - IBActions
-    
-    
-    
     @IBAction func loadRandomArticle(sender: AnyObject) {
         
         self.showLoadingScreen()
-        //we pick a random category on the client, because picking a random from all categories on the server takes too long
-        let allCategories = ["AEIOU","Alltagskultur","AustriaWiki","Bilder_und_Videos","Community","Geography","Kunst_und_Kultur","Natur","Politik_und_Geschichte","Videos","Wissenschaft_und_Wirtschaft","Wissenssammlungen/Biographien","Wissenssammlungen/Essays"]
-        let oneCategory: String = allCategories[(random() % allCategories.count)]
-        
-        RequestManager.sharedInstance.getRandomArticle(self, categories: [oneCategory])
+        RequestManager.sharedInstance.getRandomArticle(self, categories: [UserData.sharedInstance.categorySelected!])
     }
+    
+    
     @IBAction func loadArticleFromMonthlyPool(sender: AnyObject) {
-               
+        
         if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload() {
             self.showLoadingScreen()
             RequestManager.sharedInstance.getArticleFromMonthlyPool(self, month: "notset", year: "notset")
         } else {
-            self.detailItem = UserData.sharedInstance.articleOfTheMonth
+            if (ReachabilityHelper.sharedInstance.connection == ReachabilityType.NO_INTERNET){
+                self.noInternet()
+            } else {
+                self.detailItem = UserData.sharedInstance.articleOfTheMonth
+            }
         }
     }
-    @IBAction func saveArticleAsFavourite(sender: AnyObject) {
     
+    @IBAction func saveArticleAsFavourite(sender: AnyObject) {
+        
         var  activeArticle : [String:String] = [:]
-        if let activeArticleInWebView = SearchHolder.sharedInstance.selectedItem {
+        if let activeArticleInWebView = SearchHolder.sharedInstance.selectedItem, let currentCategory = SearchHolder.sharedInstance.currentCategory {
             activeArticle["title"] = activeArticleInWebView.title
             activeArticle["url"] = activeArticleInWebView.url.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
-        } else if let activeTitle = SearchHolder.sharedInstance.currentTitle, let activeUrl = self.webView.request?.URLString {
+            activeArticle["category"] = currentCategory
+        } else if let activeTitle = SearchHolder.sharedInstance.currentTitle, let activeUrl = self.webView.request?.URLString , let currentCategory = SearchHolder.sharedInstance.currentCategory {
             activeArticle["title"] = activeTitle
             activeArticle["url"] = activeUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
+            activeArticle["category"] = currentCategory
         }
         
         
@@ -135,30 +200,53 @@ class DetailViewController: UIViewController, ReachabilityDelegate {
         
     }
     
-    @IBAction func locationArticleAction(sender: UIBarButtonItem) {
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         
-        
+        if identifier == "toLocationArticles" {
+            let locationAuthorizationSystemSetting = MyLocationManager.sharedInstance.isAllowedBySystem()
+            if locationAuthorizationSystemSetting == false{
+                self.hintToSettings(inAppSetting: false)
+                return false
+            }
+            if let localAllowence = UserData.sharedInstance.locationDistanceChangeAllowed {
+                if !localAllowence{
+                    self.hintToSettings(inAppSetting: true)
+                    return false
+                }
+            }
+        }
+        return true
     }
-    
-    
-    
     
     //MARK: - Custom Functions
-    func refreshUI(){
-        //load the new set artivle into the webView
-        if let stringUrl = self.detailItem?.url {
-            if self.webView.request?.URLString == stringUrl{
-                return
+    
+    
+    
+    func hintToSettings(inAppSetting inAppSetting: Bool) {
+        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Froum darf zur Zeit nicht auf ihren Standort zugreifen. Sie können dies in den Einstellungen ändern wenn Sie wollen.", preferredStyle: UIAlertControllerStyle.Alert)
+        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.Cancel, handler: {
+            cancleAction in
+            print("pressed cancle")
+            
+        })
+        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.Default, handler: {
+            alertAction  in
+            print("go to settings")
+            if inAppSetting{
+                self.performSegueWithIdentifier("toSettings", sender: self)
+            } else {
+                let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+                UIApplication.sharedApplication().openURL(settingsUrl!)
+                
             }
-            let newUrl = stringUrl // only local server stuff // --> stringUrl.stringByReplacingOccurrencesOfString("localhost", withString: "192.168.178.21")
-            let skinRaw = newUrl.stringByAppendingString("?skin=page")
-            let url : NSURL? = NSURL(string: skinRaw)
-            print("load into webView: \(url?.URLString)")
-            self.webView.loadRequest(NSURLRequest(URL: url!))
-            
-            
-        }
+        })
+        alertController.addAction(actionAbort)
+        alertController.addAction(actionToSettings)
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
     }
+    
     
     
     func showLoadingScreen() {
@@ -166,7 +254,7 @@ class DetailViewController: UIViewController, ReachabilityDelegate {
         if let v = self.loadingView {
             print("adding \(v) now")
             
-            
+            v.labelMessage.text = "Bitte Warten ..."
             self.view.addSubview(v)
             v.bringSubviewToFront(self.view)
             v.activityIndicator.startAnimating()
@@ -187,62 +275,152 @@ class DetailViewController: UIViewController, ReachabilityDelegate {
         for item in toolBarItems {
             if item.tag == self.favouriteIconTag {
                 if self.pListWorker!.isFavourite(["url": (self.webView.request?.URLString)!]){
-                    item.image = UIImage(named: "liked.png")
+                    item.image = UIImage(named: "Hearts_Filled_50.png")
                 } else {
-                    item.image = UIImage(named: "like_it.png")
+                    item.image = UIImage(named: "Hearts_50.png")
                     
                 }
             }
         }
     }
     
-    
-    // MARK: - Delegation
-    
-    func noInternet() {
-        //we present a no internet viewcontroller.
+    func refreshWebView(){
+        //load the new set artivle into the webView
+        if var stringUrl = self.detailItem?.url {
+            stringUrl = stringUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
+            //we don't want to reload the webview if the url didn't change
+            if self.webView.request?.URLString.stringByReplacingOccurrencesOfString("?skin=page", withString: "") == stringUrl{
+                return
+            }
+            //the url is not the same anymore rebuild it with the skin and load it
+            let url : NSURL? = NSURL(string: stringUrl.stringByAppendingString("?skin=page"))
+            print("WebView load new URL: \(url?.URLString)")
+            self.webView.loadRequest(NSURLRequest(URL: url!))
+        } else {
+            let loadUrl = UserData.sharedInstance.lastVisitedString!.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
+            if self.webView.request?.URLString.stringByReplacingOccurrencesOfString("?skin=page", withString: "") == loadUrl {
+                return
+            }
+            let url : NSURL? = NSURL(string: loadUrl.stringByAppendingString("?skin=page"))
+            print("WebView load last URL: \(url?.URLString)")
+            self.webView.loadRequest(NSURLRequest(URL: url!))
+        }
     }
     
     
+    // MARK: - Delegation ReachablityHelper
     
+    func noInternet() {
+        
+        self.noInternetView = NSBundle.mainBundle().loadNibNamed("LoadingScreen", owner: self, options: nil)[0] as? LoadingScreen
+        self.noInternetView?.frame = self.view.frame
+        self.noInternetView?.frame.origin.y  -= 100
+        self.noInternetView?.tag = 99
+        self.hideLoadingScreen()
+        if let v = self.noInternetView {
+            
+            v.labelMessage.text = "Bitte überprüfen Sie ihre Internetverbindung."
+            self.view.addSubview(v)
+            v.bringSubviewToFront(self.view)
+            v.activityIndicator.startAnimating()
+            v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
+            v.viewLoadingHolder.layer.cornerRadius = 5
+            v.viewLoadingHolder.layer.masksToBounds = true;
+            print("added no Internet Notification")
+        }
+        self.performSelector("hideNoInternetView", withObject: self, afterDelay: 1)
+    }
     
+    func hideNoInternetView(){
+        print("hided no internet notification")
+        for v in self.view.subviews {
+            if v.tag == 99{
+                v.removeFromSuperview()
+            }
+        }
+    }
     
+    func InternetBack() {
+        hideNoInternetView()
+        self.refreshWebView()
+    }
 }
 
 //MARK: - UIScrollViewDelegate
 extension DetailViewController : UIScrollViewDelegate {
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView){
-        //TODO better handling for hiding the toolbars - fade in/out
-        //  self.topToolBar.hidden = true
-        //  self.bottomToolBar.hidden = true
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if self.scrollDirection == .ScrollDirectionUp{
+            hideToolBars()
+        } else if self.scrollDirection == .ScrollDirectionDown {
+            showToolBars()
+        }
         
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        //  self.topToolBar.hidden = false
-        //  self.bottomToolBar.hidden = false
+    func scrollViewDidScroll(scrollView: UIScrollView){
+        if (self.lastScrollOffset?.y > scrollView.contentOffset.y){
+            self.scrollDirection = ScrollDirection.ScrollDirectionDown
+           
+        }else if (self.lastScrollOffset?.y < scrollView.contentOffset.y) {
+            self.scrollDirection = ScrollDirection.ScrollDirectionUp
+        }
+        self.lastScrollOffset = scrollView.contentOffset;
     }
     
+    private func hideToolBars(){
+        if self.toolBarsHidden {
+            //do nothing leave it as it is
+        } else {
+            //hide it
+            self.constraintTopToolBar.constant = -44
+            self.constraintBottomToolBar.constant = -44
+            UIView.animateWithDuration(0.2, delay: 0, options: .CurveLinear, animations: {
+                self.view.layoutIfNeeded()
+                }, completion: {
+                    completed in
+                    self.topToolBar.alpha = 0.0
+                    self.toolBarsHidden = true
+            })
+        }
+    }
+    private func showToolBars(){
+        if self.toolBarsHidden{
+            //show them
+            self.constraintTopToolBar.constant = 0
+            self.constraintBottomToolBar.constant = 0
+            self.topToolBar.alpha = 1
+            UIView.animateWithDuration(0.2, delay: 0, options: .CurveLinear, animations: {
+                self.view.layoutIfNeeded()
+                }, completion: {
+                    completed in
+                    self.toolBarsHidden = false
+            })
+        } else {
+            //nothing leave it as it is
+        }
+    }
 }
 
 
 //MARK: - NetworkDelegate
 extension DetailViewController : NetworkDelegation {
     func onRequestFailed(){
-        self.loadingView?.activityIndicator.stopAnimating()
-        self.loadingView?.removeFromSuperview()
-        
+        self.loadingView?.labelMessage.text = "Ups! Der Austria-Forum Server ist zur Zeit nicht erreichbar"
+        self.performSelector("hideLoadingScreen", withObject: nil, afterDelay: 3)
+        self.webView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
     }
     func onRequestSuccess(){
-        let stringUrl = SearchHolder.sharedInstance.selectedItem!.url
-        let newUrl = stringUrl.stringByReplacingOccurrencesOfString("localhost", withString: "192.168.178.21")
-        let skinRaw = newUrl.stringByAppendingString("?skin=page")
-        let url : NSURL? = NSURL(string: skinRaw)
-        print("pageUrl = \(url?.URLString)")
-        self.webView.loadRequest(NSURLRequest(URL: url!))
+        if let _ = SearchHolder.sharedInstance.selectedItem {
+            self.detailItem = SearchHolder.sharedInstance.selectedItem
+            self.hideLoadingScreen()
+            
+        } else {
+            self.loadingView?.labelMessage.text = SearchHolder.sharedInstance.resultMessage
+            self.performSelector("hideLoadingScreen", withObject: nil, afterDelay: 3)
+            self.webView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
+        }
         
-        self.loadingView?.removeFromSuperview()
     }
 }
 
@@ -256,6 +434,10 @@ extension DetailViewController : UIWebViewDelegate {
         
         //present content which isnt from AF in Safari
         if request.URLString.containsString(BaseRequest.urlAFStatic) == false {
+            //if we have a embed youtube video within an iframe dont open in safari
+            if request.URLString.containsString("embed"){
+                return true
+            }
             UIApplication.sharedApplication().openURL(request.URL!)
             return false
         }
@@ -265,13 +447,13 @@ extension DetailViewController : UIWebViewDelegate {
             let pageUrl = request.URLString + "?skin=page"
             let url : NSURL? = NSURL(string: pageUrl)
             SearchHolder.sharedInstance.selectedItem = nil
-            SearchHolder.sharedInstance.lastUrl = request.URLString
+            SearchHolder.sharedInstance.currentUrl = request.URLString
             self.webView.loadRequest(NSURLRequest(URL: url!))
             return false
             
         } else if navigationType == .BackForward {
             SearchHolder.sharedInstance.selectedItem = nil
-            SearchHolder.sharedInstance.lastUrl = request.URLString
+            SearchHolder.sharedInstance.currentUrl = request.URLString
         }
         return true;
     }
@@ -280,9 +462,19 @@ extension DetailViewController : UIWebViewDelegate {
         
         let currentTitle : String? = self.loadCurrentTitleFromHTML()
         SearchHolder.sharedInstance.currentTitle = currentTitle
+        SearchHolder.sharedInstance.currentUrl = self.webView.request?.URLString
+        let currentCategory : String? = CategoriesListed.GetBeautyCategoryFromUrlString((self.webView.request?.URLString)!)
+        SearchHolder.sharedInstance.currentCategory = currentCategory
         self.progressBar.setProgress(1, animated: true)
         self.performSelector("hideProgressBar", withObject: nil, afterDelay: 0.5)
         self.updateFavouriteIcon()
+        UserData.sharedInstance.lastVisitedString = SearchHolder.sharedInstance.currentUrl
+        
+    }
+    
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?){
+        self.hideProgressBar()
+        
     }
     
     func hideProgressBar() {
@@ -293,8 +485,13 @@ extension DetailViewController : UIWebViewDelegate {
     func webViewDidStartLoad(webView: UIWebView) {
         self.progressBar.hidden = false
         self.progressBar.setProgress(0.5, animated: true)
-        
     }
+    
+    func hideLoadingScreen() {
+        self.loadingView?.activityIndicator.stopAnimating()
+        self.loadingView?.removeFromSuperview()
+    }
+    
     
     func loadCurrentTitleFromHTML () -> String? {
         let jsCMD =
@@ -307,7 +504,32 @@ extension DetailViewController : UIWebViewDelegate {
             //now call the function and get a return string
         "getHeaderTitle()"
         
-        return self.webView.stringByEvaluatingJavaScriptFromString(jsCMD)
+        
+        let jsCMD2 =
+        "function getWebBookInfo () { " +
+            "var values = document.getElementsByClassName(\"bread-title\");" +
+            "if (values.length == 2){" +
+            "return values[1].textContent;" +
+            "} else if (values.length == 1){" +
+            "return values[0].textContent;" +
+            "}" +
+            "}" +
+        "getWebBookInfo()"
+        
+        
+        
+        
+        let title  = self.webView.stringByEvaluatingJavaScriptFromString(jsCMD)!
+        let titleWebBook = self.webView.stringByEvaluatingJavaScriptFromString(jsCMD2)!
+        
+        if title.characters.count > 0 {
+            print("Returning title : \(title) count of title is \(title.characters.count)")
+            return title
+        } else {
+            
+            print("Returning title : \(titleWebBook)")
+            return titleWebBook
+        }
     }
     
 }

@@ -12,24 +12,27 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EIG-aN-PZy">
-                    <rect key="frame" x="212" y="260" width="177" height="80"/>
+                    <rect key="frame" x="215" y="270" width="171" height="60"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Wait ..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyv-5B-g9L">
-                            <rect key="frame" x="49" y="20" width="108" height="40"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Wait ..." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyv-5B-g9L">
+                            <rect key="frame" x="49" y="20" width="102" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="WwA-lq-IuT"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="rxU-Zz-JCT">
-                            <rect key="frame" x="20" y="20" width="20" height="40"/>
+                            <rect key="frame" x="20" y="20" width="20" height="20"/>
                         </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="rxU-Zz-JCT" firstAttribute="top" secondItem="EIG-aN-PZy" secondAttribute="top" constant="20" symbolic="YES" id="0ba-Ip-oFA"/>
                         <constraint firstItem="uyv-5B-g9L" firstAttribute="top" secondItem="EIG-aN-PZy" secondAttribute="top" constant="20" symbolic="YES" id="13a-sj-GVg"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="350" id="Rm0-wY-F1a"/>
                         <constraint firstItem="uyv-5B-g9L" firstAttribute="leading" secondItem="rxU-Zz-JCT" secondAttribute="trailing" constant="9" id="aM9-yN-jGo"/>
-                        <constraint firstAttribute="height" constant="80" id="cOu-Ry-1xH"/>
                         <constraint firstAttribute="bottom" secondItem="rxU-Zz-JCT" secondAttribute="bottom" constant="20" symbolic="YES" id="n2h-iT-9sr"/>
                         <constraint firstAttribute="trailing" secondItem="uyv-5B-g9L" secondAttribute="trailing" constant="20" symbolic="YES" id="oxO-C1-X6l"/>
                         <constraint firstAttribute="bottom" secondItem="uyv-5B-g9L" secondAttribute="bottom" constant="20" symbolic="YES" id="rY3-DH-xcV"/>

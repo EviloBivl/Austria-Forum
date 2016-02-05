@@ -43,11 +43,14 @@ class FindPagesRequest : BaseRequest {
     override func parseResponse(response: JSON) {
         print("Request : \(self.description)\nResponseData: \(response.description)")
         //do somthing usefull with the result
+        SearchHolder.sharedInstance.searchResults.removeAll()
         if let articles = response["result"]["list"].arrayObject {
             for object in articles {
                 if let page = object["map"] {
-                    let result: SearchResult = SearchResult(title: page!["title"] as! String, name: page!["page"]! as! String, url: page!["url"]! as! String, score: page!["score"] as! Int)
-                    SearchHolder.sharedInstance.searchResults.append(result)
+                    if page!["score"] as! Int > 1 {
+                        let result: SearchResult = SearchResult(title: page!["title"] as! String, name: page!["page"]! as! String, url: page!["url"]! as! String, score: page!["score"] as! Int)
+                        SearchHolder.sharedInstance.searchResults.append(result)
+                    }
                 }
             }
         }

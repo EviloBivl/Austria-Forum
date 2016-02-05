@@ -42,6 +42,8 @@ class BaseRequest : NSObject {
     
     func handleResponseError(errorFrom: String, article: [String:AnyObject]){
         print("Error from \(errorFrom) with ResultCode: \(article["ResultCode"] as? String) and Message: \(article["ResultDescription"])")
+        //set the article to nil to provide the error message and proper handling of relaoding on failed requests
+        SearchHolder.sharedInstance.selectedItem = nil
     }
     
 }

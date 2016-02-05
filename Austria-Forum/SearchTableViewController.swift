@@ -32,6 +32,7 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
     var categories : Array<String> = []
     var delegate: ArticleSelectionDelegate?
     let searchController = UISearchController(searchResultsController: nil)
+    var noInternetView : LoadingScreen?
     
     
     // MARK: - Override Lifecycle
@@ -75,19 +76,14 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         super.viewWillLayoutSubviews()
     }
     
-    
-    // MARK: - Custom Functions
-    
-    func startRequestTesting() {
-        
-        //    RequestManager.sharedInstance.getArticleFromMonthlyPool(self)
-        //    RequestManager.sharedInstance.getArticleFromMonthlyPool(self, month: "November", year: "2015")
-        //    RequestManager.sharedInstance.getRandomArticle()
-        RequestManager.sharedInstance.findPages(self, query: "Tesla", numberOfMaxResults: 20)
-        
-        
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        //Always set the current controller as the delegate to ReachabilityHelper
+        ReachabilityHelper.sharedInstance.delegate = self
     }
     
+    
+   
     // MARK: - UITableView
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -130,16 +126,22 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         dispatch_async(dispatch_get_main_queue(), {
             self.myData.removeAll()
             self.categories.removeAll()
+            
+            for result in SearchHolder.sharedInstance.searchResults {
+                self.categories.append(CategoriesListed.GetBeautyCategoryFromUrlString(result.url))
+                self.myData.append(result.title)
+            }
+            
             self.tableView.reloadData()
         })
         
-        
+        /*
         //add new results
         dispatch_async(dispatch_get_main_queue()) {
             
             
             for result in SearchHolder.sharedInstance.searchResults {
-                self.categories.append("\(result.score) - TODO: change af webservice to get Category")
+                self.categories.append(CategoriesListed.GetBeautyCategoryFromUrlString(result.url))
                 self.myData.append(result.title)
                 let indexPath = NSIndexPath(forRow: self.myData.count - 1, inSection: 0)
                 self.tableView.beginUpdates()
@@ -148,6 +150,7 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
              }
             
         }
+*/
         
     }
     
@@ -155,7 +158,7 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
     //MARK: - UISearchResultsUpdating
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         print("Searchbar update with text \(searchController.searchBar.text!)");
-        RequestManager.sharedInstance.findPages(self, query: searchController.searchBar.text!, numberOfMaxResults: 4)
+        RequestManager.sharedInstance.findPages(self, query: searchController.searchBar.text!, numberOfMaxResults: 50)
         
     }
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -173,7 +176,38 @@ extension SearchTableViewController
 : ReachabilityDelegate {
     func noInternet() {
         
+        self.noInternetView = NSBundle.mainBundle().loadNibNamed("LoadingScreen", owner: self, options: nil)[0] as? LoadingScreen
+        self.noInternetView?.frame = self.view.frame
+        self.noInternetView?.frame.origin.y  -= 100
+        self.noInternetView?.tag = 99
+      
+        if let v = self.noInternetView {
+            
+            v.labelMessage.text = "Bitte überprüfen Sie ihre Internetverbindung."
+            self.view.addSubview(v)
+            v.bringSubviewToFront(self.view)
+            v.activityIndicator.startAnimating()
+            v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
+            v.viewLoadingHolder.layer.cornerRadius = 5
+            v.viewLoadingHolder.layer.masksToBounds = true;
+            print("added no Internet Notification")
+        }
+        self.performSelector("hideNoInternetView", withObject: self, afterDelay: 1)
     }
+    
+    func hideNoInternetView(){
+        print("hided no internet notification")
+        for v in self.view.subviews {
+            if v.tag == 99{
+                v.removeFromSuperview()
+            }
+        }
+    }
+    
+    func InternetBack() {
+        hideNoInternetView()
+    }
+
 }
 
 

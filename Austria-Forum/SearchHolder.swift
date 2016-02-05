@@ -15,8 +15,9 @@ class SearchHolder {
     var searchResults : [SearchResult] = []
     var selectedItem : SearchResult?
     var currentTitle : String? 
-    var lastUrl: String?
-    
+    var currentUrl: String?
+    var resultMessage: String = "Leider liegt ein Fehler vor. Es wird daran gearbeitet."
+    var currentCategory : String? 
     
     private init(){}
     

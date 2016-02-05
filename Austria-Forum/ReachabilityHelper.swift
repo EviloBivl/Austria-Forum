@@ -60,6 +60,9 @@ class ReachabilityHelper {
                 print("Reachable via Cellular")
                 self.connection = .CELLULAR
             }
+            if let del = self.delegate {
+                del.InternetBack()
+            }
         } else {
             print("Not reachable")
             self.connection = .NO_INTERNET

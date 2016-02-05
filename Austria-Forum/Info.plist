@@ -42,7 +42,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Darf Austria-Forum ihren Standort benutzen um Ihnen Nachrichten zu schicken</string>
+	<string>Wenn Sie dies erlauben, kann Austria-Froum Ihnen Nachrichten schicken wenn Sie sich in der Nähe von einem Interessanten Ort befinden. Sie können diese Auswahl auch noch später treffen.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

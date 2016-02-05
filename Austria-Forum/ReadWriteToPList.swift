@@ -57,8 +57,6 @@ class ReadWriteToPList {
             //fileManager.removeItemAtPath(path, error: nil)
         }
         
-        let resultDictionary = NSMutableDictionary(contentsOfFile: path)
-        print("Loaded Favourites.plist file is --> \(resultDictionary?.description)")
         
         let myDict = NSDictionary(contentsOfFile: path)
         
@@ -72,7 +70,7 @@ class ReadWriteToPList {
                 if key as! String == "CountOfFavourites" {
                     self.countOfFavourites = val as! Int
                 }
-                print(" k: \(key) v: \(val)")
+               
             }
             //...
         } else {
