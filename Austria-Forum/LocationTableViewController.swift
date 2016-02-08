@@ -113,10 +113,11 @@ class LocationTableViewController: UITableViewController {
 
 extension LocationTableViewController : NetworkDelegation {
     
-    func onRequestFailed(){
+    func onRequestFailed(from: String?){
+        
         
     }
-    func onRequestSuccess(){
+    func onRequestSuccess(from: String?){
         print("Success in LocaitonTableView")
         print("appending to tableview Location")
         

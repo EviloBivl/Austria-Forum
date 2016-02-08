@@ -242,26 +242,30 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ba8-21-zvw">
-                                <rect key="frame" x="500" y="496" width="80" height="40"/>
+                            <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ICI-FP-GzO">
+                                <rect key="frame" x="442" y="518" width="150" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="e3u-JV-KtX"/>
-                                    <constraint firstAttribute="width" constant="80" id="nR9-tE-SaJ"/>
+                                    <constraint firstAttribute="width" constant="150" id="ZVu-AV-s8d"/>
+                                    <constraint firstAttribute="height" constant="30" id="wxn-h8-h6x"/>
                                 </constraints>
-                            </imageView>
+                                <state key="normal" title="Button" image="publicdomain.png"/>
+                                <connections>
+                                    <action selector="loadLicenseButton:" destination="k5S-Qj-ZYD" eventType="touchUpInside" id="q9x-tH-hbB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="veV-Go-xHX" secondAttribute="trailing" constant="-20" id="1E6-Yw-1Ga"/>
-                            <constraint firstItem="veV-Go-xHX" firstAttribute="top" secondItem="Ba8-21-zvw" secondAttribute="bottom" constant="20" id="26a-DS-onC"/>
                             <constraint firstItem="XEE-VP-jOh" firstAttribute="leading" secondItem="apR-DP-xfu" secondAttribute="leadingMargin" constant="-20" id="2XU-eh-Uc4"/>
                             <constraint firstItem="veV-Go-xHX" firstAttribute="leading" secondItem="apR-DP-xfu" secondAttribute="leadingMargin" constant="-20" id="4eJ-OG-RNL"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ba8-21-zvw" secondAttribute="trailing" id="6el-c8-2Kg"/>
                             <constraint firstItem="9qp-am-cE3" firstAttribute="top" secondItem="veV-Go-xHX" secondAttribute="bottom" id="9gQ-q1-FWP"/>
                             <constraint firstItem="VCq-jY-mbQ" firstAttribute="top" secondItem="XEE-VP-jOh" secondAttribute="bottom" id="BbS-4q-v2B"/>
                             <constraint firstItem="VCq-jY-mbQ" firstAttribute="leading" secondItem="apR-DP-xfu" secondAttribute="leadingMargin" constant="-20" id="HQI-63-FYi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ICI-FP-GzO" secondAttribute="trailing" constant="-12" id="RfI-sG-gWc"/>
                             <constraint firstItem="XEE-VP-jOh" firstAttribute="top" secondItem="kqQ-t2-hyg" secondAttribute="bottom" symbolic="YES" id="ZSB-g3-MTb"/>
                             <constraint firstItem="eIM-Zx-M2D" firstAttribute="top" secondItem="XEE-VP-jOh" secondAttribute="bottom" id="fAd-AA-tXe"/>
+                            <constraint firstItem="veV-Go-xHX" firstAttribute="top" secondItem="ICI-FP-GzO" secondAttribute="bottom" constant="8" id="fPo-T5-Kzw"/>
                             <constraint firstItem="veV-Go-xHX" firstAttribute="top" secondItem="VCq-jY-mbQ" secondAttribute="bottom" id="kDc-Pp-qoo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XEE-VP-jOh" secondAttribute="trailing" constant="-20" id="oC1-Ug-yBq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eIM-Zx-M2D" secondAttribute="trailing" constant="-20" id="tMB-PX-Eb6"/>
@@ -274,6 +278,7 @@
                         <outlet property="bottomToolBar" destination="veV-Go-xHX" id="epf-v5-6s0"/>
                         <outlet property="constraintBottomToolBar" destination="9gQ-q1-FWP" id="85j-v0-Sv2"/>
                         <outlet property="constraintTopToolBar" destination="ZSB-g3-MTb" id="Kpf-50-R2K"/>
+                        <outlet property="licenseTag" destination="ICI-FP-GzO" id="C1h-md-LzS"/>
                         <outlet property="progressBar" destination="eIM-Zx-M2D" id="Ktk-7F-WLv"/>
                         <outlet property="topToolBar" destination="XEE-VP-jOh" id="sbg-mI-4Qs"/>
                         <outlet property="webView" destination="VCq-jY-mbQ" id="BGm-wh-nr7"/>
@@ -294,7 +299,7 @@
                         <sections>
                             <tableViewSection headerTitle="Ortungseinstellungen" id="N7j-HE-f2d">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="optionCell" rowHeight="65" id="xnU-wf-t8I">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="optionCell" rowHeight="65" id="xnU-wf-t8I">
                                         <rect key="frame" x="0.0" y="124" width="600" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xnU-wf-t8I" id="MaG-zY-jlf">
@@ -549,6 +554,6 @@
         <image name="Search_50.png" width="35" height="35"/>
         <image name="Shuffle_50.png" width="35" height="35"/>
         <image name="Upload_50.png" width="35" height="35"/>
-        <image name="menu.png" width="32" height="32"/>
+        <image name="publicdomain.png" width="267" height="50"/>
     </resources>
 </document>

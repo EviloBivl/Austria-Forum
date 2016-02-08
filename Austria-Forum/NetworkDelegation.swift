@@ -13,13 +13,13 @@ import Foundation
 */
 protocol NetworkDelegation {
     
-    func onRequestFailed();
-    func onRequestSuccess();
+    func onRequestFailed(from: String?);
+    func onRequestSuccess(from: String?);
 
 }
 
 protocol PageInfoDelegate {
-    func onPageInfoSucces();
+    func onPageInfoSuccess();
     func onPageInfoFail();
 
 }

@@ -80,10 +80,12 @@ class RequestManager : NSObject {
             
             
             var id : Int = 0;
+            var reqName : String?
             
             if let body = jsonResp.request!.HTTPBody {
                 let json = JSON(data: body)
                 id = json["id"].intValue
+                reqName = json["method"].stringValue
                 print("====== REQUEST STARTED WITH ===== FOR ID:  \(id)    =====")
                 print(json.debugDescription)
 
@@ -94,7 +96,7 @@ class RequestManager : NSObject {
             if let error = jsonResp.result.error {
                 print(error.debugDescription)
                 if delegate is NetworkDelegation {
-                    (delegate as! NetworkDelegation).onRequestFailed()
+                    (delegate as! NetworkDelegation).onRequestFailed(nil)
                 }
             }
             
@@ -102,8 +104,10 @@ class RequestManager : NSObject {
                 if let value = jsonResp.result.value {
                     req.parseResponse(JSON(value))
                     if delegate is NetworkDelegation {
-                        (delegate as! NetworkDelegation).onRequestSuccess()
+                        (delegate as! NetworkDelegation).onRequestSuccess(reqName)
                     }
+                    
+                    
                 }
             } else if jsonResp.result.isFailure {
                 print("For now we are failing in the alamo closures - later send it to delegate")

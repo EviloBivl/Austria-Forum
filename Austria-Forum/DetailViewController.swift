@@ -30,6 +30,8 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
     @IBOutlet weak var constraintTopToolBar: NSLayoutConstraint!
     @IBOutlet weak var constraintBottomToolBar: NSLayoutConstraint!
     
+    @IBOutlet weak var licenseTag: UIButton!
+    
     var scrollDirection : ScrollDirection?
     var lastScrollOffset : CGPoint?
     var loadingView : LoadingScreen?
@@ -148,11 +150,25 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
     }
     
     // MARK: - IBActions
+    
+    
+    @IBAction func loadLicenseButton(sender: UIButton) {
+      
+        if let license = SearchHolder.sharedInstance.selectedItem?.license{
+            if let licenseUrl = LicenseManager.getLinkForLicense(license){
+                let url = NSURL(string: licenseUrl)!
+                 UIApplication.sharedApplication().openURL(url)
+            }
+        }
+    }
+    
+    
     @IBAction func loadRandomArticle(sender: AnyObject) {
         
         self.showLoadingScreen()
         RequestManager.sharedInstance.getRandomArticle(self, categories: [UserData.sharedInstance.categorySelected!])
     }
+    
     
     
     @IBAction func loadArticleFromMonthlyPool(sender: AnyObject) {
@@ -366,7 +382,7 @@ extension DetailViewController : UIScrollViewDelegate {
         } else if self.scrollDirection == .ScrollDirectionDown {
             showToolBars()
         }
-        
+        print("did end draging")
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView){
@@ -377,6 +393,7 @@ extension DetailViewController : UIScrollViewDelegate {
             self.scrollDirection = ScrollDirection.ScrollDirectionUp
         }
         self.lastScrollOffset = scrollView.contentOffset;
+        print("did scroll")
     }
     
     private func hideToolBars(){
@@ -416,12 +433,27 @@ extension DetailViewController : UIScrollViewDelegate {
 
 //MARK: - NetworkDelegate
 extension DetailViewController : NetworkDelegation {
-    func onRequestFailed(){
+    func onRequestFailed(from: String?){
         self.loadingView?.labelMessage.text = "Ups! Der Austria-Forum Server ist zur Zeit nicht erreichbar"
         self.performSelector("hideLoadingScreen", withObject: nil, afterDelay: 3)
         self.webView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
     }
-    func onRequestSuccess(){
+    func onRequestSuccess(from: String?){
+        
+        if let from = from {
+            if from == "search.getPageInfo"{
+                print("getPageInfo returned successfully");
+                //fake the license for now
+                //TODO really we need to get rid of it, just for testing
+                //SearchHolder.sharedInstance.selectedItem?.license = "CC0"
+                
+                //update the license tag when we are getting a succes from the server
+                self.updateLicenseTag()
+
+                return
+            }
+        }
+        
         if let _ = SearchHolder.sharedInstance.selectedItem {
             self.detailItem = SearchHolder.sharedInstance.selectedItem
             self.hideLoadingScreen()
@@ -432,17 +464,12 @@ extension DetailViewController : NetworkDelegation {
             self.webView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
         }
         
+        //fake the license for now
+        //TODO really we need to get rid of it, just for testing
+        //SearchHolder.sharedInstance.selectedItem?.license = "CC0"
         
-        
-    }
-}
-//MARK: onPageInfoDelegation
-extension DetailViewController : PageInfoDelegate {
-    func onPageInfoSucces(){
-        self.refreshWebView()
-    }
-    
-    func onPageInfoFail(){
+        //update the license tag when we are getting a succes from the server
+        self.updateLicenseTag()
     }
 }
 
@@ -493,6 +520,26 @@ extension DetailViewController : UIWebViewDelegate {
         self.updateFavouriteIcon()
         UserData.sharedInstance.lastVisitedString = SearchHolder.sharedInstance.currentUrl
         
+        // we leave getting info from the js as it is - but non the less we start the request if we made a mistake
+        // or perhaps the js > request so we are double "safe"
+        self.getPageInfoFromUrl(SearchHolder.sharedInstance.currentUrl!.stringByReplacingOccurrencesOfString("?skin=page", withString: ""))
+        
+        
+        self.showToolBars()
+        
+    }
+    
+    func updateLicenseTag(){
+        if let license = SearchHolder.sharedInstance.selectedItem?.license {
+            let licenseImageName = LicenseManager.getImageNameForLicense(license)
+            if let name = licenseImageName{
+                let image = UIImage(named: name)
+                self.licenseTag.setImage(image, forState: .Normal)
+                self.licenseTag.hidden = false;
+                return
+            }
+        }
+        self.licenseTag.hidden = true
     }
     
     func getPageInfoFromUrl(url: String){

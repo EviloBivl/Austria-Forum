@@ -57,6 +57,7 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         //Register Custom Cell
         let nib = UINib(nibName: "afTableCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "afTableCell")
+        self.tableView.rowHeight = 50
         
     }
     
@@ -114,12 +115,12 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
     
     //MARK: - Protocol Implementation
     
-    func onRequestFailed(){
+    func onRequestFailed(from: String?){
         
     }
     
     
-    func onRequestSuccess(){
+    func onRequestSuccess(from: String?){
         print("appending to tableview")
       
         //delete previous results

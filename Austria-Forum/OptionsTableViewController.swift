@@ -19,6 +19,8 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
     let categoryPickerOptions : [String] = ["Alle","AEIOU","Alltagskultur","AustriaWiki","Bilder & Videos","Community","Geography","Kunst & Kultur","Natur","Politik & Geschichte","Videos","Wissenschaft & Wirtschaft","Biographien","Essays", "Web Books", "force Fail"]
     let categoryPickerValues : [String] = ["ALL","AEIOU","Alltagskultur","AustriaWiki","Bilder_und_Videos","Community","Geography","Kunst_und_Kultur","Natur","Politik_und_Geschichte","Videos","Wissenschaft_und_Wirtschaft","Wissenssammlungen/Biographien","Wissenssammlungen/Essays", "Web_Books", "not_existing"]
     
+    //TODO delete me
+    var test : Bool = false
     
     @IBOutlet weak var switchAllowPushNotificationOutlet: UISwitch!
     @IBOutlet weak var switchAllowBackgroundLocation: UISwitch!
@@ -44,6 +46,9 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
         
         self.setSwitchOptionValues()
         self.setPickerSelection()
+        
+        self.tableView.allowsSelection = true
+        
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -158,7 +163,7 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
                 self.switchAllowSignificantChange.setOn(false, animated: true)
                 
             })
-
+            
             
         })
         let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.Default, handler: {
@@ -218,61 +223,80 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
     // MARK: - Table view data source
     /*
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    // #warning Incomplete implementation, return the number of sections
-    return 3
+        // #warning Incomplete implementation, return the number of sections
+        return 3
     }
-    */
-    /*
+    
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // #warning Incomplete implementation, return the number of rows
-    return 3
+        // #warning Incomplete implementation, return the number of rows
+        return 3
     }
-    */
     
-    /*
+    
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("optionCell", forIndexPath: indexPath)
-    
-    // Configure the cell...
-    cell.textLabel?.text = self.options[indexPath.row]
-    return cell
+        let cell = tableView.dequeueReusableCellWithIdentifier("optionCell", forIndexPath: indexPath)
+        
+        // Configure the cell...
+        cell.textLabel?.text = self.options[indexPath.row]
+        return cell
     }
     */
     
-    /*
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("we selceted \(indexPath.row)")
+     
+    }
+    
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 44
+        
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        print("will select rpw at \(indexPath.row)")
+        if (indexPath.row == 3){
+        
+        }
+        return indexPath
+    }
+    
+    
+    
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the specified item to be editable.
-    return true
+        // Return false if you do not want the specified item to be editable.
+        return true
     }
-    */
     
-    /*
+    
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        if editingStyle == .Delete {
+            // Delete the row from the data source
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
     }
-    }
-    */
     
-    /*
+    
+    
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
+        
     }
-    */
     
-    /*
+    
+    
     // Override to support conditional rearranging of the table view.
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the item to be re-orderable.
-    return true
+        // Return false if you do not want the item to be re-orderable.
+        return true
     }
-    */
+    
     
     /*
     // MARK: - Navigation

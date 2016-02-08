@@ -14,7 +14,7 @@ class SearchResult {
     private(set) var name : String = ""
     private(set) var url: String = ""
     private(set) var score : Int = 0;
-    private(set) var license : String?
+    var license : String?
     
     private init(){
         

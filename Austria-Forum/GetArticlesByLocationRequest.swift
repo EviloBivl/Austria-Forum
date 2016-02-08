@@ -60,10 +60,11 @@ class GetArticlesByLocationRequest: BaseRequest {
                         let endIndex = distString.characters.endIndex
                         if let index = decimalIndex {
                             if index.distanceTo(endIndex) >= 3{
-                            distString = distString.substringToIndex(index.advancedBy(3)) + " Km"
+                            distString = distString.substringToIndex(index.advancedBy(3))
                             }
                             distString = distString.stringByReplacingOccurrencesOfString(".", withString: ",")
                         }
+                        distString += " Km"
                     }
                     
                     let result : LocationArticleResult = LocationArticleResult(title: title, name: name, url: url, distanceStr: distString, distanceVal: distanceInt, license: license)

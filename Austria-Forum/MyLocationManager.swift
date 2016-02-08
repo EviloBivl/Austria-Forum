@@ -171,10 +171,10 @@ extension MyLocationManager : CLLocationManagerDelegate {
     Delagation for the location based Request.
  */
 extension MyLocationManager : NetworkDelegation {
-    func onRequestFailed(){
+    func onRequestFailed(from: String?){
         
     }
-    func onRequestSuccess(){
+    func onRequestSuccess(from: String?){
         
         
         let articles = LocationArticleHolder.sharedInstance.articles
