@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wSM-cl-X97">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wSM-cl-X97">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -44,22 +44,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="favouriteCell" textLabel="FOC-Zj-5uJ" detailTextLabel="Uho-ma-b4C" style="IBUITableViewCellStyleSubtitle" id="vaI-mq-XGH">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="favouriteCell" textLabel="FOC-Zj-5uJ" detailTextLabel="Uho-ma-b4C" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="vaI-mq-XGH">
+                                <rect key="frame" x="0.0" y="92" width="600" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vaI-mq-XGH" id="oi3-dL-CrA">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FOC-Zj-5uJ">
-                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
+                                            <rect key="frame" x="15" y="13" width="32" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Uho-ma-b4C">
-                                            <rect key="frame" x="15" y="25" width="41" height="14"/>
+                                            <rect key="frame" x="15" y="33" width="41" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -78,7 +78,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nB2-O1-Qh5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2343" y="-1379"/>
+            <point key="canvasLocation" x="-1741" y="-1385"/>
         </scene>
         <!--Artikel in der Nähe-->
         <scene sceneID="uQk-QN-qW6">
@@ -134,6 +134,7 @@
         <!--Navigation Controller-->
         <scene sceneID="uBG-L1-5dV">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zI9-7X-scY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="wSM-cl-X97" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ODC-vd-scf">
@@ -144,7 +145,6 @@
                         <segue destination="k5S-Qj-ZYD" kind="relationship" relationship="rootViewController" id="luB-fi-36G"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zI9-7X-scY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3057" y="-2955"/>
         </scene>
@@ -160,13 +160,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VCq-jY-mbQ">
-                                <rect key="frame" x="0.0" y="108" width="600" height="448"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                            </webView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="eIM-Zx-M2D">
                                 <rect key="frame" x="0.0" y="108" width="600" height="2"/>
                             </progressView>
+                            <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ICI-FP-GzO">
+                                <rect key="frame" x="442" y="518" width="150" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="ZVu-AV-s8d"/>
+                                    <constraint firstAttribute="height" constant="30" id="wxn-h8-h6x"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="publicdomain.png"/>
+                                <connections>
+                                    <action selector="loadLicenseButton:" destination="k5S-Qj-ZYD" eventType="touchUpInside" id="Qnf-wx-THZ"/>
+                                </connections>
+                            </button>
                             <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEE-VP-jOh">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                 <constraints>
@@ -181,13 +188,13 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="zvg-jy-R9a"/>
                                     <barButtonItem tag="3" image="Shuffle_50.png" id="BPu-Bn-7oW">
                                         <connections>
-                                            <action selector="loadRandomArticle:" destination="k5S-Qj-ZYD" id="oPh-hX-FFy"/>
+                                            <action selector="loadRandomArticle:" destination="k5S-Qj-ZYD" id="5JM-Lt-sU8"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="y20-R4-VBj"/>
-                                    <barButtonItem tag="3" image="Calendar_1_50.png" style="plain" id="V8s-rY-B4s">
+                                    <barButtonItem tag="3" image="Calendar_1_50.png" id="V8s-rY-B4s">
                                         <connections>
-                                            <action selector="loadArticleFromMonthlyPool:" destination="k5S-Qj-ZYD" id="fLq-Jv-4AV"/>
+                                            <action selector="loadArticleFromMonthlyPool:" destination="k5S-Qj-ZYD" id="M1z-Xn-i9U"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="P2C-RU-Lug"/>
@@ -197,7 +204,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="A70-oi-Tch"/>
-                                    <barButtonItem tag="3" image="Search_50.png" style="plain" id="gUl-qk-DD1">
+                                    <barButtonItem tag="3" image="Search_50.png" id="gUl-qk-DD1">
                                         <connections>
                                             <segue destination="ZwQ-rb-KNo" kind="show" identifier="toSearchArticle" id="tnR-8C-9OK"/>
                                         </connections>
@@ -213,19 +220,19 @@
                                 <items>
                                     <barButtonItem tag="4" image="Back_50.png" width="40" id="DAA-Wl-4qM">
                                         <connections>
-                                            <action selector="goBack" destination="VCq-jY-mbQ" id="Mi5-4O-lzj"/>
+                                            <action selector="back:" destination="k5S-Qj-ZYD" id="Ig8-9A-fVv"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="8QW-SC-n76"/>
                                     <barButtonItem tag="4" image="Forward_50.png" width="40" id="dGM-Rm-ibp">
                                         <connections>
-                                            <action selector="goForward" destination="VCq-jY-mbQ" id="JaY-NG-Rax"/>
+                                            <action selector="forward:" destination="k5S-Qj-ZYD" id="sWb-WY-Dfp"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hSN-DU-cKK"/>
                                     <barButtonItem tag="3" image="Hearts_50.png" id="KPc-Ae-vns">
                                         <connections>
-                                            <action selector="saveArticleAsFavourite:" destination="k5S-Qj-ZYD" id="QO5-wz-HiD"/>
+                                            <action selector="saveArticleAsFavourite:" destination="k5S-Qj-ZYD" id="5NY-Np-DJX"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Yht-FX-09I"/>
@@ -237,22 +244,11 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="87P-Eg-wFZ"/>
                                     <barButtonItem tag="4" image="Upload_50.png" id="YoC-Oc-Ol9">
                                         <connections>
-                                            <action selector="shareContentButton:" destination="k5S-Qj-ZYD" id="LFV-li-Rij"/>
+                                            <action selector="shareContentButton:" destination="k5S-Qj-ZYD" id="a9d-bp-LDM"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ICI-FP-GzO">
-                                <rect key="frame" x="442" y="518" width="150" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="ZVu-AV-s8d"/>
-                                    <constraint firstAttribute="height" constant="30" id="wxn-h8-h6x"/>
-                                </constraints>
-                                <state key="normal" title="Button" image="publicdomain.png"/>
-                                <connections>
-                                    <action selector="loadLicenseButton:" destination="k5S-Qj-ZYD" eventType="touchUpInside" id="q9x-tH-hbB"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -260,28 +256,23 @@
                             <constraint firstItem="XEE-VP-jOh" firstAttribute="leading" secondItem="apR-DP-xfu" secondAttribute="leadingMargin" constant="-20" id="2XU-eh-Uc4"/>
                             <constraint firstItem="veV-Go-xHX" firstAttribute="leading" secondItem="apR-DP-xfu" secondAttribute="leadingMargin" constant="-20" id="4eJ-OG-RNL"/>
                             <constraint firstItem="9qp-am-cE3" firstAttribute="top" secondItem="veV-Go-xHX" secondAttribute="bottom" id="9gQ-q1-FWP"/>
-                            <constraint firstItem="VCq-jY-mbQ" firstAttribute="top" secondItem="XEE-VP-jOh" secondAttribute="bottom" id="BbS-4q-v2B"/>
-                            <constraint firstItem="VCq-jY-mbQ" firstAttribute="leading" secondItem="apR-DP-xfu" secondAttribute="leadingMargin" constant="-20" id="HQI-63-FYi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ICI-FP-GzO" secondAttribute="trailing" constant="-12" id="RfI-sG-gWc"/>
                             <constraint firstItem="XEE-VP-jOh" firstAttribute="top" secondItem="kqQ-t2-hyg" secondAttribute="bottom" symbolic="YES" id="ZSB-g3-MTb"/>
                             <constraint firstItem="eIM-Zx-M2D" firstAttribute="top" secondItem="XEE-VP-jOh" secondAttribute="bottom" id="fAd-AA-tXe"/>
                             <constraint firstItem="veV-Go-xHX" firstAttribute="top" secondItem="ICI-FP-GzO" secondAttribute="bottom" constant="8" id="fPo-T5-Kzw"/>
-                            <constraint firstItem="veV-Go-xHX" firstAttribute="top" secondItem="VCq-jY-mbQ" secondAttribute="bottom" id="kDc-Pp-qoo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XEE-VP-jOh" secondAttribute="trailing" constant="-20" id="oC1-Ug-yBq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eIM-Zx-M2D" secondAttribute="trailing" constant="-20" id="tMB-PX-Eb6"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="VCq-jY-mbQ" secondAttribute="trailing" constant="-20" id="tmk-70-mit"/>
                             <constraint firstItem="eIM-Zx-M2D" firstAttribute="leading" secondItem="apR-DP-xfu" secondAttribute="leadingMargin" constant="-20" id="wH9-LX-shw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="C02-Yb-va9"/>
                     <connections>
-                        <outlet property="bottomToolBar" destination="veV-Go-xHX" id="epf-v5-6s0"/>
-                        <outlet property="constraintBottomToolBar" destination="9gQ-q1-FWP" id="85j-v0-Sv2"/>
-                        <outlet property="constraintTopToolBar" destination="ZSB-g3-MTb" id="Kpf-50-R2K"/>
-                        <outlet property="licenseTag" destination="ICI-FP-GzO" id="C1h-md-LzS"/>
-                        <outlet property="progressBar" destination="eIM-Zx-M2D" id="Ktk-7F-WLv"/>
-                        <outlet property="topToolBar" destination="XEE-VP-jOh" id="sbg-mI-4Qs"/>
-                        <outlet property="webView" destination="VCq-jY-mbQ" id="BGm-wh-nr7"/>
+                        <outlet property="bottomToolBar" destination="veV-Go-xHX" id="9gv-en-5Aq"/>
+                        <outlet property="constraintBottomToolBar" destination="9gQ-q1-FWP" id="xpi-4V-bEx"/>
+                        <outlet property="constraintTopToolBar" destination="ZSB-g3-MTb" id="Yje-bk-P2n"/>
+                        <outlet property="licenseTag" destination="ICI-FP-GzO" id="Bjb-8E-WOl"/>
+                        <outlet property="progressBar" destination="eIM-Zx-M2D" id="wMA-nt-6sk"/>
+                        <outlet property="topToolBar" destination="XEE-VP-jOh" id="zor-FZ-9mk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rxN-Cm-CTh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -540,7 +531,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3dc-YT-JvT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3057" y="-1390"/>
+            <point key="canvasLocation" x="-2419" y="-1385"/>
         </scene>
     </scenes>
     <resources>

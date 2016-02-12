@@ -34,7 +34,7 @@ class Austria_ForumTests: XCTestCase {
         
         
         UserData.sharedInstance.removeValueForKey(UserDefaultKeys.kLastMonthOfArticleOfTheMonthNSDate)
-        UserData.sharedInstance.removeValueForKey(UserDefaultKeys.kArticleOfTheMonthString)
+        UserData.sharedInstance.removeValueForKey(UserDefaultKeys.kArticleOfTheMonthSearchResult)
         
         if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload() {
             assert(true)
@@ -44,7 +44,7 @@ class Austria_ForumTests: XCTestCase {
         }
         let url : String = "http://a.glorious.url"
         UserData.sharedInstance.articleOfTheMonth = url
-        assert(UserData.sharedInstance.getValueForKey(UserDefaultKeys.kArticleOfTheMonthString) as! String == url, "saving articleOfTheMonth failed")
+        assert(UserData.sharedInstance.getValueForKey(UserDefaultKeys.kArticleOfTheMonthSearchResult) as! String == url, "saving articleOfTheMonth failed")
         
         if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload(){
             assertionFailure("checkIfArticleOfTheMonthNeedsReload returns true although values are set")

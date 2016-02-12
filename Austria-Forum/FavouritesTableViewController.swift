@@ -20,6 +20,8 @@ class FavouritesTableViewController: UITableViewController {
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        self.tableView.rowHeight = 60
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,9 +64,7 @@ class FavouritesTableViewController: UITableViewController {
             
             
         } else {
-            cell.textLabel?.text = "from signifcant change launch"
-            cell.detailTextLabel?.text = "right"
-            
+          //nothing 
         }
         
         

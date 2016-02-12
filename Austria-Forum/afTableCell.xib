@@ -3,34 +3,49 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="afTableCell" id="zUx-nI-P3c" customClass="afTableViewCell" customModule="Austria_Forum" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zUx-nI-P3c" id="X7g-1q-QQF">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="af_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="zGa-Bj-Cwi">
-                        <rect key="frame" x="8" y="4" width="42" height="42"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="af_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="zGa-Bj-Cwi">
+                        <rect key="frame" x="16" y="8" width="45" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="45" id="1Nj-bb-zaB"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Titel:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfo-P3-eKO">
-                        <rect key="frame" x="58" y="8" width="254" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Titel:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfo-P3-eKO">
+                        <rect key="frame" x="69" y="8" width="38" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Kategorie:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDk-II-TOo">
-                        <rect key="frame" x="58" y="28" width="251" height="13"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kategorie:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDk-II-TOo">
+                        <rect key="frame" x="69" y="35" width="67" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="leadingMargin" secondItem="zGa-Bj-Cwi" secondAttribute="leading" constant="-8" id="3RT-bs-mNR"/>
+                    <constraint firstAttribute="topMargin" secondItem="zGa-Bj-Cwi" secondAttribute="top" id="556-bD-1xK"/>
+                    <constraint firstItem="bDk-II-TOo" firstAttribute="leading" secondItem="zGa-Bj-Cwi" secondAttribute="trailing" constant="8" id="8gf-tw-3Xv"/>
+                    <constraint firstItem="Nfo-P3-eKO" firstAttribute="top" secondItem="zGa-Bj-Cwi" secondAttribute="top" id="Fv3-3R-c9T"/>
+                    <constraint firstItem="bDk-II-TOo" firstAttribute="bottom" secondItem="zGa-Bj-Cwi" secondAttribute="bottom" id="Shg-Ne-AMy"/>
+                    <constraint firstItem="Nfo-P3-eKO" firstAttribute="leading" secondItem="zGa-Bj-Cwi" secondAttribute="trailing" constant="8" id="WWi-nS-O8D"/>
+                </constraints>
             </tableViewCellContentView>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="zGa-Bj-Cwi" secondAttribute="bottom" constant="8" id="AqB-Zh-a6o"/>
+            </constraints>
             <connections>
                 <outlet property="lCategoryNameTVC" destination="bDk-II-TOo" id="VSs-VD-j2y"/>
                 <outlet property="lTitleNameTVC" destination="Nfo-P3-eKO" id="k2Z-tu-noh"/>

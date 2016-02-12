@@ -4,8 +4,8 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'Austria-Forum' do
-pod 'SwiftyJSON', '~> 2.3.1'
-pod 'Alamofire', '~> 3.0'
+pod 'SwiftyJSON'
+pod 'Alamofire'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Google/Analytics'
@@ -14,8 +14,8 @@ pod 'ReachabilitySwift', git: 'https://github.com/ashleymills/Reachability.swift
 end
 
 target 'Austria-ForumTests' do
-    pod 'SwiftyJSON', '~> 2.3.1'
-    pod 'Alamofire', '~> 3.0'
+    pod 'SwiftyJSON'
+    pod 'Alamofire'
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'Google/Analytics'
@@ -24,8 +24,8 @@ target 'Austria-ForumTests' do
 end
 
 target 'Austria-ForumUITests' do
-    pod 'SwiftyJSON', '~> 2.3.1'
-    pod 'Alamofire', '~> 3.0'
+    pod 'SwiftyJSON'
+    pod 'Alamofire'
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'Google/Analytics'

@@ -6,6 +6,7 @@
 //  Copyright © 2015 Paul Neuhold. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import WebKit
 
@@ -19,14 +20,14 @@ enum ScrollDirection : Int {
 }
 
 
-class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDelegate {
+class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDelegate, WKNavigationDelegate {
     
     // MARK: - Properties
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var topToolBar: UIToolbar!
     @IBOutlet weak var bottomToolBar: UIToolbar!
     @IBOutlet weak var progressBar: UIProgressView!
-
+    
     @IBOutlet weak var constraintTopToolBar: NSLayoutConstraint!
     @IBOutlet weak var constraintBottomToolBar: NSLayoutConstraint!
     
@@ -38,6 +39,7 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
     var pListWorker : ReadWriteToPList?
     var noInternetView : LoadingScreen?
     let favouriteIconTag = 3
+    var webKitView: WKWebView
     
     var toolBarsHidden : Bool = false
     
@@ -45,6 +47,11 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
         didSet {
             self.refreshWebView()
         }
+    }
+    
+   required init?(coder aDecoder: NSCoder) {
+        self.webKitView = WKWebView(frame: CGRectZero)
+        super.init(coder: aDecoder)
     }
     
     // MARK: - Lifecycle
@@ -57,14 +64,132 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
         
         //init the pListWorker to write to plist files
         self.pListWorker = ReadWriteToPList()
-        
+
         NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil, queue: NSOperationQueue.mainQueue(), usingBlock: {
             notification in
             print("recieved UIApplicationBecomeActive Notification")
             self.setDetailItem()
         })
+        
     }
     
+    private func pleaseSetupUpThisWebKitForMeDearXCodeAndFuckThisStupidLeakyWebViewShit(){
+        
+        self.view.insertSubview(webKitView, belowSubview: self.progressBar)
+        webKitView.translatesAutoresizingMaskIntoConstraints = false
+    
+        let topVertical = NSLayoutConstraint(item: webKitView, attribute: .Top, relatedBy: .Equal, toItem: self.topToolBar, attribute: .Bottom, multiplier: 1, constant: 0)
+        let bottomVertical = NSLayoutConstraint(item: webKitView, attribute: .Bottom, relatedBy: .Equal, toItem: self.bottomToolBar, attribute: .Top, multiplier: 1, constant: 0)
+        let leadingSpace = NSLayoutConstraint(item: webKitView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .LeadingMargin, multiplier: 1, constant: -19)
+        let trailingSpace = NSLayoutConstraint(item: webKitView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .TrailingMargin, multiplier: 1, constant: 19)
+        
+        view.addConstraints([topVertical, bottomVertical,leadingSpace,trailingSpace])
+        
+        
+        self.webKitView.navigationDelegate = self
+        self.webKitView.scrollView.delegate = self
+       
+        webKitView.addObserver(self, forKeyPath: "estimatedProgress", options: .New, context: nil)
+        
+    }
+    
+    
+    //MARK : WEBKIT NAVIGATION DELEGATE =======
+    
+    
+    func webView(webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation, withError error: NSError) {
+        var msg : String = ""
+        if let url = webView.URL?.URLString {
+            msg = error.localizedDescription + url
+        } else{
+            msg = error.localizedDescription
+        }
+        let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
+    }
+  
+ 
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if (keyPath == "estimatedProgress") {
+            print("progriss : \(webKitView.estimatedProgress)")
+            let finishedLoading = webKitView.estimatedProgress == 1
+            if finishedLoading {
+                self.performSelector("hideProgressBar", withObject: nil, afterDelay: 0.5)
+            } else {
+                self.progressBar.hidden = false
+            }
+            progressBar.setProgress(Float(webKitView.estimatedProgress), animated: true)
+            
+        }
+    }
+    //===
+    //should start LoadWithRequest 
+    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void){
+       
+        print("url of webview: \(webView.URL?.absoluteString)")
+        print("url of property:\(self.webKitView.URL?.absoluteString)")
+    
+        print("action of navigation \(navigationAction.navigationType.rawValue)")
+        print("request of navigation \(navigationAction.request.URLString)")
+        
+        
+        
+        if !navigationAction.request.URLString.containsString("austria-forum.org") && !navigationAction.request.URLString.containsString("embed"){
+            UIApplication.sharedApplication().openURL(navigationAction.request.URL!)
+            decisionHandler(WKNavigationActionPolicy.Cancel)
+        } else {
+            if navigationAction.request.URLString.containsString("embed"){
+                decisionHandler(WKNavigationActionPolicy.Allow)
+            }
+            
+            else if !navigationAction.request.URLString.containsString("?skin=page"){
+                self.webKitView.loadRequest(NSURLRequest(URL: NSURL(string: navigationAction.request.URLString.stringByAppendingString("?skin=page"))!))
+                decisionHandler(WKNavigationActionPolicy.Cancel)
+            } else {
+                decisionHandler(WKNavigationActionPolicy.Allow)
+            }
+        }
+    }
+
+    
+    
+    
+    
+    //webViewDidFinishLoad
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation){
+        print("did finish navigation")
+       // if !isCorrectSkinnedPage(){
+      //      self.refreshWebView()
+       //     return
+       // }
+        
+        let currentTitle : String? = self.loadCurrentTitleFromHTML()
+        SearchHolder.sharedInstance.currentTitle = currentTitle
+        SearchHolder.sharedInstance.currentUrl = self.webKitView.URL?.URLString
+        let currentCategory : String? = CategoriesListed.GetBeautyCategoryFromUrlString((self.webKitView.URL?.URLString)!)
+        SearchHolder.sharedInstance.currentCategory = currentCategory
+        
+        self.updateFavouriteIcon()
+        UserData.sharedInstance.lastVisitedString = SearchHolder.sharedInstance.currentUrl
+        
+        // we leave getting info from the js as it is - but non the less we start the request if we made a mistake
+        // or perhaps the js > request so we are double "safe"
+        self.getPageInfoFromUrl(SearchHolder.sharedInstance.currentUrl!.stringByReplacingOccurrencesOfString("?skin=page", withString: ""))
+        
+        
+        self.checkIfScrollViewIsScrollableToToggleToolbars()
+        
+        
+        
+    }
+    
+    
+    
+    
+    //
+    
+    //==========
     
     
     func setDetailItem(){
@@ -78,6 +203,7 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
         ReachabilityHelper.sharedInstance.delegate = self
         
         self.detailItem = SearchHolder.sharedInstance.selectedItem
+        self.checkIfScrollViewIsScrollableToToggleToolbars()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -98,13 +224,18 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
         
         //resize the loadingscreen frame to the current viewcontroller after layout is defined
         self.loadingView?.frame = self.view.frame
+       
         
     }
     
     //MARK: - Custom Functions
     private func configureViews(){
         //webview
-        self.configureWebView()
+        //self.configureWebView()
+        //now replaced be set up webkit
+        self.pleaseSetupUpThisWebKitForMeDearXCodeAndFuckThisStupidLeakyWebViewShit()
+
+        
         
         
         //toolbars
@@ -122,17 +253,12 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
         
         //hide progressbar if not needed
         self.progressBar.hidden = true
+        self.progressBar.progress = 0
+        self.progressBar.progressViewStyle = UIProgressViewStyle.Bar
         
+        //hide license tag because we don't have information about license for now
+        self.licenseTag.hidden = true
         
-        
-    }
-    
-    func imageWithImage(image:UIImage, scaledToSize newSize: CGSize) -> UIImage{
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
-        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
-        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage
     }
     
     private func configureWebView(){
@@ -146,33 +272,37 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
     }
     
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-            return .Top
+        return .Top
     }
     
     // MARK: - IBActions
-    
-    
     @IBAction func loadLicenseButton(sender: UIButton) {
-      
+        
         if let license = SearchHolder.sharedInstance.selectedItem?.license{
             if let licenseUrl = LicenseManager.getLinkForLicense(license){
                 let url = NSURL(string: licenseUrl)!
-                 UIApplication.sharedApplication().openURL(url)
+                UIApplication.sharedApplication().openURL(url)
             }
         }
     }
-    
-    
+   
+    @IBAction func back(sender: UIBarButtonItem) {
+        if self.webKitView.canGoBack{
+            self.webKitView.goBack()
+        }
+    }
+    @IBAction func forward(sender: UIBarButtonItem) {
+        if self.webKitView.canGoForward {
+            self.webKitView.goForward()
+        }
+    }
+
     @IBAction func loadRandomArticle(sender: AnyObject) {
-        
         self.showLoadingScreen()
         RequestManager.sharedInstance.getRandomArticle(self, categories: [UserData.sharedInstance.categorySelected!])
     }
     
-    
-    
     @IBAction func loadArticleFromMonthlyPool(sender: AnyObject) {
-        
         if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload() {
             self.showLoadingScreen()
             RequestManager.sharedInstance.getArticleFromMonthlyPool(self, month: "notset", year: "notset")
@@ -186,18 +316,17 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
     }
     
     @IBAction func saveArticleAsFavourite(sender: AnyObject) {
-        
         var  activeArticle : [String:String] = [:]
+        var sr = SearchHolder.sharedInstance.selectedItem
         if let activeArticleInWebView = SearchHolder.sharedInstance.selectedItem, let currentCategory = SearchHolder.sharedInstance.currentCategory {
             activeArticle["title"] = activeArticleInWebView.title
             activeArticle["url"] = activeArticleInWebView.url.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
             activeArticle["category"] = currentCategory
-        } else if let activeTitle = SearchHolder.sharedInstance.currentTitle, let activeUrl = self.webView.request?.URLString , let currentCategory = SearchHolder.sharedInstance.currentCategory {
+        } else if let activeTitle = SearchHolder.sharedInstance.currentTitle, let activeUrl = self.webKitView.URL?.URLString , let currentCategory = SearchHolder.sharedInstance.currentCategory {
             activeArticle["title"] = activeTitle
             activeArticle["url"] = activeUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
             activeArticle["category"] = currentCategory
         }
-        
         
         if !activeArticle.isEmpty {
             pListWorker?.loadFavourites()
@@ -211,22 +340,23 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
         } else {
             print("No Article Loaded for saving as Favourite")
         }
-        
     }
     
     @IBAction func shareContentButton(sender: UIBarButtonItem) {
-        
-        if let currentAfUrl = self.webView.request?.URLString {
-            let stringUrl = currentAfUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
-            let url = NSURL(string: stringUrl)
-            let activityVC = UIActivityViewController(activityItems: [url!], applicationActivities: nil)
-            self.presentViewController(activityVC, animated: true, completion: nil)
+        if let currentAfUrl = self.webKitView.URL?.URLString {
+            if currentAfUrl != "" {
+                let stringUrl = currentAfUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
+                let url = NSURL(string: stringUrl)
+                let activityVC = UIActivityViewController(activityItems: [url!], applicationActivities: nil)
+                
+                //support ipads
+                if activityVC.respondsToSelector("popoverPresentationController"){
+                    activityVC.popoverPresentationController?.barButtonItem = sender
+                }
+                self.presentViewController(activityVC, animated: true, completion: nil)
+            }
         }
-        
-        
-        
     }
-    
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         
@@ -301,7 +431,7 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
         let toolBarItems = self.bottomToolBar.items!
         for item in toolBarItems {
             if item.tag == self.favouriteIconTag {
-                if self.pListWorker!.isFavourite(["url": (self.webView.request?.URLString)!]){
+                if self.pListWorker!.isFavourite(["url": (self.webKitView.URL?.URLString)!]){
                     item.image = UIImage(named: "Hearts_Filled_50.png")
                 } else {
                     item.image = UIImage(named: "Hearts_50.png")
@@ -316,21 +446,21 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
         if var stringUrl = self.detailItem?.url {
             stringUrl = stringUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
             //we don't want to reload the webview if the url didn't change
-            if self.webView.request?.URLString.stringByReplacingOccurrencesOfString("?skin=page", withString: "") == stringUrl{
+            if self.webKitView.URL?.URLString.stringByReplacingOccurrencesOfString("?skin=page", withString: "") == stringUrl{
                 return
             }
             //the url is not the same anymore rebuild it with the skin and load it
             let url : NSURL? = NSURL(string: stringUrl.stringByAppendingString("?skin=page"))
-            print("WebView load new URL: \(url?.URLString)")
-            self.webView.loadRequest(NSURLRequest(URL: url!))
+            print("\(__FUNCTION__) loading \(url?.URLString)")
+            self.webKitView.loadRequest(NSURLRequest(URL: url!))
         } else {
             let loadUrl = UserData.sharedInstance.lastVisitedString!.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
-            if self.webView.request?.URLString.stringByReplacingOccurrencesOfString("?skin=page", withString: "") == loadUrl {
+            if self.webKitView.URL?.URLString.stringByReplacingOccurrencesOfString("?skin=page", withString: "") == loadUrl {
                 return
             }
             let url : NSURL? = NSURL(string: loadUrl.stringByAppendingString("?skin=page"))
-            print("WebView load last URL: \(url?.URLString)")
-            self.webView.loadRequest(NSURLRequest(URL: url!))
+            print("\(__FUNCTION__) loading \(url?.URLString)")
+            self.webKitView.loadRequest(NSURLRequest(URL: url!))
         }
     }
     
@@ -369,7 +499,7 @@ class DetailViewController: UIViewController, ReachabilityDelegate, UIToolbarDel
     
     func InternetBack() {
         hideNoInternetView()
-        self.refreshWebView()
+      self.refreshWebView()
     }
 }
 
@@ -382,18 +512,17 @@ extension DetailViewController : UIScrollViewDelegate {
         } else if self.scrollDirection == .ScrollDirectionDown {
             showToolBars()
         }
-        print("did end draging")
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView){
         if (self.lastScrollOffset?.y > scrollView.contentOffset.y){
             self.scrollDirection = ScrollDirection.ScrollDirectionDown
-           
+            
         }else if (self.lastScrollOffset?.y < scrollView.contentOffset.y) {
             self.scrollDirection = ScrollDirection.ScrollDirectionUp
         }
         self.lastScrollOffset = scrollView.contentOffset;
-        print("did scroll")
+        
     }
     
     private func hideToolBars(){
@@ -409,6 +538,8 @@ extension DetailViewController : UIScrollViewDelegate {
                     completed in
                     self.topToolBar.alpha = 0.0
                     self.toolBarsHidden = true
+                    print("far to early")
+                    self.checkIfScrollViewIsScrollableToToggleToolbars()
             })
         }
     }
@@ -428,6 +559,14 @@ extension DetailViewController : UIScrollViewDelegate {
             //nothing leave it as it is
         }
     }
+    
+    private func checkIfScrollViewIsScrollableToToggleToolbars (){
+        let isScrollViewScrollable = self.webKitView.scrollView.contentSize.height >= self.view.bounds.height
+        if !isScrollViewScrollable {
+         //   self.showToolBars()
+        }
+        
+    }
 }
 
 
@@ -436,7 +575,8 @@ extension DetailViewController : NetworkDelegation {
     func onRequestFailed(from: String?){
         self.loadingView?.labelMessage.text = "Ups! Der Austria-Forum Server ist zur Zeit nicht erreichbar"
         self.performSelector("hideLoadingScreen", withObject: nil, afterDelay: 3)
-        self.webView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
+        print("\(__FUNCTION__) loading \(UserData.sharedInstance.lastVisitedString!)")
+        self.webKitView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
     }
     func onRequestSuccess(from: String?){
         
@@ -449,7 +589,7 @@ extension DetailViewController : NetworkDelegation {
                 
                 //update the license tag when we are getting a succes from the server
                 self.updateLicenseTag()
-
+                
                 return
             }
         }
@@ -461,7 +601,8 @@ extension DetailViewController : NetworkDelegation {
         } else {
             self.loadingView?.labelMessage.text = SearchHolder.sharedInstance.resultMessage
             self.performSelector("hideLoadingScreen", withObject: nil, afterDelay: 3)
-            self.webView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
+            print("\(__FUNCTION__) loading \(UserData.sharedInstance.lastVisitedString!)")
+            self.webKitView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
         }
         
         //fake the license for now
@@ -492,24 +633,39 @@ extension DetailViewController : UIWebViewDelegate {
             return false
         }
         
-        if navigationType == UIWebViewNavigationType.LinkClicked {
-            
-            let pageUrl = request.URLString + "?skin=page"
-            let url : NSURL? = NSURL(string: pageUrl)
+        
+        
+        if navigationType == .BackForward {
             SearchHolder.sharedInstance.selectedItem = nil
             SearchHolder.sharedInstance.currentUrl = request.URLString
-            self.webView.loadRequest(NSURLRequest(URL: url!))
-            return false
+        } else {
             
-        } else if navigationType == .BackForward {
-            SearchHolder.sharedInstance.selectedItem = nil
-            SearchHolder.sharedInstance.currentUrl = request.URLString
+            var pageUrl = request.URLString
+            if !pageUrl.containsString("?skin=page"){
+//                pageUrl = request.URLString.stringByReplacingOccurrencesOfString("#?skin=page", withString: "")
+//                pageUrl = request.URLString.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
+                SearchHolder.sharedInstance.selectedItem = nil
+                SearchHolder.sharedInstance.currentUrl = pageUrl
+                pageUrl += "?skin=page"
+                let url : NSURL? = NSURL(string: pageUrl)
+                self.webView.loadRequest(NSURLRequest(URL: url!))
+                return false
+            } else if pageUrl.containsString("redirect"){
+                let url : NSURL? = NSURL(string: UserData.sharedInstance.lastVisitedString!)
+                self.webView.loadRequest(NSURLRequest(URL: url!))
+                return false
+            }
         }
+        
         return true;
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
         
+        if !isCorrectSkinnedPage(){
+            self.refreshWebView()
+            return
+        }
         let currentTitle : String? = self.loadCurrentTitleFromHTML()
         SearchHolder.sharedInstance.currentTitle = currentTitle
         SearchHolder.sharedInstance.currentUrl = self.webView.request?.URLString
@@ -525,8 +681,17 @@ extension DetailViewController : UIWebViewDelegate {
         self.getPageInfoFromUrl(SearchHolder.sharedInstance.currentUrl!.stringByReplacingOccurrencesOfString("?skin=page", withString: ""))
         
         
-        self.showToolBars()
+        self.checkIfScrollViewIsScrollableToToggleToolbars()
         
+    }
+    
+    private func isCorrectSkinnedPage() -> Bool{
+        if let currentUrl = (self.webKitView.URL?.URLString){
+            if currentUrl.containsString("?skin=page"){
+                return true
+            }
+        }
+        return false
     }
     
     func updateLicenseTag(){
@@ -549,6 +714,9 @@ extension DetailViewController : UIWebViewDelegate {
     func webView(webView: UIWebView, didFailLoadWithError error: NSError?){
         self.hideProgressBar()
         
+        
+        print("Der gewünschte Inhalt kann in der App leider nicht wiedergegeben werden")
+        
     }
     
     func hideProgressBar() {
@@ -568,6 +736,7 @@ extension DetailViewController : UIWebViewDelegate {
     
     
     func loadCurrentTitleFromHTML () -> String? {
+        return ""
         let jsCMD =
         //declare a function
         "function getHeaderTitle () { var values = document.getElementsBySelector(\"h1\");" +
@@ -593,11 +762,22 @@ extension DetailViewController : UIWebViewDelegate {
         
         
         
-        let title  = self.webView.stringByEvaluatingJavaScriptFromString(jsCMD)!
-        let titleWebBook = self.webView.stringByEvaluatingJavaScriptFromString(jsCMD2)!
+        var title : String?
+        var titleWebBook : String?
         
-        if title.characters.count > 0 {
-            print("Returning title : \(title) count of title is \(title.characters.count)")
+        
+        self.webKitView.evaluateJavaScript(jsCMD, completionHandler: {
+            (result, error) -> Void in
+            title = result as? String
+        })
+        
+        self.webKitView.evaluateJavaScript(jsCMD2, completionHandler: {
+            (result, error) -> Void in
+            titleWebBook = result as? String
+        })
+        
+        if title!.characters.count > 0 {
+            print("Returning title : \(title) count of title is \(title!.characters.count)")
             return title
         } else {
             

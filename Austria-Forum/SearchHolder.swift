@@ -24,7 +24,7 @@ class SearchHolder {
         }
     }
     var currentTitle : String? 
-    var currentUrl: String?
+    var currentUrl: String? 
     var resultMessage: String = "Leider liegt ein Fehler vor. Es wird daran gearbeitet."
     var currentCategory : String?
     

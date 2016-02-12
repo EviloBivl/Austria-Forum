@@ -411,8 +411,8 @@
 			children = (
 				5C9B18FE1C197A2E0076B648 /* LaunchScreen.storyboard */,
 				5CCAECEB1C23204100713BB7 /* Main.storyboard */,
-				5C4A6AAF1C3AB8C30010499B /* afTableCell.xib */,
 				5C4A6ADB1C3E63D20010499B /* LoadingScreen.xib */,
+				5C4A6AAF1C3AB8C30010499B /* afTableCell.xib */,
 				5C4EA63F1C52831600E5B758 /* afLocationTableViewCell.xib */,
 			);
 			name = "UI Files";
@@ -565,7 +565,7 @@
 				TargetAttributes = {
 					5C9B18EC1C197A2E0076B648 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 4V6T7BCGGR;
+						DevelopmentTeam = K4XFJA86D8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
