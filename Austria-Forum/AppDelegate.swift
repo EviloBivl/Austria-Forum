@@ -121,9 +121,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func logUser() {
         // TODO: Use the current user's information
         // You can call any combination of these three methods
-        Crashlytics.sharedInstance().setUserEmail("user@fabric.io")
-        Crashlytics.sharedInstance().setUserIdentifier("12345")
-        Crashlytics.sharedInstance().setUserName("Test User")
+        let name = UIDevice.currentDevice().name
+        let model = UIDevice.currentDevice().model
+        let iosVersion = UIDevice.currentDevice().systemVersion
+        let user = "\(name) - \(model) - iOS:\(iosVersion)"
+        
+        Crashlytics.sharedInstance().setUserName(user)
     }
     
     

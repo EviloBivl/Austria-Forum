@@ -6,6 +6,7 @@ use_frameworks!
 target 'Austria-Forum' do
 pod 'SwiftyJSON'
 pod 'Alamofire'
+pod 'Answers'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Google/Analytics'

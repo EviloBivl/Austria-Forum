@@ -19,6 +19,20 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
     let categoryPickerOptions : [String] = ["Alle","AEIOU","Alltagskultur","AustriaWiki","Bilder & Videos","Community","Geography","Kunst & Kultur","Natur","Politik & Geschichte","Videos","Wissenschaft & Wirtschaft","Biographien","Essays", "Web Books", "force Fail"]
     let categoryPickerValues : [String] = ["ALL","AEIOU","Alltagskultur","AustriaWiki","Bilder_und_Videos","Community","Geography","Kunst_und_Kultur","Natur","Politik_und_Geschichte","Videos","Wissenschaft_und_Wirtschaft","Wissenssammlungen/Biographien","Wissenssammlungen/Essays", "Web_Books", "not_existing"]
     
+    
+    let sectionTitlePretty : [String] = ["Ortungseinstellungen", "Zufalls Artikel Einstellungen"]
+    
+    let rowTitlePrettySectionOne : [String] = ["Erlaube Push Notifications", "Lokalisierung im Hintergrund", "Lokalisierung auch wenn Austria-Forum geschlossen ist", "Push Notification nicht öfters als alle..." , "Lokalisierung nicht öfters als alle ..."]
+    
+    let rowTitlePrettySectionTwo : [String] = ["Suche in allen Kategorien" , "Wähle zu durchsuchende"]
+    
+    let isRowExpandableSectionOne : [Bool] = [false, false, false, true, true]
+    var rowIsExpandedSectionOne : [Bool] = [false, false, false, false, false]
+    
+    
+    
+    
+    
     //TODO delete me
     var test : Bool = false
     
@@ -223,42 +237,56 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
     // MARK: - Table view data source
     /*
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 3
+    // #warning Incomplete implementation, return the number of sections
+    return 3
     }
     
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 3
+    // #warning Incomplete implementation, return the number of rows
+    return 3
     }
     
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("optionCell", forIndexPath: indexPath)
-        
-        // Configure the cell...
-        cell.textLabel?.text = self.options[indexPath.row]
-        return cell
+    let cell = tableView.dequeueReusableCellWithIdentifier("optionCell", forIndexPath: indexPath)
+    
+    // Configure the cell...
+    cell.textLabel?.text = self.options[indexPath.row]
+    return cell
     }
     */
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("we selceted \(indexPath.row)")
-     
-    }
-    
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44
+        
+        switch indexPath.section {
+        case 0:
+            if isRowExpandableSectionOne[indexPath.row] {
+                rowIsExpandedSectionOne[indexPath.row] = !rowIsExpandedSectionOne[indexPath.row]
+            }
+            break
+        case 1:
+            //for multiple category selection we start another tableview
+            break
+        default:
+            break
+        }
+        
+        
+        tableView.beginUpdates()
+        tableView.endUpdates()
         
     }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+    
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        print("will select rpw at \(indexPath.row)")
-        if (indexPath.row == 3){
         
-        }
         return indexPath
     }
     
@@ -296,6 +324,7 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
         // Return false if you do not want the item to be re-orderable.
         return true
     }
+    
     
     
     /*

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import WebKit
+import Crashlytics
 
 enum ScrollDirection : Int {
     case ScrollDirectionNone = 0
@@ -54,6 +55,7 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
     required init?(coder aDecoder: NSCoder) {
         self.webKitView = WKWebView(frame: CGRectZero)
         super.init(coder: aDecoder)
+  
     }
     
     override func viewDidLoad() {
@@ -175,9 +177,17 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
         }
     }
     
+    private func logToAnswers(message: String, customAttributes: [String : AnyObject]?){
+        Answers.logCustomEventWithName(message, customAttributes: customAttributes)
+    }
+    
     
     // MARK: - IBActions
     @IBAction func loadLicenseButton(sender: UIButton) {
+        
+        // TODO: Track the user action that is important for you.
+        self.logToAnswers("License Floating Button clicked", customAttributes: nil)
+        
         
         if let license = SearchHolder.sharedInstance.selectedItem?.license{
             if let licenseUrl = LicenseManager.getLinkForLicense(license){
@@ -188,11 +198,15 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
     }
     
     @IBAction func loadRandomArticle(sender: AnyObject) {
+        self.logToAnswers("Random Article Requested", customAttributes: nil)
+        
         self.showLoadingScreen()
         RequestManager.sharedInstance.getRandomArticle(self, categories: [UserData.sharedInstance.categorySelected!])
     }
     
     @IBAction func loadArticleFromMonthlyPool(sender: AnyObject) {
+        self.logToAnswers("Monthly Article Requested", customAttributes: nil)
+        
         if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload() {
             self.showLoadingScreen()
             RequestManager.sharedInstance.getArticleFromMonthlyPool(self, month: "notset", year: "notset")
@@ -206,20 +220,31 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
     }
     
     @IBAction func saveArticleAsFavourite(sender: AnyObject) {
+        if let sr = SearchHolder.sharedInstance.selectedItem {
+            self.logToAnswers("Article Saved as Favourite", customAttributes: ["Article" : sr.title , "Article Url" : sr.url])
+        }
          self.saveCurrentArticleAsFavourite()
     }
     
     @IBAction func shareContentButton(sender: UIBarButtonItem) {
+        if let sr = SearchHolder.sharedInstance.selectedItem {
+             self.logToAnswers("Article Saved as Favourite", customAttributes: ["Article" : sr.title , "Article Url" : sr.url])
+        }
+        
         if let currentAfUrl = self.webKitView.URL?.URLString {
             if currentAfUrl != "" {
                 let stringUrl = currentAfUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
                 let url = NSURL(string: stringUrl)
-                let activityVC = UIActivityViewController(activityItems: [url!], applicationActivities: nil)
-                
+                let items = [url!]
+                let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+                //we exclude them because we have massive leaks in the built in functions
+                activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeCopyToPasteboard,UIActivityTypeAddToReadingList]
                 //support ipads
                 if activityVC.respondsToSelector("popoverPresentationController"){
                     activityVC.popoverPresentationController?.barButtonItem = sender
                 }
+                activityVC.completionWithItemsHandler = nil
+                
                 self.presentViewController(activityVC, animated: true, completion: nil)
             }
         }
@@ -250,6 +275,7 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         
         if identifier == "toLocationArticles" {
+            self.logToAnswers("Nearby Articles Requested", customAttributes: nil )
             let locationAuthorizationSystemSetting = MyLocationManager.sharedInstance.isAllowedBySystem()
             if locationAuthorizationSystemSetting == false{
                 self.hintToSettings(inAppSetting: false)
@@ -261,7 +287,13 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
                     return false
                 }
             }
+        } else if identifier == "toSearchArticle" {
+            self.logToAnswers("Search Articles Requested", customAttributes: nil )
+        } else if identifier == "toFavourites"{
+            self.logToAnswers("Favourite List Requested", customAttributes: nil )
         }
+        print("performing segue \(identifier)")
+        
         return true
     }
     
@@ -425,7 +457,9 @@ extension DetailViewController : WKNavigationDelegate {
         let msg = error.localizedDescription
         let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-        presentViewController(alert, animated: true, completion: nil)
+        if error.code != -999 {
+            presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
     
