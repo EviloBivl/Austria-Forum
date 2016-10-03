@@ -1,4 +1,4 @@
-//
+    //
 //  AppDelegate.swift
 //  Austria-Forum
 //
@@ -9,127 +9,128 @@
 import UIKit
 import Fabric
 import Crashlytics
-
+import UserNotifications
+    
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var window: UIWindow?
+    var isGrantedNotificationAccess : Bool = false
     
-    
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        UNUserNotificationCenter.current().delegate = self
+        
+        // Handle launching with options
+        if let launchOptions = launchOptions {
+            //handle launching from significant Location Change
+            if let _ = launchOptions[UIApplicationLaunchOptionsKey.location]{
+                    MyLocationManager.sharedInstance.startAsResultTOLaunchFromLocationKey()
+                    return true
+                }
+        }
         
         //start the Reachability Observer
         let _ : ReachabilityHelper = ReachabilityHelper.sharedInstance
-        //for crashlytics
+        
+        //init crashlytics
         Fabric.with([Crashlytics.self])
-        // TODO: Move this to where you establish a user session
         self.logUser()
         
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert,  UIUserNotificationType.Badge , UIUserNotificationType.Sound], categories: nil))
-        application.applicationIconBadgeNumber = 0
-        
-        // Handle launching from a notification
-        // TODO Here
-        if let launchOptions = launchOptions {
-            if let _ = launchOptions[UIApplicationLaunchOptionsLocationKey]{
-                MyLocationManager.sharedInstance.startFromTerminated()
-            }
-            if let notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification{
-                if let sr = notification.userInfo{
-                    print("started with url: \(sr["url"])")
-                    SearchHolder.sharedInstance.selectedItem = SearchResult(title: sr["title"] as! String , name: sr["name"] as! String , url: sr["url"] as! String, score: 100, license: sr["license"] as! String?)
-                }
-            }
-        } else {
+        if UserData.sharedInstance.wasPushPermissionAsked! {
             MyLocationManager.sharedInstance.startIfAllowed()
         }
-        //Start the LocalizationManager
-        //    print("restarting locaiton Manager now")
-        //    MyLocationManager.sharedInstance.startFromTerminated()
-        print("APP STARTED")
+        
+        application.applicationIconBadgeNumber = 0
         return true
     }
     
-    func applicationWillResignActive(application: UIApplication) {
+    
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
-    
-    func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        //print("Application state : \(application.applicationState.rawValue)" )
-        UserData.sharedInstance.lastNotificationDate = NSDate()
-        //set first Time
         
-    }
     
-    
-    
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    func applicationWillEnterForeground(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
+        if UserData.sharedInstance.wasPushPermissionAsked! {
+            MyLocationManager.sharedInstance.startIfAllowed()
+        }
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
     }
     
-    func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
-        
+    func applicationWillTerminate(_ application: UIApplication) {
         //remove the Observer
+        print("will Terminate")
         ReachabilityHelper.sharedInstance.removeObserver()
-        print("swiped to kill")
-    }
-    
-    
-    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        print("didRevieceLocalNotification")
-        if let sr = notification.userInfo{
-            if let _ = sr["url"]{
-                print("started with url: \(sr["url"] as! String)")
-                SearchHolder.sharedInstance.selectedItem = SearchResult(title: sr["title"] as! String , name: sr["name"] as! String , url: sr["url"] as! String, score: 100, license: sr["license"] as! String? )
-            }
-        }
-        
-        
+        MyLocationManager.sharedInstance.startIfAllowed()
         
     }
     
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        print("recieved RegisterUserNotification   \(notificationSettings.types.rawValue)")
-        let type = notificationSettings.types
-        let requiredForPush = UIUserNotificationType.Alert.rawValue | UIUserNotificationType.Badge.rawValue | UIUserNotificationType.Sound.rawValue
+  
+
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Swift.Void){
         
-        print("requiredForPush is \(requiredForPush)")
-        if type.rawValue == requiredForPush {
-            UserData.sharedInstance.allowPushNotification = true
-        } else {
-            UserData.sharedInstance.allowPushNotification = false
-            //slightly blend out the allow push notification setting
-        }
+        let notificationUserInfo : [AnyHashable : Any] = response.notification.request.content.userInfo
+        
+        let sr = Helper.getSearchResultNotificationUserInfoNoLicense(userinfo: notificationUserInfo)
+        SearchHolder.sharedInstance.selectedItem = sr
+        Answers.logCustomEvent(withName: DetailViewController.answersEventFromPush, customAttributes: ["Article" : notificationUserInfo["title"], "Distance" : notificationUserInfo["distance"]])
+        
+        completionHandler()
     }
     
-    
-    
-    
-    
-    // MARK: - Crashlytics Logging
     func logUser() {
-        // TODO: Use the current user's information
-        // You can call any combination of these three methods
-        let name = UIDevice.currentDevice().name
-        let model = UIDevice.currentDevice().model
-        let iosVersion = UIDevice.currentDevice().systemVersion
+        let name = UIDevice.current.name
+        let model = UIDevice.current.model
+        let iosVersion = UIDevice.current.systemVersion
         let user = "\(name) - \(model) - iOS:\(iosVersion)"
-        
         Crashlytics.sharedInstance().setUserName(user)
     }
     
+//    func fireNotificationFromTerminated(){
+//        let localNotification : UILocalNotification = UILocalNotification()
+//        //==
+//        let calendar = NSCalendar.init(calendarIdentifier: NSCalendarIdentifierGregorian)
+//        let currentHour = (calendar?.component(NSCalendarUnit.Hour, fromDate: NSDate()))!
+//        let currentMinute = (calendar?.component(NSCalendarUnit.Minute, fromDate: NSDate()))!
+//        let currentSecond = (calendar?.component(NSCalendarUnit.Second, fromDate: NSDate()))!
+//        //let writer = ReadWriteToPList()
+//        //writer.loadFavourites()
+//        //==
+//        
+//        localNotification.fireDate = NSDate()
+//        localNotification.soundName = UILocalNotificationDefaultSoundName
+//        localNotification.alertBody = "Push From Terminated - \(currentHour):\(currentMinute):\(currentSecond)"
+//        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+//        localNotification.applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
+//        //print("previous app badge number: \(UIApplication.sharedApplication().applicationIconBadgeNumber)")
+//        
+//        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+//
+//    }
     
+    //this is so iOS 9 and shall be refactored ignored for now
+    /*
+     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+     print("didRevieceLocalNotification")
+     if let sr = notification.userInfo{
+     if let _ = sr["url"]{
+     print("started with url: \(sr["url"] as! String)")
+     //Note: We ignore the license for now - because we load it in getPageInfo afterwards anyway
+     SearchHolder.sharedInstance.selectedItem = Helper.getSearchResultNotificationUserInfoNoLicense(userinfo: sr)
+     Answers.logCustomEvent(withName: DetailViewController.answersEventFromPush, customAttributes: ["Article" : sr["title"]!, "Distance" : sr["distance"]! ])
+     
+     }
+     }
+     }
+     */
     
 }
 

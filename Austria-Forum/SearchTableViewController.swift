@@ -21,7 +21,7 @@ import Crashlytics
 
 
 protocol ArticleSelectionDelegate {
-    func articleSelected(article: SearchResult);
+    func articleSelected(_ article: SearchResult);
 }
 
 class SearchTableViewController: UITableViewController, NetworkDelegation, UISearchResultsUpdating, UISearchBarDelegate  {
@@ -56,14 +56,14 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         
         //Register Custom Cell
         let nib = UINib(nibName: "afTableCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "afTableCell")
+        self.tableView.register(nib, forCellReuseIdentifier: "afTableCell")
         self.tableView.rowHeight = 60
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -77,60 +77,62 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         super.viewWillLayoutSubviews()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //Always set the current controller as the delegate to ReachabilityHelper
         ReachabilityHelper.sharedInstance.delegate = self
+        
+        self.trackViewControllerTitleToAnalytics()
     }
     
     
    
     // MARK: - UITableView
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // Return the number of sections.
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
         return myData.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
-        let afCell : afTableViewCell = tableView.dequeueReusableCellWithIdentifier("afTableCell") as! afTableViewCell
-        afCell.lTitleNameTVC.text = myData[indexPath.row]
-        afCell.lCategoryNameTVC.text = categories[indexPath.row]
+        let afCell : afTableViewCell = tableView.dequeueReusableCell(withIdentifier: "afTableCell") as! afTableViewCell
+        afCell.lTitleNameTVC.text = myData[(indexPath as NSIndexPath).row]
+        afCell.lCategoryNameTVC.text = categories[(indexPath as NSIndexPath).row]
         
         return afCell
     }
     
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedArticle : SearchResult = SearchHolder.sharedInstance.searchResults[indexPath.row]
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedArticle : SearchResult = SearchHolder.sharedInstance.searchResults[(indexPath as NSIndexPath).row]
         SearchHolder.sharedInstance.selectedItem = selectedArticle
-        self.navigationController?.popViewControllerAnimated(true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: - Protocol Implementation
     
-    func onRequestFailed(from: String?){
+    func onRequestFailed(){
         
     }
     
     
-    func onRequestSuccess(from: String?){
+    func onRequestSuccess(_ from: String){
         print("appending to tableview")
       
         //delete previous results
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             self.myData.removeAll()
             self.categories.removeAll()
             
             for result in SearchHolder.sharedInstance.searchResults {
                 self.categories.append(CategoriesListed.GetBeautyCategoryFromUrlString(result.url))
-                self.myData.append(result.title)
+                self.myData.append(result.title ?? "")
             }
             
             self.tableView.reloadData()
@@ -157,12 +159,12 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
     
     
     //MARK: - UISearchResultsUpdating
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         print("Searchbar update with text \(searchController.searchBar.text!)");
         RequestManager.sharedInstance.findPages(self, query: searchController.searchBar.text!, numberOfMaxResults: 50)
         
     }
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 //        if self.respondsToSelector("edgesForExtendedLayout"){
 //            self.edgesForExtendedLayout = UIRectEdge.None
 //        }
@@ -177,7 +179,7 @@ extension SearchTableViewController
 : ReachabilityDelegate {
     func noInternet() {
         
-        self.noInternetView = NSBundle.mainBundle().loadNibNamed("LoadingScreen", owner: self, options: nil)[0] as? LoadingScreen
+        self.noInternetView = Bundle.main.loadNibNamed("LoadingScreen", owner: self, options: nil)![0] as? LoadingScreen
         self.noInternetView?.frame = self.view.frame
         self.noInternetView?.frame.origin.y  -= 100
         self.noInternetView?.tag = 99
@@ -186,14 +188,14 @@ extension SearchTableViewController
             
             v.labelMessage.text = "Bitte überprüfen Sie ihre Internetverbindung."
             self.view.addSubview(v)
-            v.bringSubviewToFront(self.view)
+            v.bringSubview(toFront: self.view)
             v.activityIndicator.startAnimating()
             v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
             v.viewLoadingHolder.layer.cornerRadius = 5
             v.viewLoadingHolder.layer.masksToBounds = true;
             print("added no Internet Notification")
         }
-        self.performSelector("hideNoInternetView", withObject: self, afterDelay: 1)
+        self.perform(#selector(SearchTableViewController.hideNoInternetView), with: self, afterDelay: 1)
     }
     
     func hideNoInternetView(){

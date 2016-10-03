@@ -6,12 +6,14 @@ import Foundation
 struct CategoriesListed {
     
     
-    static func GetBeautyCategoryFromUrlString (url: String) -> String {
+    static func GetBeautyCategoryFromUrlString (_ url: String?) -> String {
         
+        if let url = url {
         for str in categoriesRaw {
-            if url.containsString(str) {
-                let beautyIndex = categoriesRaw.indexOf(str)
-                return categoriesBeautiful[beautyIndex!]
+                if url.contains(str) {
+                    let beautyIndex = categoriesRaw.index(of: str)
+                    return categoriesBeautiful[beautyIndex!]
+                }
             }
         }
         

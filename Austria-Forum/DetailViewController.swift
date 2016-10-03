@@ -11,21 +11,22 @@ import UIKit
 import WebKit
 import Crashlytics
 
+
 enum ScrollDirection : Int {
-    case ScrollDirectionNone = 0
-    case ScrollDirectionRight
-    case ScrollDirectionLeft
-    case ScrollDirectionUp
-    case ScrollDirectionDown
-    case ScrollDirectionCrazy
+    case scrollDirectionNone = 0
+    case scrollDirectionRight
+    case scrollDirectionLeft
+    case scrollDirectionUp
+    case scrollDirectionDown
+    case scrollDirectionCrazy
 }
 
 
-class DetailViewController: UIViewController, UIToolbarDelegate {
+class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     // MARK: - Properties
-    @IBOutlet weak var topToolBar: UIToolbar!
-    @IBOutlet weak var bottomToolBar: UIToolbar!
+    @IBOutlet weak var topToolBar: ToolBar!
+    @IBOutlet weak var bottomToolBar: ToolBar!
     @IBOutlet weak var progressBar: UIProgressView!
     
     @IBOutlet weak var constraintTopToolBar: NSLayoutConstraint!
@@ -38,10 +39,30 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
     var loadingView : LoadingScreen?
     var pListWorker : ReadWriteToPList?
     var noInternetView : LoadingScreen?
-    let favouriteIconTag = 3
+    let favouriteIconTag = 22
     var webKitView: WKWebView
+    let toolBarIconSize : CGSize = CGSize(width: 30, height: 30)
+    
+    var wkNavigatioinCount : Int = 0
+    
+    let userActionEvent = "User Action"
+    let userNavigation = "Navigation"
+    
+    let answersEventLicense = "License"
+    let answersEventRandom = "Random Article"
+    let answersEventMonthly = "Monthly Article"
+    let answersEventAddFavs = "Add Favourite"
+    static let answersEventFromPush = "Start From Push"
+    let answersEventLocation = "Location Articles"
+    let answersEventHome = "Home Navigation"
+    let answersEventFavs = "Open Favourites"
+    let answersEventShare = "Share Article"
+    let answersEventSearch = "Search Articles"
+    
+    
     
     var toolBarsHidden : Bool = false
+    var isLandScape : Bool = false
     
     var detailItem: SearchResult? {
         didSet {
@@ -53,9 +74,24 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
     
     // MARK: - Lifecycle
     required init?(coder aDecoder: NSCoder) {
-        self.webKitView = WKWebView(frame: CGRectZero)
+//        Use this in order to load the repair.js script to execute it on pageload so we can fake the css heading.
+//
+//        let config = WKWebViewConfiguration()
+//        let scriptURL = NSBundle.mainBundle().pathForResource("repair", ofType: "js")
+//
+//        do {
+//        let scriptContent = try String(contentsOfFile:scriptURL!, encoding:NSUTF8StringEncoding)
+//        let script = WKUserScript(source: scriptContent, injectionTime: .AtDocumentEnd, forMainFrameOnly: true)
+//        config.userContentController.addUserScript(script)
+//
+//        } catch  {
+//
+//        }
+//        self.webKitView = WKWebView(frame: CGRectZero, configuration: config)
+        
+        self.webKitView = WKWebView(frame: CGRect.zero)
         super.init(coder: aDecoder)
-  
+        
     }
     
     override func viewDidLoad() {
@@ -64,20 +100,26 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
         self.initScene()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         //Always set the current controller as the delegate to ReachabilityHelper
         ReachabilityHelper.sharedInstance.delegate = self
         
         self.setDetailItem()
+        
+        if UIDeviceOrientationIsLandscape(UIDevice.current.orientation){
+            isLandScape = true
+        }
+        
+        self.trackViewControllerTitleToAnalytics()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         //hide navigationBar
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     
@@ -91,24 +133,36 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
         self.resizeLoadingScreenSizeAfterSubViewsWereLayout()
     }
     
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
+    deinit {
+        removeObservers()
+    }
+    
+    
     //MARK: UIToolbar - Top Delegate
     
-    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-        return .Top
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .top
     }
     
     //MARK: - Custom Functions
-
     
-    private func initScene(){
+    fileprivate func initScene(){
         //properties configurations
         self.configureProperties()
         //webkit
         self.pleaseSetupUpThisWebKitForMeDearXCodeAndFuckThisStupidLeakyWebViewShit()
         self.registerObserverForAppLaunchingFromLocalNotification()
+        self.registerObserverForOrientationChange()
+        
     }
     
-    private func configureProperties(){
+    
+    fileprivate func configureProperties(){
         
         //favourite worker
         self.pListWorker = ReadWriteToPList()
@@ -117,58 +171,107 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
         self.topToolBar.delegate = self
         
         //Please Wait ... Screen
-        self.loadingView = NSBundle.mainBundle().loadNibNamed("LoadingScreen", owner: self, options: nil)[0] as? LoadingScreen
+        self.loadingView = Bundle.main.loadNibNamed("LoadingScreen", owner: self, options: nil)![0] as? LoadingScreen
         
         //on start up hide progress bar - will be handled by the webkit
-        self.progressBar.hidden = true
+        self.progressBar.isHidden = true
         self.progressBar.progress = 0
-        self.progressBar.progressViewStyle = UIProgressViewStyle.Bar
+        self.progressBar.progressViewStyle = UIProgressViewStyle.bar
         
         //hide license tag on start up
-        self.licenseTag.hidden = true
+        self.licenseTag.isHidden = true
+        
+        
         
     }
     
-    private func registerObserverForAppLaunchingFromLocalNotification(){
-        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil, queue: NSOperationQueue.mainQueue(), usingBlock: {
-            notification in
-            print("recieved UIApplicationBecomeActive Notification")
-            self.setDetailItem()
-        })
+    
+    fileprivate func registerObserverForAppLaunchingFromLocalNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewController.appBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
-    private func setDetailItem(){
+    fileprivate func registerObserverForOrientationChange(){
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewController.deviceRotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    fileprivate func removeObservers(){
+        // self.webKitView.removeObserver(self, forKeyPath: "URL")
+        // self.webKitView.removeObserver(self, forKeyPath: "estimatedProgress")
+        print("\n\n Removing Observers \n\n")
+        //        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
+        //        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
+        //        webKitView.removeObserver(self, forKeyPath: "URL", context: nil)
+        //        webKitView.removeObserver(self, forKeyPath: "estimatedProgress", context: nil)
+        //
+    }
+    
+    func deviceRotated(){
+        if(UIDeviceOrientationIsLandscape(UIDevice.current.orientation))
+        {
+            if let disableToolbar = UserData.sharedInstance.disableToolbar{
+                if disableToolbar {
+                    hideToolBars()
+                }
+            }
+            isLandScape = true
+        }
+        
+        if(UIDeviceOrientationIsPortrait(UIDevice.current.orientation))
+        {
+            isLandScape = false
+            showToolBars()
+        }
+    }
+    
+    func appBecomeActive(){
+        print("Application Did Become Active Notification - DetailViewController")
+        self.setDetailItem()
+    }
+    
+    func setDetailItem(){
         self.detailItem = SearchHolder.sharedInstance.selectedItem
+        
     }
     
     
-    private func resizeLoadingScreenSizeAfterSubViewsWereLayout (){
+    fileprivate func resizeLoadingScreenSizeAfterSubViewsWereLayout (){
         self.loadingView?.frame = self.view.frame
     }
     
-    private func saveCurrentArticleAsFavourite(){
+    fileprivate func saveCurrentArticleAsFavourite(webBook: Bool? = false){
         var  activeArticle : [String:String] = [:]
         
         if let activeArticleInWebView = SearchHolder.sharedInstance.selectedItem, let currentCategory = SearchHolder.sharedInstance.currentCategory {
             activeArticle["title"] = activeArticleInWebView.title
-            activeArticle["url"] = activeArticleInWebView.url.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
+            activeArticle["url"] = activeArticleInWebView.url?.replacingOccurrences(of: "?skin=page", with: "")
             activeArticle["category"] = currentCategory
-        } else if let activeTitle = SearchHolder.sharedInstance.currentTitle, let activeUrl = self.webKitView.URL?.URLString , let currentCategory = SearchHolder.sharedInstance.currentCategory {
+        } else if let activeTitle = SearchHolder.sharedInstance.currentTitle, let activeUrl = self.webKitView.url?.absoluteString , let currentCategory = SearchHolder.sharedInstance.currentCategory {
             activeArticle["title"] = activeTitle
-            activeArticle["url"] = activeUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
+            activeArticle["url"] = activeUrl.replacingOccurrences(of: "?skin=page", with: "")
             activeArticle["category"] = currentCategory
-        } else if let activeUrl = self.webKitView.URL?.URLString , let currentCategory = SearchHolder.sharedInstance.currentCategory {
-            activeArticle["title"] = self.webKitView.URL?.path ?? activeUrl
-            activeArticle["url"] = activeUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
+        } else if let activeUrl = self.webKitView.url?.absoluteString , let currentCategory = SearchHolder.sharedInstance.currentCategory {
+            activeArticle["title"] = self.webKitView.url?.path ?? activeUrl
+            activeArticle["url"] = activeUrl.replacingOccurrences(of: "?skin=page", with: "")
             activeArticle["category"] = currentCategory
         }
         
+        if let webBook = webBook {
+            if webBook {
+                if let activeUrl = self.webKitView.url?.absoluteString {
+                    activeArticle["title"] = self.webKitView.title ?? activeUrl
+                    activeArticle["url"] = activeUrl.replacingOccurrences(of: "?skin=page", with: "")
+                    activeArticle["category"] = "Web Book"
+                }
+            }
+        }
+        
         if !activeArticle.isEmpty {
-            pListWorker?.loadFavourites()
+            _ = pListWorker?.loadFavourites()
             if pListWorker?.isFavourite(activeArticle) == false {
-                pListWorker?.saveFavourite(activeArticle)
+                _ = pListWorker?.saveFavourite(activeArticle)
+                self.trackAnalyticsEvent(withCategory: answersEventAddFavs, action: activeArticle["title"]!, label: "\(activeArticle["url"]!)  \(activeArticle["category"]!)")
             } else {
-                pListWorker?.removeFavourite(activeArticle)
+                _ = pListWorker?.removeFavourite(activeArticle)
             }
             FavouritesHolder.sharedInstance.refresh()
             self.updateFavouriteIcon()
@@ -177,120 +280,148 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
         }
     }
     
-    private func logToAnswers(message: String, customAttributes: [String : AnyObject]?){
-        Answers.logCustomEventWithName(message, customAttributes: customAttributes)
+    ///This logs the User action to fabric.io but for now we don't use it
+    ///Because we instead use the GA API
+    fileprivate func logToAnswers(_ message: String, customAttributes: [String : AnyObject]?){
+        Answers.logCustomEvent(withName: message, customAttributes: customAttributes)
+    }
+    
+    fileprivate func isRightNowAWebBookLoaded() -> Bool{
+        if let currentUrl = webKitView.url?.absoluteString {
+            if currentUrl.contains("Web_Books") || currentUrl.contains("web_books") || currentUrl.contains("web-books") {
+                return true
+            }
+        }
+        
+        return false
     }
     
     
     // MARK: - IBActions
-    @IBAction func loadLicenseButton(sender: UIButton) {
+    @IBAction func loadLicenseButton(_ sender: UIButton) {
         
-        // TODO: Track the user action that is important for you.
-        self.logToAnswers("License Floating Button clicked", customAttributes: nil)
+        var answersAttributes : [String: String] = [:]
         
-        
-        if let license = SearchHolder.sharedInstance.selectedItem?.license{
-            if let licenseUrl = LicenseManager.getLinkForLicense(license){
-                let url = NSURL(string: licenseUrl)!
-                UIApplication.sharedApplication().openURL(url)
+        if let license = SearchHolder.sharedInstance.selectedItem?.licenseResult{
+            if let licenseUrl = license.url{
+                answersAttributes["License"] = license.id
+                let url = URL(string: licenseUrl)!
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
+        } else if let licenseUrl = LicenseManager.getLinkForLicense("AF"){
+            // fallbacl license url
+            answersAttributes["License"] = "AF"
+            let url = URL(string: licenseUrl)!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+        self.logToAnswers(answersEventLicense, customAttributes: answersAttributes as [String : AnyObject]?)
+        self.trackAnalyticsEvent(withCategory: answersEventLicense, action: answersAttributes["License"]!)
     }
     
-    @IBAction func loadRandomArticle(sender: AnyObject) {
-        self.logToAnswers("Random Article Requested", customAttributes: nil)
-        
+    @IBAction func loadRandomArticle(_ sender: AnyObject) {
+        self.logToAnswers(answersEventRandom, customAttributes: ["Rnd Article - Category" : UserData.sharedInstance.categorySelected! as AnyObject])
+        self.trackAnalyticsEvent(withCategory: answersEventRandom, action: UserData.sharedInstance.categorySelected!)
         self.showLoadingScreen()
         RequestManager.sharedInstance.getRandomArticle(self, categories: [UserData.sharedInstance.categorySelected!])
     }
     
-    @IBAction func loadArticleFromMonthlyPool(sender: AnyObject) {
-        self.logToAnswers("Monthly Article Requested", customAttributes: nil)
+    @IBAction func loadArticleFromMonthlyPool(_ sender: AnyObject) {
+        self.logToAnswers(answersEventMonthly, customAttributes: ["Monthly Article" : "requested" as AnyObject])
         
         if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload() {
             self.showLoadingScreen()
             RequestManager.sharedInstance.getArticleFromMonthlyPool(self, month: "notset", year: "notset")
+            self.trackAnalyticsEvent(withCategory: answersEventMonthly, action: "Load Article From Server")
         } else {
-            if (ReachabilityHelper.sharedInstance.connection == ReachabilityType.NO_INTERNET){
+            if (ReachabilityHelper.sharedInstance.connection == ReachabilityType.no_INTERNET){
                 self.noInternet()
             } else {
+                self.trackAnalyticsEvent(withCategory: answersEventMonthly, action: "Load Article from Storage")
                 self.detailItem = UserData.sharedInstance.articleOfTheMonth
             }
         }
     }
     
-    @IBAction func saveArticleAsFavourite(sender: AnyObject) {
-        if let sr = SearchHolder.sharedInstance.selectedItem {
-            self.logToAnswers("Article Saved as Favourite", customAttributes: ["Article" : sr.title , "Article Url" : sr.url])
+    @IBAction func saveArticleAsFavourite(_ sender: AnyObject) {
+        if isRightNowAWebBookLoaded(){
+            self.saveCurrentArticleAsFavourite(webBook: true)
+        } else {
+            self.saveCurrentArticleAsFavourite()
         }
-         self.saveCurrentArticleAsFavourite()
     }
     
-    @IBAction func shareContentButton(sender: UIBarButtonItem) {
+    @IBAction func shareContentButton(_ sender: UIBarButtonItem) {
         if let sr = SearchHolder.sharedInstance.selectedItem {
-             self.logToAnswers("Article Saved as Favourite", customAttributes: ["Article" : sr.title , "Article Url" : sr.url])
+            self.trackAnalyticsEvent(withCategory: answersEventShare, action: sr.title ?? "got Nil Title", label: sr.url ?? "got Nil Url")
+            self.logToAnswers(answersEventShare, customAttributes: ["Article" : sr.title as AnyObject? ?? "got Nil Title" as AnyObject])
+        } else if let currentUrl = self.webKitView.url?.absoluteString {
+            self.trackAnalyticsEvent(withCategory: answersEventShare, action: "Webbook" , label: currentUrl )
+            self.logToAnswers(answersEventShare, customAttributes: ["Article" : "Webbook" as AnyObject])
         }
         
-        if let currentAfUrl = self.webKitView.URL?.URLString {
+        if let currentAfUrl = self.webKitView.url?.absoluteString {
             if currentAfUrl != "" {
-                let stringUrl = currentAfUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
-                let url = NSURL(string: stringUrl)
+                let stringUrl = currentAfUrl.replacingOccurrences(of: "?skin=page", with: "")
+                let url = URL(string: stringUrl)
                 let items = [url!]
                 let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
-                //we exclude them because we have massive leaks in the built in functions
-                activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeCopyToPasteboard,UIActivityTypeAddToReadingList]
+                //we exclude them because we have massive leaks in the built-in functions
+                activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.copyToPasteboard,UIActivityType.addToReadingList]
                 //support ipads
-                if activityVC.respondsToSelector("popoverPresentationController"){
+                
+                if activityVC.responds(to: #selector(getter: UIViewController.popoverPresentationController)){
                     activityVC.popoverPresentationController?.barButtonItem = sender
                 }
                 activityVC.completionWithItemsHandler = nil
                 
-                self.presentViewController(activityVC, animated: true, completion: nil)
+                self.present(activityVC, animated: true, completion: nil)
             }
         }
     }
     
-    @IBAction func back(sender: UIBarButtonItem) {
+    @IBAction func back(_ sender: UIBarButtonItem) {
         if self.webKitView.canGoBack{
             self.webKitView.goBack()
         }
         
         print("back forward list : \(self.webKitView.backForwardList.debugDescription)")
         for bItems in self.webKitView.backForwardList.backList {
-            print("url of back item: \(bItems.URL.absoluteString)")
+            print("url of back item: \(bItems.url.absoluteString)")
         }
     }
-    @IBAction func forward(sender: UIBarButtonItem) {
+    @IBAction func forward(_ sender: UIBarButtonItem) {
         if self.webKitView.canGoForward {
             self.webKitView.goForward()
         }
         print("back forward list : \(self.webKitView.backForwardList.debugDescription)")
         for bItems in self.webKitView.backForwardList.forwardList {
-            print("url of forward item: \(bItems.URL.absoluteString)")
+            print("url of forward item: \(bItems.url.absoluteString)")
         }
     }
     
+    @IBAction func loadHome(_ sender: UIBarButtonItem) {
+        if (ReachabilityHelper.sharedInstance.connection == ReachabilityType.no_INTERNET){
+            self.noInternet()
+            return
+        }
+        
+        SearchHolder.sharedInstance.selectedItem = SearchResult(title: "Austria-Forum", name: "Austria-Forum", url: "http://austria-forum.org/", score: 100, licenseResult: nil)
+        self.logToAnswers(answersEventHome, customAttributes: nil)
+        self.trackAnalyticsEvent(withCategory: answersEventHome, action: "Going Home")
+        self.setDetailItem()
+    }
+    
+    
     //MARK: Prepare for Segue - Before Transistion hints
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
         if identifier == "toLocationArticles" {
-            self.logToAnswers("Nearby Articles Requested", customAttributes: nil )
-            let locationAuthorizationSystemSetting = MyLocationManager.sharedInstance.isAllowedBySystem()
-            if locationAuthorizationSystemSetting == false{
-                self.hintToSettings(inAppSetting: false)
-                return false
-            }
-            if let localAllowence = UserData.sharedInstance.locationDistanceChangeAllowed {
-                if !localAllowence{
-                    self.hintToSettings(inAppSetting: true)
-                    return false
-                }
-            }
+            self.logToAnswers(answersEventLocation, customAttributes: nil)
         } else if identifier == "toSearchArticle" {
-            self.logToAnswers("Search Articles Requested", customAttributes: nil )
+            self.logToAnswers(answersEventSearch, customAttributes: nil )
         } else if identifier == "toFavourites"{
-            self.logToAnswers("Favourite List Requested", customAttributes: nil )
+            self.logToAnswers(answersEventFavs, customAttributes: nil )
         }
         print("performing segue \(identifier)")
         
@@ -298,27 +429,27 @@ class DetailViewController: UIViewController, UIToolbarDelegate {
     }
     
     
-    func hintToSettings(inAppSetting inAppSetting: Bool) {
-        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Froum darf zur Zeit nicht auf ihren Standort zugreifen. Sie können dies in den Einstellungen ändern wenn Sie wollen.", preferredStyle: UIAlertControllerStyle.Alert)
-        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.Cancel, handler: {
+    func hintToSettings(inAppSetting: Bool) {
+        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum darf zur Zeit nicht auf ihren Standort zugreifen. Sie können dies in den Einstellungen ändern wenn Sie wollen.", preferredStyle: UIAlertControllerStyle.alert)
+        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.cancel, handler: {
             cancleAction in
             print("pressed cancle")
             
         })
-        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.Default, handler: {
+        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.default, handler: {
             alertAction  in
             print("go to settings")
             if inAppSetting{
-                self.performSegueWithIdentifier("toSettings", sender: self)
+                self.performSegue(withIdentifier: "toSettings", sender: self)
             } else {
-                let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-                UIApplication.sharedApplication().openURL(settingsUrl!)
+                let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+                UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
                 
             }
         })
         alertController.addAction(actionAbort)
         alertController.addAction(actionToSettings)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
         
     }
     
@@ -335,7 +466,7 @@ extension DetailViewController : ReachabilityDelegate {
     
     func noInternet() {
         
-        self.noInternetView = NSBundle.mainBundle().loadNibNamed("LoadingScreen", owner: self, options: nil)[0] as? LoadingScreen
+        self.noInternetView = Bundle.main.loadNibNamed("LoadingScreen", owner: self, options: nil)![0] as? LoadingScreen
         self.noInternetView?.frame = self.view.frame
         self.noInternetView?.frame.origin.y  -= 100
         self.noInternetView?.tag = 99
@@ -344,28 +475,31 @@ extension DetailViewController : ReachabilityDelegate {
             
             v.labelMessage.text = "Bitte überprüfen Sie ihre Internetverbindung."
             self.view.addSubview(v)
-            v.bringSubviewToFront(self.view)
+            v.bringSubview(toFront: self.view)
             v.activityIndicator.startAnimating()
             v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
             v.viewLoadingHolder.layer.cornerRadius = 5
             v.viewLoadingHolder.layer.masksToBounds = true;
             print("added no Internet Notification")
         }
-        self.performSelector("hideNoInternetView", withObject: self, afterDelay: 1)
+        self.perform(#selector(DetailViewController.hideNoInternetView), with: self, afterDelay: 1)
     }
     
     func InternetBack() {
-        hideNoInternetView()
-        self.refreshWebView()
+        if hideNoInternetView(){
+            self.refreshWebView()
+        }
     }
     
-    func hideNoInternetView(){
+    func hideNoInternetView() -> Bool {
         print("hided no internet notification")
         for v in self.view.subviews {
             if v.tag == 99{
                 v.removeFromSuperview()
+                return true
             }
         }
+        return false
     }
 }
 
@@ -374,33 +508,41 @@ extension DetailViewController : ReachabilityDelegate {
 //MARK: - UIScrollViewDelegate
 extension DetailViewController : UIScrollViewDelegate {
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if self.scrollDirection == .ScrollDirectionUp{
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if self.scrollDirection == .scrollDirectionUp{
             hideToolBars()
-        } else if self.scrollDirection == .ScrollDirectionDown {
-            showToolBars()
+        } else if self.scrollDirection == .scrollDirectionDown {
+            if !isLandScape {
+                showToolBars()
+            } else if let disabledToolbar = UserData.sharedInstance.disableToolbar {
+                if !disabledToolbar {
+                    showToolBars()
+                }
+            }
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView){
-        if (self.lastScrollOffset?.y > scrollView.contentOffset.y){
-            self.scrollDirection = ScrollDirection.ScrollDirectionDown
-            
-        }else if (self.lastScrollOffset?.y < scrollView.contentOffset.y) {
-            self.scrollDirection = ScrollDirection.ScrollDirectionUp
-        }
-        self.lastScrollOffset = scrollView.contentOffset;
+    func scrollViewDidScroll(_ scrollView: UIScrollView){
         
+        if let y = self.lastScrollOffset?.y {
+            if (y > scrollView.contentOffset.y){
+                self.scrollDirection = ScrollDirection.scrollDirectionDown
+            }else if (y < scrollView.contentOffset.y) {
+                self.scrollDirection = ScrollDirection.scrollDirectionUp
+            }
+        }
+        
+        self.lastScrollOffset = scrollView.contentOffset;
     }
     
-    private func hideToolBars(){
+    fileprivate func hideToolBars(){
         if self.toolBarsHidden {
             //do nothing leave it as it is
         } else {
             //hide it
             self.constraintTopToolBar.constant = -44
             self.constraintBottomToolBar.constant = -44
-            UIView.animateWithDuration(0.2, delay: 0, options: .CurveLinear, animations: {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
                 self.view.layoutIfNeeded()
                 }, completion: {
                     completed in
@@ -409,12 +551,12 @@ extension DetailViewController : UIScrollViewDelegate {
             })
         }
     }
-    private func showToolBars(){
+    fileprivate func showToolBars(){
         if self.toolBarsHidden{
             self.constraintTopToolBar.constant = 0
             self.constraintBottomToolBar.constant = 0
             self.topToolBar.alpha = 1
-            UIView.animateWithDuration(0.2, delay: 0, options: .CurveLinear, animations: {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
                 self.view.layoutIfNeeded()
                 }, completion: {
                     completed in
@@ -430,7 +572,15 @@ extension DetailViewController : UIScrollViewDelegate {
 //MARK: WKNavigation Delegate - and WebKit Handling
 extension DetailViewController : WKNavigationDelegate {
     
-    private func pleaseSetupUpThisWebKitForMeDearXCodeAndFuckThisStupidLeakyWebViewShit(){
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("didFailNavigation")
+    }
+    
+    
+    
+    
+    fileprivate func pleaseSetupUpThisWebKitForMeDearXCodeAndFuckThisStupidLeakyWebViewShit(){
         //add the webview to hirarchy
         self.view.insertSubview(webKitView, belowSubview: self.progressBar)
         
@@ -438,66 +588,88 @@ extension DetailViewController : WKNavigationDelegate {
         webKitView.translatesAutoresizingMaskIntoConstraints = false
         
         //create the constraints
-        let topVertical = NSLayoutConstraint(item: webKitView, attribute: .Top, relatedBy: .Equal, toItem: self.topToolBar, attribute: .Bottom, multiplier: 1, constant: 0)
-        let bottomVertical = NSLayoutConstraint(item: webKitView, attribute: .Bottom, relatedBy: .Equal, toItem: self.bottomToolBar, attribute: .Top, multiplier: 1, constant: 0)
-        let leadingSpace = NSLayoutConstraint(item: webKitView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .LeadingMargin, multiplier: 1, constant: -19)
-        let trailingSpace = NSLayoutConstraint(item: webKitView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .TrailingMargin, multiplier: 1, constant: 19)
+        let topVertical = NSLayoutConstraint(item: webKitView, attribute: .top, relatedBy: .equal, toItem: self.topToolBar, attribute: .bottom, multiplier: 1, constant: 0)
+        let bottomVertical = NSLayoutConstraint(item: webKitView, attribute: .bottom, relatedBy: .equal, toItem: self.bottomToolBar, attribute: .top, multiplier: 1, constant: 0)
+        let leadingSpace = NSLayoutConstraint(item: webKitView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leadingMargin, multiplier: 1, constant: -19)
+        let trailingSpace = NSLayoutConstraint(item: webKitView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailingMargin, multiplier: 1, constant: 19)
         view.addConstraints([topVertical, bottomVertical,leadingSpace,trailingSpace])
+        
+        
         
         //set the delegates
         self.webKitView.navigationDelegate = self
         self.webKitView.scrollView.delegate = self
         
+        //disable overscrolling
+        self.webKitView.scrollView.alwaysBounceHorizontal = false
+        
         //add observer for managing the progressbar
-        webKitView.addObserver(self, forKeyPath: "estimatedProgress", options: .New, context: nil)
+        webKitView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
+        //oberserver for updating favourite icon when in webbooks browsing mode
+        webKitView.addObserver(self, forKeyPath: "URL", options: NSKeyValueObservingOptions.new, context: nil)
         
     }
     
-    func webView(webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation, withError error: NSError) {
-        let msg = error.localizedDescription
-        let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-        if error.code != -999 {
-            presentViewController(alert, animated: true, completion: nil)
-        }
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation, withError error: Error) {
+        _ = error.localizedDescription
+        print("didFailNavigation")
+        /* let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .Alert)
+         alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+         if error.code != -999 {
+         presentViewController(alert, animated: true, completion: nil)
+         }*/
     }
     
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if (keyPath == "estimatedProgress") {
             let finishedLoading = webKitView.estimatedProgress == 1
             if finishedLoading {
-                self.performSelector("hideProgressBar", withObject: nil, afterDelay: 0.5)
+                self.perform(#selector(DetailViewController.hideProgressBar), with: nil, afterDelay: 0.5)
             } else {
-                self.progressBar.hidden = false
+                self.progressBar.isHidden = false
             }
             progressBar.setProgress(Float(webKitView.estimatedProgress), animated: true)
             
         }
-    }
- 
-    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void){
-        
-        print("url of property:\(self.webKitView.URL?.absoluteString)")
-        print("request of navigation \(navigationAction.request.URLString)")
-        
-        
-        
-        if !navigationAction.request.URLString.containsString("austria-forum.org") && !navigationAction.request.URLString.containsString("embed"){
-            UIApplication.sharedApplication().openURL(navigationAction.request.URL!)
-            decisionHandler(WKNavigationActionPolicy.Cancel)
-        } else {
-            if navigationAction.request.URLString.containsString("embed"){
-                decisionHandler(WKNavigationActionPolicy.Allow)
-            }
-                
-            else if !navigationAction.request.URLString.containsString("?skin=page"){
-                self.webKitView.loadRequest(NSURLRequest(URL: NSURL(string: navigationAction.request.URLString.stringByAppendingString("?skin=page"))!))
-                decisionHandler(WKNavigationActionPolicy.Cancel)
-            } else {
-                decisionHandler(WKNavigationActionPolicy.Allow)
+        if (keyPath == "URL") {
+            print("URL change")
+            if isRightNowAWebBookLoaded(){
+                print("updated icons in observer mode")
+                self.updateFavouriteIcon()
             }
         }
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void){
+        
+        print("url of property:\(self.webKitView.url?.absoluteString)")
+        print("request of navigation \(navigationAction.request.url?.absoluteString)")
+        
+        let urlIsFormatted : Bool = (navigationAction.request.url?.absoluteString.contains("?skin=page"))! ||
+                                    (navigationAction.request.url?.absoluteString.contains("&skin=page"))!
+        
+      
+        
+        if (!(navigationAction.request.url?.absoluteString.contains("austria-forum.org"))! && !(navigationAction.request.url?.absoluteString.contains("embed"))!) {
+            if wkNavigatioinCount > 1 {
+                UIApplication.shared.open(navigationAction.request.url!, options: [:], completionHandler: nil)
+            }
+            decisionHandler(WKNavigationActionPolicy.cancel)
+        } else {
+            if (navigationAction.request.url?.absoluteString.contains("embed"))!{
+                decisionHandler(WKNavigationActionPolicy.allow)
+            }
+            else if !urlIsFormatted{
+                let url = prepareUrlForloading(url: (navigationAction.request.url?.absoluteString)!)
+                wkNavigatioinCount = 0
+                self.webKitView.load(URLRequest(url: URL(string: url)!))
+                decisionHandler(WKNavigationActionPolicy.cancel)
+            } else {
+                decisionHandler(WKNavigationActionPolicy.allow)
+            }
+        }
+        wkNavigatioinCount = wkNavigatioinCount + 1
     }
     
     
@@ -505,21 +677,21 @@ extension DetailViewController : WKNavigationDelegate {
     
     
     //webViewDidFinishLoad
-    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation){
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation){
         print("did finish navigation")
         // if !isCorrectSkinnedPage(){
         //      self.refreshWebView()
         //     return
         // }
         
-        SearchHolder.sharedInstance.currentUrl = self.webKitView.URL?.URLString
-        let currentCategory : String? = CategoriesListed.GetBeautyCategoryFromUrlString((self.webKitView.URL?.URLString)!)
+        SearchHolder.sharedInstance.currentUrl = self.webKitView.url?.absoluteString
+        let currentCategory : String? = CategoriesListed.GetBeautyCategoryFromUrlString((self.webKitView.url?.absoluteString)!)
         SearchHolder.sharedInstance.currentCategory = currentCategory
         
         self.updateFavouriteIcon()
         UserData.sharedInstance.lastVisitedString = SearchHolder.sharedInstance.currentUrl
         
-        self.getPageInfoFromUrl(SearchHolder.sharedInstance.currentUrl!.stringByReplacingOccurrencesOfString("?skin=page", withString: ""))
+        self.getPageInfoFromUrl(SearchHolder.sharedInstance.currentUrl!.replacingOccurrences(of: "?skin=page", with: ""))
     }
     
     
@@ -530,7 +702,7 @@ extension DetailViewController : WKNavigationDelegate {
             
             v.labelMessage.text = "Bitte Warten ..."
             self.view.addSubview(v)
-            v.bringSubviewToFront(self.view)
+            v.bringSubview(toFront: self.view)
             v.activityIndicator.startAnimating()
             v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
             v.viewLoadingHolder.layer.cornerRadius = 5
@@ -548,10 +720,10 @@ extension DetailViewController : WKNavigationDelegate {
         let toolBarItems = self.bottomToolBar.items!
         for item in toolBarItems {
             if item.tag == self.favouriteIconTag {
-                if self.pListWorker!.isFavourite(["url": (self.webKitView.URL?.URLString)!]){
-                    item.image = UIImage(named: "Hearts_Filled_50.png")
+                if self.pListWorker!.isFavourite(["url": (self.webKitView.url?.absoluteString)!]){
+                    item.image = self.bottomToolBar.likedImage
                 } else {
-                    item.image = UIImage(named: "Hearts_50.png")
+                    item.image = self.bottomToolBar.notLikedImage
                     
                 }
             }
@@ -560,56 +732,74 @@ extension DetailViewController : WKNavigationDelegate {
     
     func refreshWebView(){
         //load the new set artivle into the webView
-        if var stringUrl = self.detailItem?.url {
-            stringUrl = stringUrl.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
+        if var stringUrl = self.detailItem?.url, var selectedUrl = SearchHolder.sharedInstance.currentUrl {
+            stringUrl = stringUrl.replacingOccurrences(of: "?skin=page", with: "")
+            selectedUrl = selectedUrl.replacingOccurrences(of: "?skin=page", with: "")
             //we don't want to reload the webview if the url didn't change
-            if self.webKitView.URL?.URLString.stringByReplacingOccurrencesOfString("?skin=page", withString: "") == stringUrl{
+            let webKitUrl = self.webKitView.url?.absoluteString.replacingOccurrences(of: "?skin=page", with: "")
+            if webKitUrl == stringUrl {
                 return
             }
             //the url is not the same anymore rebuild it with the skin and load it
-            let url : NSURL? = NSURL(string: stringUrl.stringByAppendingString("?skin=page"))
-            print("\(__FUNCTION__) loading \(url?.URLString)")
-            self.webKitView.loadRequest(NSURLRequest(URL: url!))
+            let url : URL? = URL(string: prepareUrlForloading(url: stringUrl))
+            print("\(#function) loading \(url?.absoluteString)")
+            self.webKitView.load(URLRequest(url: url!))
         } else {
-            let loadUrl = UserData.sharedInstance.lastVisitedString!.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
-            if self.webKitView.URL?.URLString.stringByReplacingOccurrencesOfString("?skin=page", withString: "") == loadUrl {
+            let loadUrl = UserData.sharedInstance.lastVisitedString!.replacingOccurrences(of: "?skin=page", with: "")
+            if self.webKitView.url?.absoluteString.replacingOccurrences(of: "?skin=page", with: "") == loadUrl {
                 return
             }
-            let url : NSURL? = NSURL(string: loadUrl.stringByAppendingString("?skin=page"))
-            print("\(__FUNCTION__) loading \(url?.URLString)")
-            self.webKitView.loadRequest(NSURLRequest(URL: url!))
+            let url : URL? = URL(string: prepareUrlForloading(url: loadUrl))
+            print("\(#function) loading \(url?.absoluteString)")
+            self.webKitView.load(URLRequest(url: url!))
         }
     }
     
-    private func isCorrectSkinnedPage() -> Bool{
-        if let currentUrl = (self.webKitView.URL?.URLString){
-            if currentUrl.containsString("?skin=page"){
+    fileprivate func isCorrectSkinnedPage() -> Bool{
+        if let currentUrl = (self.webKitView.url?.absoluteString){
+            if currentUrl.contains("?skin=page"){
                 return true
             }
         }
         return false
     }
     
-    func updateLicenseTag(){
-        if let license = SearchHolder.sharedInstance.selectedItem?.license {
-            let licenseImageName = LicenseManager.getImageNameForLicense(license)
-            if let name = licenseImageName{
-                let image = UIImage(named: name)
-                self.licenseTag.setImage(image, forState: .Normal)
-                self.licenseTag.hidden = false;
-                return
-            }
+    internal func prepareUrlForloading(url : String) -> String{
+        if url.contains("?"){
+            return url.appending("&skin=page")
+        } else {
+            return url.appending("?skin=page")
         }
-        self.licenseTag.hidden = true
     }
     
-    func getPageInfoFromUrl(url: String){
+    func updateLicenseTag(){
+        if let license = SearchHolder.sharedInstance.selectedItem?.licenseResult {
+            let licenseImageName = LicenseManager.getImageNameForLicense(license.css ?? "af")
+            if let name = licenseImageName {
+                let image = UIImage(named: name)
+                self.licenseTag.setImage(image, for: UIControlState())
+                self.licenseTag.isHidden = false
+            }
+        } else {
+            //fallback license
+            let licenseImageName = LicenseManager.getImageNameForLicense("af")
+            if let name = licenseImageName {
+                let image = UIImage(named: name)
+                self.licenseTag.setImage(image, for: UIControlState())
+                self.licenseTag.isHidden = false
+            }
+            
+        }
+        
+    }
+    
+    func getPageInfoFromUrl(_ url: String){
         RequestManager.sharedInstance.getPageInfoFromUrls(self, urls: [url])
     }
     
     
     func hideProgressBar() {
-        self.progressBar.hidden = true
+        self.progressBar.isHidden = true
         self.progressBar.setProgress(0, animated: false)
     }
     
@@ -619,35 +809,42 @@ extension DetailViewController : WKNavigationDelegate {
         self.loadingView?.removeFromSuperview()
     }
     
-    
+    //MARK: injecting JS to webview
+    func loadTitleViaJS() -> String{
+        
+        let title = ""
+        
+        return title
+    }
 }
+
 
 
 
 
 //MARK: - NetworkDelegate
 extension DetailViewController : NetworkDelegation {
-    func onRequestFailed(from: String?){
+    func onRequestFailed(){
         self.loadingView?.labelMessage.text = "Ups! Der Austria-Forum Server ist zur Zeit nicht erreichbar"
-        self.performSelector("hideLoadingScreen", withObject: nil, afterDelay: 3)
-        print("\(__FUNCTION__) loading \(UserData.sharedInstance.lastVisitedString!)")
-        self.webKitView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
+        self.perform(#selector(DetailViewController.hideLoadingScreen), with: nil, afterDelay: 3)
+        print("\(#function) loading \(UserData.sharedInstance.lastVisitedString!)")
+        self.webKitView.load(URLRequest(url: URL(string: self.prepareUrlForloading(url: UserData.sharedInstance.lastVisitedString!))!))
     }
-    func onRequestSuccess(from: String?){
+    func onRequestSuccess(_ from: String){
+        //  print("Returned from method_ \(from)")
         
-        if let from = from {
-            if from == "search.getPageInfo"{
-                print("getPageInfo returned successfully");
-                //fake the license for now
-                //TODO really we need to get rid of it, just for testing
-                //SearchHolder.sharedInstance.selectedItem?.license = "CC0"
-                
-                //update the license tag when we are getting a succes from the server
-                self.updateLicenseTag()
-                
-                return
+        if from == "search.getPageInfo"{
+            print("getPageInfo returned successfully");
+            
+            //update the license tag when we are getting a succes from the server
+            self.updateLicenseTag()
+            if let _ = SearchHolder.sharedInstance.selectedItem {
+                self.detailItem = SearchHolder.sharedInstance.selectedItem
             }
+            
+            return
         }
+        
         
         if let _ = SearchHolder.sharedInstance.selectedItem {
             self.detailItem = SearchHolder.sharedInstance.selectedItem
@@ -655,14 +852,10 @@ extension DetailViewController : NetworkDelegation {
             
         } else {
             self.loadingView?.labelMessage.text = SearchHolder.sharedInstance.resultMessage
-            self.performSelector("hideLoadingScreen", withObject: nil, afterDelay: 3)
-            print("\(__FUNCTION__) loading \(UserData.sharedInstance.lastVisitedString!)")
-            self.webKitView.loadRequest(NSURLRequest(URL: NSURL(string: UserData.sharedInstance.lastVisitedString!)!))
+            self.perform(#selector(DetailViewController.hideLoadingScreen), with: nil, afterDelay: 3)
+            print("\(#function) loading \(UserData.sharedInstance.lastVisitedString!)")
+            self.webKitView.load(URLRequest(url: URL(string: self.prepareUrlForloading(url: UserData.sharedInstance.lastVisitedString!))!))
         }
-        
-        //fake the license for now
-        //TODO really we need to get rid of it, just for testing
-        //SearchHolder.sharedInstance.selectedItem?.license = "CC0"
         
         //update the license tag when we are getting a succes from the server
         self.updateLicenseTag()
@@ -670,144 +863,6 @@ extension DetailViewController : NetworkDelegation {
     
 }
 
-
-
-//MARK: - WebView Delegate
-extension DetailViewController : UIWebViewDelegate {
-    /*
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool{
-    print("webview delegate was called");
-    print("requested url is: \(request.URLString)")
-    
-    //present content which isnt from AF in Safari
-    if request.URLString.containsString(BaseRequest.urlAFStatic) == false {
-    //if we have a embed youtube video within an iframe dont open in safari
-    if request.URLString.containsString("embed"){
-    return true
-    }
-    UIApplication.sharedApplication().openURL(request.URL!)
-    return false
-    }
-    
-    
-    
-    if navigationType == .BackForward {
-    SearchHolder.sharedInstance.selectedItem = nil
-    SearchHolder.sharedInstance.currentUrl = request.URLString
-    } else {
-    
-    var pageUrl = request.URLString
-    if !pageUrl.containsString("?skin=page"){
-    //                pageUrl = request.URLString.stringByReplacingOccurrencesOfString("#?skin=page", withString: "")
-    //                pageUrl = request.URLString.stringByReplacingOccurrencesOfString("?skin=page", withString: "")
-    SearchHolder.sharedInstance.selectedItem = nil
-    SearchHolder.sharedInstance.currentUrl = pageUrl
-    pageUrl += "?skin=page"
-    let url : NSURL? = NSURL(string: pageUrl)
-    self.webView.loadRequest(NSURLRequest(URL: url!))
-    return false
-    } else if pageUrl.containsString("redirect"){
-    let url : NSURL? = NSURL(string: UserData.sharedInstance.lastVisitedString!)
-    self.webView.loadRequest(NSURLRequest(URL: url!))
-    return false
-    }
-    }
-    
-    return true;
-    }
-    
-    func webViewDidFinishLoad(webView: UIWebView) {
-    
-    if !isCorrectSkinnedPage(){
-    self.refreshWebView()
-    return
-    }
-    let currentTitle : String? = self.loadCurrentTitleFromHTML()
-    SearchHolder.sharedInstance.currentTitle = currentTitle
-    SearchHolder.sharedInstance.currentUrl = self.webView.request?.URLString
-    let currentCategory : String? = CategoriesListed.GetBeautyCategoryFromUrlString((self.webView.request?.URLString)!)
-    SearchHolder.sharedInstance.currentCategory = currentCategory
-    self.progressBar.setProgress(1, animated: true)
-    self.performSelector("hideProgressBar", withObject: nil, afterDelay: 0.5)
-    self.updateFavouriteIcon()
-    UserData.sharedInstance.lastVisitedString = SearchHolder.sharedInstance.currentUrl
-    
-    // we leave getting info from the js as it is - but non the less we start the request if we made a mistake
-    // or perhaps the js > request so we are double "safe"
-    self.getPageInfoFromUrl(SearchHolder.sharedInstance.currentUrl!.stringByReplacingOccurrencesOfString("?skin=page", withString: ""))
-    
-    
-    self.checkIfScrollViewIsScrollableToToggleToolbars()
-    
-    }
-    
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?){
-    self.hideProgressBar()
-    
-    
-    print("Der gewünschte Inhalt kann in der App leider nicht wiedergegeben werden")
-    
-    }
-    
-    
-    func webViewDidStartLoad(webView: UIWebView) {
-    self.progressBar.hidden = false
-    self.progressBar.setProgress(0.5, animated: true)
-    }
-    
-    func loadCurrentTitleFromHTML () -> String? {
-    return ""
-    let jsCMD =
-    //declare a function
-    "function getHeaderTitle () { var values = document.getElementsBySelector(\"h1\");" +
-    "if (values.length > 0){" +
-    "var headerTag = values[0]; " +
-    "}" +
-    "return headerTag.getText()}" +
-    //now call the function and get a return string
-    "getHeaderTitle()"
-    
-    
-    let jsCMD2 =
-    "function getWebBookInfo () { " +
-    "var values = document.getElementsByClassName(\"bread-title\");" +
-    "if (values.length == 2){" +
-    "return values[1].textContent;" +
-    "} else if (values.length == 1){" +
-    "return values[0].textContent;" +
-    "}" +
-    "}" +
-    "getWebBookInfo()"
-    
-    
-    
-    
-    var title : String?
-    var titleWebBook : String?
-    
-    
-    self.webKitView.evaluateJavaScript(jsCMD, completionHandler: {
-    (result, error) -> Void in
-    title = result as? String
-    })
-    
-    self.webKitView.evaluateJavaScript(jsCMD2, completionHandler: {
-    (result, error) -> Void in
-    titleWebBook = result as? String
-    })
-    
-    if title!.characters.count > 0 {
-    print("Returning title : \(title) count of title is \(title!.characters.count)")
-    return title
-    } else {
-    
-    print("Returning title : \(titleWebBook)")
-    return titleWebBook
-    }
-    }
-    */
-    
-}
 
 
 

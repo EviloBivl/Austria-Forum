@@ -25,22 +25,22 @@ class ReadWriteToPList {
     func loadFavourites() -> Bool {
         
         // getting path to GameData.plist
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
         let documentsDirectory = paths[0] as! NSString
-        let path = documentsDirectory.stringByAppendingPathComponent("Favourites.plist")
+        let path = documentsDirectory.appendingPathComponent("Favourites.plist")
         
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager = FileManager.default
         
         //check if file exists
-        if(!fileManager.fileExistsAtPath(path)) {
+        if(!fileManager.fileExists(atPath: path)) {
             // If it doesn't, copy it from the default file in the Bundle
-            if let bundlePath = NSBundle.mainBundle().pathForResource("Favourites", ofType: "plist") {
+            if let bundlePath = Bundle.main.path(forResource: "Favourites", ofType: "plist") {
                 
                 let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
                 print("Bundle Favourites.plist file is --> \(resultDictionary?.description)")
                 
                 do {
-                    try fileManager.copyItemAtPath(bundlePath, toPath: path)
+                    try fileManager.copyItem(atPath: bundlePath, toPath: path)
                 } catch _ {
                     print("exception happend")
                     return false
@@ -80,29 +80,29 @@ class ReadWriteToPList {
         return true
     }
     
-    func saveFavourite(articleToSave : [String:String]) -> Bool {
+    func saveFavourite(_ articleToSave : [String:String]) -> Bool {
         
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
-        let documentsDirectory = paths.objectAtIndex(0) as! NSString
-        let path = documentsDirectory.stringByAppendingPathComponent("Favourites.plist")
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
+        let documentsDirectory = paths.object(at: 0) as! NSString
+        let path = documentsDirectory.appendingPathComponent("Favourites.plist")
         
         let dict: NSMutableDictionary = [:]
-        self.countOfFavourites++
-        dict.setObject(self.countOfFavourites, forKey: "CountOfFavourites")
+        self.countOfFavourites += 1
+        dict.setObject(self.countOfFavourites, forKey: "CountOfFavourites" as NSCopying)
         self.favourites.append(articleToSave)
-        dict.setObject(self.favourites, forKey: "Favourites")
+        dict.setObject(self.favourites, forKey: "Favourites" as NSCopying)
         
         //writing to Favourite.plist
-        if dict.writeToFile(path, atomically: false) {
+        if dict.write(toFile: path, atomically: false) {
             return true
         } else {
             self.favourites.removeLast()
-            self.countOfFavourites--
+            self.countOfFavourites -= 1
             return false
         }
     }
     
-    func isFavourite (article: [String:String]) -> Bool {
+    func isFavourite (_ article: [String:String]) -> Bool {
         
         
          if (!article.keys.contains("url")){
@@ -119,7 +119,7 @@ class ReadWriteToPList {
             if dict["url"] == article["url"]{
                 return true
             }
-            if dict["url"]?.stringByAppendingString("?skin=page") == article["url"]{
+            if (dict["url"])! + "?skin=page" == article["url"]!{
                 return true
             }
         }
@@ -129,7 +129,7 @@ class ReadWriteToPList {
     /*
     In Order to remove a Favourite properly the given article MUST contain the Url. Removing based on category or title is not working
     */
-    func removeFavourite(articleToRemove: [String: String]) -> Bool {
+    func removeFavourite(_ articleToRemove: [String: String]) -> Bool {
         
         if (!articleToRemove.keys.contains("url")){
             print("The Key \"url\" is not within the given Dictionary for REMOVEING a Favourite")
@@ -148,20 +148,20 @@ class ReadWriteToPList {
                 removeIt = true
                 break
             }
-            removeIndex++
+            removeIndex += 1
         }
         if removeIt {
-            self.favourites.removeAtIndex(removeIndex)
-            self.countOfFavourites--
+            self.favourites.remove(at: removeIndex)
+            self.countOfFavourites -= 1
             
-            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
-            let documentsDirectory = paths.objectAtIndex(0) as! NSString
-            let path = documentsDirectory.stringByAppendingPathComponent("Favourites.plist")
+            let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
+            let documentsDirectory = paths.object(at: 0) as! NSString
+            let path = documentsDirectory.appendingPathComponent("Favourites.plist")
             
             let dict: NSMutableDictionary = [:]
-            dict.setObject(self.countOfFavourites, forKey: "CountOfFavourites")
-            dict.setObject(self.favourites, forKey: "Favourites")
-            if dict.writeToFile(path, atomically: false) {
+            dict.setObject(self.countOfFavourites, forKey: "CountOfFavourites" as NSCopying)
+            dict.setObject(self.favourites, forKey: "Favourites" as NSCopying)
+            if dict.write(toFile: path, atomically: false) {
                 return true
             } else {
                 return false

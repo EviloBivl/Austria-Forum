@@ -11,10 +11,12 @@ import Foundation
 /** NetworkDelegation protocol
 
 */
-protocol NetworkDelegation {
+@objc
+protocol NetworkDelegation : class{
     
-    func onRequestFailed(from: String?);
-    func onRequestSuccess(from: String?);
+    func onRequestFailed();
+    func onRequestSuccess(_ from: String);
+    @objc optional func noInternet();
 
 }
 
@@ -22,4 +24,17 @@ protocol PageInfoDelegate {
     func onPageInfoSuccess();
     func onPageInfoFail();
 
+}
+
+
+protocol LocationControllerDelegate : class {
+    func receivedPermissionResult()
+}
+
+protocol OptionsLocationDelegate : class {
+    func receivedAlwaysPermissions()
+}
+
+protocol LocationErrorDelegate : class {
+    func receivedErrorFromLocationManager()
 }

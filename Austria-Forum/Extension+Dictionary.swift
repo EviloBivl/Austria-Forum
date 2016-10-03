@@ -11,7 +11,7 @@ import Foundation
 
 extension Dictionary {
     
-    func isEqual(toCompare: [String:String]) -> Bool {
+    func isEqual(_ toCompare: [String:String]) -> Bool {
         
         //count of entries are simply not equal
         if self.count != toCompare.count {
@@ -19,7 +19,7 @@ extension Dictionary {
         }
         
         for (key, val) in self {
-            if let v = val as? String, k = key as? String {
+            if let v = val as? String, let k = key as? String {
                 if toCompare[k] != v{
                     return false
                 }

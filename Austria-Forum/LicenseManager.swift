@@ -10,7 +10,7 @@ import Foundation
 
 class LicenseManager {
     
-    class func getImageNameForLicense(licenseName : String) -> String? {
+    class func getImageNameForLicense(_ licenseName : String) -> String? {
         
         if let license = LicenseName(rawValue: licenseName){
             
@@ -39,11 +39,11 @@ class LicenseManager {
         }
         
         
-        return .None
+        return .none
     }
     
     
-    class func getLinkForLicense(licenseName : String) -> String? {
+    class func getLinkForLicense(_ licenseName : String) -> String? {
         
         if let license = LicenseName(rawValue: licenseName){
             
@@ -70,30 +70,30 @@ class LicenseManager {
                 return LicenseUrl.CCBYNCND.rawValue
             }
         }
-        return .None
+        return .none
     }
         
 }
 
 enum LicenseName : String{
-    case AF = "AF"
-    case PD = "PD"
-    case CC0 = "CC0"
-    case CCBY = "CCBY"
-    case CCBYSA = "CCBYSA"
-    case CCBYSA30 = "CCBYSA30"
-    case CCBYND = "CCBYND"
-    case CCBYNC = "CCBYNC"
-    case CCBYNCSA = "CCBYNCSA"
-    case CCBYNCND = "CCBYNCND"
+    case AF = "af"
+    case PD = "pd"
+    case CC0 = "cc0"
+    case CCBY = "ccby"
+    case CCBYSA = "ccbysa"
+    case CCBYSA30 = "ccbysa30"
+    case CCBYND = "ccbynd"
+    case CCBYNC = "ccbync"
+    case CCBYNCSA = "ccbyncsa"
+    case CCBYNCND = "ccbyncnd"
     
-    func rawValueToType(raw: String) -> LicenseName? {
+    func rawValueToType(_ raw: String) -> LicenseName? {
         return LicenseName(rawValue: raw)
     }
 }
 
 enum LicenseUrl : String {
-    case AF = "http://austria-forum.org/af/Lizenzen/Austria-Forum"
+    case AF = "http://austria-forum.org/af/Lizenzen/AF"
     case PD = "https://creativecommons.org/about/pdm/"
     case CC0 = "https://creativecommons.org/publicdomain/zero/1.0/"
     case CCBY = "https://creativecommons.org/licenses/by/4.0/"

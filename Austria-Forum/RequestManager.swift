@@ -18,22 +18,28 @@ class RequestManager : NSObject {
     
     static let sharedInstance = RequestManager()
     
-    var alamo : Manager?
+    var alamo : SessionManager?
+    let timeoutInSeconds : TimeInterval = 6
     
-    private override init(){
+    fileprivate override init(){
         super.init()
-        self.alamo = Manager.sharedInstance
+        self.alamo = SessionManager()
+        
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = timeoutInSeconds
+        config.timeoutIntervalForResource = timeoutInSeconds
+        self.alamo = SessionManager(configuration: config)
         
     }
     
     
-    func getRandomArticle(delegate: AnyObject? = nil, categories: [String]){
+    func getRandomArticle(_ delegate: NetworkDelegation, categories: [String]){
         let getRandomArticleRequest : GetRandomArticleRequest = GetRandomArticleRequest(categories: categories)
         performRequest(getRandomArticleRequest, delegate: delegate)
         
     }
     
-    func getArticleFromMonthlyPool(delegate: AnyObject? = nil, month: String? = nil, year: String? = nil){
+    func getArticleFromMonthlyPool(_ delegate: NetworkDelegation, month: String? = nil, year: String? = nil){
         
         let getArticleFMPReq : GetArticleFromMonthlyPool?
         if let m = month, let y = year {
@@ -46,78 +52,130 @@ class RequestManager : NSObject {
     }
     
     
-    func findPages(delegate: AnyObject? = nil ,query : String, numberOfMaxResults: Int ){
+    func findPages(_ delegate: NetworkDelegation ,query : String, numberOfMaxResults: Int ){
         let findPagesReq : FindPagesRequest = FindPagesRequest(query: query, numberOfMaxResults: numberOfMaxResults)
         performRequest(findPagesReq, delegate: delegate)
         
     }
     
-    func getArticlesByLocation (delegate: AnyObject?  = nil, location: CLLocationCoordinate2D, numberOfResults: Int){
+    func getArticlesByLocation (_ delegate: NetworkDelegation, location: CLLocationCoordinate2D, numberOfResults: Int){
         let getArticlesByLocationRequest : GetArticlesByLocationRequest = GetArticlesByLocationRequest(coordinates: location, numberOfResults: numberOfResults)
         performRequest(getArticlesByLocationRequest, delegate: delegate)
         
     }
     
-    func getPageInfoFromUrls(delegate : AnyObject? = nil, urls : [String]){
+    func getPageInfoFromUrls(_ delegate: NetworkDelegation, urls : [String]){
         let pageInfoRequest : GetPageInfoFromUrls = GetPageInfoFromUrls(urls: urls)
         performRequest(pageInfoRequest, delegate: delegate)
     }
-
-
-    private func performRequest(req: BaseRequest, delegate: AnyObject? = nil) -> Void{
-
-        if let reachable = delegate as? ReachabilityDelegate {
-            if ReachabilityHelper.sharedInstance.connection == ReachabilityType.NO_INTERNET{
-                reachable.noInternet()
-                return
-            }
+    
+    
+    fileprivate func performRequest(_ req: BaseRequest, delegate: NetworkDelegation) -> Void {
+        
+        
+        if ReachabilityHelper.sharedInstance.connection == ReachabilityType.no_INTERNET{
+            delegate.noInternet?()
+            return
         }
         
         
         print("====== STARTING REQUEST ========= FOR ID:  \(req.requestBody["id"]!)    =====");
+        print("\(req.requestBody.debugDescription)")
         
-        self.alamo!.request(.POST, req.urlAF, parameters: req.requestBody, encoding: .JSON, headers: req.requestHeader ).responseJSON { jsonResp in
+        self.alamo!.request(req.urlAF, method: .post, parameters: req.requestBody, encoding: JSONEncoding.default, headers: req.requestHeader ).responseJSON { /*[unowned delegate]*/
             
+            jsonResp in
             
-            var id : Int = 0;
-            var reqName : String?
-            
-            if let body = jsonResp.request!.HTTPBody {
-                let json = JSON(data: body)
-                id = json["id"].intValue
-                reqName = json["method"].stringValue
-                print("====== REQUEST STARTED WITH ===== FOR ID:  \(id)    =====")
-                print(json.debugDescription)
-
-            }
-            
-            print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(id)    =====")
             
             if let error = jsonResp.result.error {
-                print(error.debugDescription)
-                if delegate is NetworkDelegation {
-                    (delegate as! NetworkDelegation).onRequestFailed(nil)
-                }
+                print(error.localizedDescription)
+                delegate.onRequestFailed()
+                return
             }
-            
-            if jsonResp.result.isSuccess {
-                if let value = jsonResp.result.value {
-                    req.parseResponse(JSON(value))
-                    if delegate is NetworkDelegation {
-                        (delegate as! NetworkDelegation).onRequestSuccess(reqName)
+                
+            else if jsonResp.result.isSuccess {
+                if let responseJSON = jsonResp.result.value as? [String: AnyObject], let value = jsonResp.result.value {
+                    if let idFromReq = responseJSON["id"] as? Int /*let results = responseJSON["result"] as? [String: AnyObject]*/{
+                        
+                        
+                        print("====== REQUEST STARTED WITH ===== FOR ID:  \(idFromReq)    =====")
+                        print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(idFromReq)    =====")
+                        print("\(jsonResp.result.value)")
+                        print("=======================================================")
+                        let methodString = RequestID.getStringForRawValue(idFromReq)
+                        
+                        let responseInJson = JSON(value)
+                        req.parseResponse(responseInJson)
+                        delegate.onRequestSuccess(methodString)
+                        
+//                        if let list = results["list"] as? [AnyObject]{
+//                            if let mapDict = list.first as? [String: AnyObject]{
+//                                if let map = mapDict["map"] as? [String: AnyObject]{
+//                                    if let query = map["query"] as? String, let name = map["name"] as? String, let title = map["title"] as? String, let url = map["url"] as? String {
+//                                        // print("executet query was: \(query)")
+//                                        // var license = "AF"
+//                                        // if let newlicense = map["license"] as? String{
+//                                        // license = newlicense
+//                                        // }
+//                                        let searchResult = SearchResult(title: title, name: name, url: url, score: 100, license: nil)
+//                                        SearchHolder.sharedInstance.selectedItem = searchResult
+//                                        //   req.sendValue(query)
+//                                        // delegate.onRequestSuccess("search.getPageInfo")
+//                                    }
+//                                }
+//                            }
+//                        }
                     }
-                    
-                    
                 }
+                
             } else if jsonResp.result.isFailure {
                 print("For now we are failing in the alamo closures - later send it to delegate")
             }
             
             
-            print("====== RESPONSE END         ===== FOR ID:  \(id)    =====")
+            print("====== RESPONSE END         ============================")
+            
+            
         }
     }
 }
+
+public enum RequestID : Int {
+    
+    case getPageInfo = 1001
+    case getRandomPage = 1002
+    case getLocationArticles = 1003
+    case getMonthlyArticle = 1004
+    case getSearchedArticles = 1005
+    
+    static func getStringForRawValue (_ rawVal : Int)  -> String {
+        
+        let requestId = RequestID(rawValue: rawVal)
+        if let requestId = requestId {
+            switch requestId {
+            case .getPageInfo:
+                return "search.getPageInfo"
+            case .getRandomPage:
+                return "search.getRandomPage"
+            case .getLocationArticles:
+                return "search.getAllPagesInRange"
+            case .getSearchedArticles:
+                return "search.findPagesMobile"
+            case .getMonthlyArticle:
+                return "search.getArticleFromMonthlyPool"
+            }
+        } else {
+            return ""
+        }
+    }
+    
+}
+
+/*
+ 
+ 
+ */
+
 
 
 

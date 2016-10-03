@@ -14,6 +14,6 @@ class LocationArticleHolder {
     var articles : Array<LocationArticleResult> = []
     
     
-    private init(){}
+    fileprivate init(){}
     
 }

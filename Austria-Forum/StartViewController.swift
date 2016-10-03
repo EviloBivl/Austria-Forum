@@ -27,10 +27,10 @@ class StartViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if UserData.sharedInstance.checkIfAppStartsTheFirstTime() {
-            self.performSegueWithIdentifier("toDetailView", sender: self)
+            self.performSegue(withIdentifier: "toDetailView", sender: self)
         } else {
             self.rememberUserStartedAppTheFirstTime()
         }
@@ -44,7 +44,7 @@ class StartViewController: UIViewController {
     }
     
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
     }
@@ -60,7 +60,7 @@ class StartViewController: UIViewController {
         just remeber the user started the app for the firsttime
     */
     func rememberUserStartedAppTheFirstTime(){
-        UserData.sharedInstance.setValueForKey("App already started once", key: UserDefaultKeys.kFirstTimeStartingAppString)
+        UserData.sharedInstance.setValueForKey("App already started once" as AnyObject, key: UserDefaultKeys.kFirstTimeStartingAppString)
        
     }
     

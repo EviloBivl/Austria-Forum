@@ -10,9 +10,9 @@ import Foundation
 import ReachabilitySwift
 
 enum ReachabilityType {
-    case WIFI
-    case CELLULAR
-    case NO_INTERNET
+    case wifi
+    case cellular
+    case no_INTERNET
 }
 
 class ReachabilityHelper {
@@ -22,13 +22,13 @@ class ReachabilityHelper {
     static let sharedInstance = ReachabilityHelper()
     var reachability : Reachability?
     
-    var connection : ReachabilityType = .NO_INTERNET
+    var connection : ReachabilityType = .no_INTERNET
     var delegate : ReachabilityDelegate?
     
-    private init(){
+    fileprivate init(){
         
         do {
-            reachability = try Reachability.reachabilityForInternetConnection()
+            reachability =  Reachability.init()
             addObserver()
             try reachability?.startNotifier()
         } catch {
@@ -38,34 +38,33 @@ class ReachabilityHelper {
         
     }
     
-    
-    private func addObserver(){
+    fileprivate func addObserver(){
         
-        NSNotificationCenter.defaultCenter().addObserverForName(ReachabilityChangedNotification, object: nil, queue: NSOperationQueue.mainQueue(), usingBlock: {
+        NotificationCenter.default.addObserver(forName: ReachabilityChangedNotification, object: nil, queue: OperationQueue.main, using: {
             notification in
             self.reachabilityChanged(notification)
         })
         
     }
     
-    func reachabilityChanged(note: NSNotification) {
+    func reachabilityChanged(_ note: Notification) {
         
         let reachability = note.object as! Reachability
         
-        if reachability.isReachable() {
-            if reachability.isReachableViaWiFi() {
+        if reachability.isReachable {
+            if reachability.isReachableViaWiFi {
                 print("Reachable via WiFi")
-                self.connection = .WIFI
+                self.connection = .wifi
             } else {
                 print("Reachable via Cellular")
-                self.connection = .CELLULAR
+                self.connection = .cellular
             }
             if let del = self.delegate {
                 del.InternetBack()
             }
         } else {
             print("Not reachable")
-            self.connection = .NO_INTERNET
+            self.connection = .no_INTERNET
             if let del = self.delegate {
                 del.noInternet()
             }
@@ -75,17 +74,11 @@ class ReachabilityHelper {
     
     func removeObserver(){
         reachability?.stopNotifier()
-        NSNotificationCenter.defaultCenter().removeObserver(self,
+        NotificationCenter.default.removeObserver(self,
             name: ReachabilityChangedNotification,
             object: reachability)
     }
     
-    deinit {
-        // in case the Object get deinit before we can remove the Observer in an apropiate way
-        NSNotificationCenter.defaultCenter().removeObserver(self,
-            name: ReachabilityChangedNotification,
-            object: reachability)
-    }
     
 }
 

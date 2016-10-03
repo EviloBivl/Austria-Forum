@@ -15,11 +15,11 @@ class SearchHolder {
     var searchResults : [SearchResult] = []
     var selectedItem : SearchResult? {
         didSet{
-            if let _ = self.selectedItem?.license{
+            if let _ = self.selectedItem?.licenseResult {
                 //ok do nothing
             } else {
                 //default to af license
-                self.selectedItem?.license = "AF"
+                self.selectedItem?.licenseResult = LicenseResult(withCss: "af", withTitle: "af", withUrl: "http://austria-forum.org/af/Lizenzen/AF", withId: "AF")
             }
         }
     }
@@ -27,9 +27,11 @@ class SearchHolder {
     var currentUrl: String? 
     var resultMessage: String = "Leider liegt ein Fehler vor. Es wird daran gearbeitet."
     var currentCategory : String?
+    var dummyObjectHolder : AnyObject?
+    
     
     var fetchedPageInfosFromGetPageInfo : SearchResult?
     
-    private init(){}
+    fileprivate init(){}
     
 }

@@ -16,18 +16,20 @@ class FavouritesHolder {
     var favourites : Array<[String:String]> = [[:]]
     var countOfFavourites : Int = 0
     
-    private init(){
+    fileprivate init(){
         
         self.pListWorker = ReadWriteToPList()
-        pListWorker.loadFavourites()
+        if pListWorker.loadFavourites() {
         self.favourites = pListWorker.favourites
         self.countOfFavourites = pListWorker.countOfFavourites
+        }
     }
     
     func refresh(){
-        pListWorker.loadFavourites()
+       if pListWorker.loadFavourites() {
         self.favourites = pListWorker.favourites
         self.countOfFavourites = pListWorker.countOfFavourites
+        }
 
     }
     

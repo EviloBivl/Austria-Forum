@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 /** UserData Class
  
  On creation the class will load all stored Values from the NSUserDefaults into the stored properties of the class
@@ -17,9 +18,8 @@ import Foundation
 class UserData : NSObject {
     
     static let sharedInstance = UserData()
-    private var userDefaults : NSUserDefaults?
+    fileprivate var userDefaults : UserDefaults?
     
-    var testData : Bool = false
     
     /**
      If you set this property it will also get stored as Object in the NSUserDefaults with the key UserDefaultKeys.kLastVisitedString
@@ -33,7 +33,7 @@ class UserData : NSObject {
             }
         }
         set{
-            self.setValueForKey(newValue!, key: UserDefaultKeys.kLastVisitedString)
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kLastVisitedString)
         }
     }
     
@@ -47,12 +47,25 @@ class UserData : NSObject {
             }
         }
         set{
-            self.setValueForKey(newValue!, key: UserDefaultKeys.kOptionAllowPushNotificationBool)
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kOptionAllowPushNotificationBool)
+        }
+    }
+    
+    var wasPushPermissionAsked : Bool? {
+        get{
+            if let val = self.getValueForKey(UserDefaultKeys.kOptionWasPushPermissionAskedBool) as? Bool {
+                return val
+            } else {
+                return UserDefaultValues.wasPushPermissionAsked
+            }
+        }
+        set{
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kOptionWasPushPermissionAskedBool)
         }
     }
     /*
-    seems to be unesed atm
-    */
+     seems to be unesed atm
+     */
     var optionLocationUpdateInterval : Int? {
         get{
             if let val = self.getValueForKey(UserDefaultKeys.kOptionLocationUpdateIntervalInt) as? Int {
@@ -62,21 +75,22 @@ class UserData : NSObject {
             }
         }
         set{
-            self.setValueForKey(newValue!, key: UserDefaultKeys.kOptionLocationUpdateIntervalInt)
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kOptionLocationUpdateIntervalInt)
         }
         
     }
     
-    var lastNotificationDate : NSDate? {
+    var lastNotificationDate : Date? {
         get{
-            if let val = self.getValueForKey(UserDefaultKeys.kLastNotificationMessageNSDate) as? NSDate {
+            if let val = self.getValueForKey(UserDefaultKeys.kLastNotificationMessageNSDate) as? Date {
                 return val
             } else {
-                return NSDate()
+                self.lastNotificationDate = Date()
+                return Date()
             }
         }
         set{
-            self.setValueForKey(newValue!, key: UserDefaultKeys.kLastNotificationMessageNSDate)
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kLastNotificationMessageNSDate)
         }
         
     }
@@ -90,7 +104,7 @@ class UserData : NSObject {
             }
         }
         set{
-            self.setValueForKey(newValue!, key: UserDefaultKeys.kLocationChangedValueInt)
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kLocationChangedValueInt)
         }
     }
     
@@ -99,13 +113,11 @@ class UserData : NSObject {
             if let val = self.getValueForKey(UserDefaultKeys.kLocationSignificantChangeAllowedBool) as? Bool {
                 return val
             } else {
-                
-                print("RETURNED DEFAULT VALUE")
                 return UserDefaultValues.allowLocationSignificantChange
             }
         }
         set{
-            self.setValueForKey(newValue!, key: UserDefaultKeys.kLocationSignificantChangeAllowedBool)
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kLocationSignificantChangeAllowedBool)
         }
     }
     
@@ -114,14 +126,13 @@ class UserData : NSObject {
             if let val = self.getValueForKey(UserDefaultKeys.kLocationDistanceChangeAllowedBool) as? Bool {
                 return val
             } else {
-                print("RETURNED DEFAULT VALUE")
                 return UserDefaultValues.allowLocationDistanceChange
             }
         }
         set{
-            self.setValueForKey(newValue!, key: UserDefaultKeys.kLocationDistanceChangeAllowedBool)
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kLocationDistanceChangeAllowedBool)
         }
-
+        
     }
     
     var notificationIntervalInSeconds : Int? {
@@ -133,7 +144,7 @@ class UserData : NSObject {
             }
         }
         set{
-            self.setValueForKey(newValue!, key: UserDefaultKeys.kNotificationIntervalInSecondsInt)
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kNotificationIntervalInSecondsInt)
         }
     }
     
@@ -146,10 +157,22 @@ class UserData : NSObject {
             }
         }
         set{
-            self.setValueForKey(newValue!, key: UserDefaultKeys.kCategorySelectedString)
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kCategorySelectedString)
         }
     }
     
+    var disableToolbar : Bool? {
+        get {
+            if let val = self.getValueForKey(UserDefaultKeys.kDisableToolbarBool) as? Bool {
+                return val
+            } else {
+                return UserDefaultValues.disableToolbar
+            }
+        }
+        set {
+            self.setValueForKey(newValue! as AnyObject, key: UserDefaultKeys.kDisableToolbarBool)
+        }
+    }
     
     /**
      If we set this property, persist it
@@ -157,9 +180,13 @@ class UserData : NSObject {
     var articleOfTheMonth : SearchResult?  {
         get{
             if let val = self.getValueForKey(UserDefaultKeys.kArticleOfTheMonthSearchResult) as? NSDictionary {
-                return SearchResult(title: val.valueForKey("title") as! String, name: val.valueForKey("name") as! String, url: val.valueForKey("url") as! String, score: 100, license: val.valueForKey("license") as? String )
+                var licenseResult : LicenseResult? = .none
+                if let license = val["licenseResult"] as? NSDictionary{
+                    licenseResult = LicenseResult(withCss: license["css"] as? String, withTitle: license["title"] as? String, withUrl: license["url"] as? String, withId: license["id"]as? String)
+                }
+                return SearchResult(title: val.value(forKey: "title") as? String, name: val.value(forKey: "name") as? String, url: val.value(forKey: "url") as? String, score: 100, licenseResult: licenseResult )
             } else{
-                return SearchResult(title: "", name: "", url: self.lastVisitedString!, score: 0, license: nil)
+                return SearchResult(title: "", name: "", url: self.lastVisitedString, score: 0, licenseResult: .none)
             }
         }
         set{
@@ -167,11 +194,11 @@ class UserData : NSObject {
         }
     }
     
-
     
-    private override init(){
+    
+    fileprivate override init(){
         super.init()
-        self.userDefaults = NSUserDefaults.standardUserDefaults()
+        self.userDefaults = UserDefaults.standard
         
         
         //load all saved defaults to save userDefaults access later
@@ -179,37 +206,48 @@ class UserData : NSObject {
         
     }
     
-    func setValueForKey(value: AnyObject, key: String){
-        self.userDefaults?.setObject(value, forKey: key)
+    func setValueForKey(_ value: AnyObject, key: String){
+        self.userDefaults?.set(value, forKey: key)
     }
     
-    func getValueForKey(key: String) -> AnyObject?{
-        return self.userDefaults?.objectForKey(key)
+    func getValueForKey(_ key: String) -> AnyObject?{
+        return self.userDefaults?.object(forKey: key) as AnyObject?
     }
     
-    func removeValueForKey(key: String) {
-        self.userDefaults?.removeObjectForKey(key)
+    func removeValueForKey(_ key: String) {
+        self.userDefaults?.removeObject(forKey: key)
     }
     
     
-    private func persistArticleOfTheMonth(article: SearchResult) {
+    fileprivate func persistArticleOfTheMonth(_ article: SearchResult) {
         if checkIfArticleOfTheMonthNeedsReload() {
-            let emptyLicense : String? = ""
-            let license = article.license ?? emptyLicense
-            let dictFromSearchResult : NSDictionary = ["url":article.url, "title" : article.title, "name" : article.name, "score" : article.score, "license" : license! ]
-            setValueForKey(dictFromSearchResult, key: UserDefaultKeys.kArticleOfTheMonthSearchResult)
-            setValueForKey(NSDate(), key: UserDefaultKeys.kLastMonthOfArticleOfTheMonthNSDate)
+
+            var licenseDict : [String:String] = [:]
+            if let license = article.licenseResult {
+                licenseDict = ["id" : license.id!, "title": license.title!, "css" : license.css!, "url" : license.url!]
+            }
+            
+            let url = article.url as AnyObject? ?? "" as AnyObject
+            let title = article.title as AnyObject? ?? "" as AnyObject
+            let name = article.name as AnyObject? ?? "" as AnyObject
+            let score = article.score as AnyObject
+            
+            let dictFromSearchResult : [String:AnyObject] = ["url":url, "title" : title,
+                                                             "name" : name, "score" : score,
+                                                             "licenseResult" : licenseDict as AnyObject]
+            setValueForKey(dictFromSearchResult as AnyObject, key: UserDefaultKeys.kArticleOfTheMonthSearchResult)
+            setValueForKey(Date() as AnyObject, key: UserDefaultKeys.kLastMonthOfArticleOfTheMonthNSDate)
         }
     }
     
     func checkIfArticleOfTheMonthNeedsReload () -> Bool{
-        let calendar = NSCalendar.init(calendarIdentifier: NSCalendarIdentifierGregorian)
-        let currentMonth = (calendar?.component(NSCalendarUnit.Month, fromDate: NSDate()))!
-        let currentYear = (calendar?.component(NSCalendarUnit.Year, fromDate: NSDate()))!
+        let calendar = Calendar.init(identifier: Calendar.Identifier.gregorian)
+        let currentMonth = ((calendar as NSCalendar?)?.component(NSCalendar.Unit.month, from: Date()))!
+        let currentYear = ((calendar as NSCalendar?)?.component(NSCalendar.Unit.year, from: Date()))!
         
-        if let lastDate = getValueForKey(UserDefaultKeys.kLastMonthOfArticleOfTheMonthNSDate) as? NSDate {
-            let lastMonth = (calendar?.component(NSCalendarUnit.Month, fromDate: lastDate))!
-            let lastYear = (calendar?.component(NSCalendarUnit.Year, fromDate: lastDate))!
+        if let lastDate = getValueForKey(UserDefaultKeys.kLastMonthOfArticleOfTheMonthNSDate) as? Date {
+            let lastMonth = ((calendar as NSCalendar?)?.component(NSCalendar.Unit.month, from: lastDate))!
+            let lastYear = ((calendar as NSCalendar?)?.component(NSCalendar.Unit.year, from: lastDate))!
             if lastYear < currentYear {
                 return true
             } else {
@@ -224,9 +262,10 @@ class UserData : NSObject {
     }
     
     
-    private func loadAllSavedValuesFromUserDefaults () {
+    
+    fileprivate func loadAllSavedValuesFromUserDefaults () {
         
-       
+        
         
     }
     /**
@@ -269,12 +308,14 @@ struct UserDefaultKeys {
     static let kLocationSignificantChangeAllowedBool : String = "kSignificantChangeAllowed"
     static let kLocationDistanceChangeAllowedBool : String = "kRegularLocationChange"
     static let kCategorySelectedString : String = "kCategorySelected"
+    static let kDisableToolbarBool : String = "kDisableToolBar"
+    static let kOptionWasPushPermissionAskedBool : String = "kWasPushPermissionAsked"
     
 }
 
 /**
  Struct containing all Default Values for not set settings
-*/
+ */
 struct UserDefaultValues {
     static let intervalTime : Int = 10
     static let allowPushNotifications : Bool = false
@@ -283,6 +324,8 @@ struct UserDefaultValues {
     static let locationChangedValue : Int = 50
     static let notificationIntervalSeconds = 1 * 60
     static let categorySelected : String = "ALL"
+    static let disableToolbar : Bool = false
+    static let wasPushPermissionAsked : Bool = false
 }
 
 

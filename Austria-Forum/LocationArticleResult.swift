@@ -10,25 +10,26 @@ import Foundation
 
 class LocationArticleResult {
     
-    private(set) var title : String = ""
-    private(set) var name : String = ""
-    private(set) var url: String = ""
-    private(set) var distanceString : String = ""
-    private(set) var distanceValue : Int = 0
-    private(set) var license : String?
+    fileprivate(set) var title : String = ""
+    fileprivate(set) var name : String = ""
+    fileprivate(set) var url: String = ""
+    fileprivate(set) var distanceString : String = ""
+    fileprivate(set) var distanceValue : Int = 0
+    fileprivate(set) var licenseResult: LicenseResult?
     
-    private init(){
+    
+    fileprivate init(){
         
     }
     
-    convenience init(title: String, name: String, url: String, distanceStr: String, distanceVal : Int, license: String?) {
+    convenience init(title: String, name: String, url: String, distanceStr: String, distanceVal : Int, licenseResult: LicenseResult?) {
         self.init()
         self.title = title
         self.name = name
         self.url = url
         self.distanceValue = distanceVal
         self.distanceString = distanceStr
-        self.license = license
+        self.licenseResult = licenseResult
     }
 
 }

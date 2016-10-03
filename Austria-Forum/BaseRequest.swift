@@ -19,7 +19,8 @@ class BaseRequest : NSObject {
  //   static let urlAFStatic = "http://192.168.178.21:8080"
     var requestHeader : [String:String] = [:]
     var requestBody : [String:AnyObject] = [:]
-    private(set) var requestID : Int = random()
+    //TODO make requestID random again
+    var requestID : Int = 1337
     
     override init() {
         super.init()
@@ -28,7 +29,7 @@ class BaseRequest : NSObject {
     
     func customInitAfterSuperInit(){
         self.requestHeader["Content-Type"] = "application/json"
-        self.requestBody["id"] = requestID
+        self.requestBody["id"] = requestID as AnyObject?
         
     }
     
@@ -36,14 +37,20 @@ class BaseRequest : NSObject {
         fatalError("\(self.description) must override addAdditionalRequestInfo()")
     }
     
-    func parseResponse (response: JSON){
+    func parseResponse (_ response: JSON){
         fatalError("\(self.description) must override parseResponse(response: JSON)")
     }
+    func sendValue(_ response: AnyObject){
+        
+        print("Response BASEREQUEST: \(response)")
+    }
     
-    func handleResponseError(errorFrom: String, article: [String:AnyObject]){
-        print("Error from \(errorFrom) with ResultCode: \(article["ResultCode"] as? String) and Message: \(article["ResultDescription"])")
+    func handleResponseError(_ errorFrom: String, article: [String:JSON]){
+        print("Error from \(errorFrom) with ResultCode: \(article["ResultCode"]?.string) and Message: \(article["ResultDescription"])")
         //set the article to nil to provide the error message and proper handling of relaoding on failed requests
         SearchHolder.sharedInstance.selectedItem = nil
     }
-    
+    deinit {
+        print("\(self.description) deinit")
+    }
 }

@@ -15,14 +15,16 @@ class GetRandomArticleRequest: BaseRequest {
     var method: String = "search.getRandomPage"
     var categories: [String] = []
     
-    private override init(){
+    fileprivate override init(){
         super.init()
+        self.requestID = RequestID.getRandomPage.rawValue
         self.customInitAfterSuperInit()
     }
     
     convenience init(categories: [String]) {
         self.init()
-        self.categories.appendContentsOf(categories)
+        self.requestID = RequestID.getRandomPage.rawValue
+        self.categories.append(contentsOf: categories)
         self.addAdditionalRequestInfo()
     }
     
@@ -37,32 +39,44 @@ class GetRandomArticleRequest: BaseRequest {
     
     */
     override func addAdditionalRequestInfo() {
-        self.requestBody["method"] = self.method
+        self.requestBody["method"] = self.method as AnyObject?
         //provide a dummy paramter so that JSON-RPC can handle the incoming call
         var paramsArray : Array<AnyObject> = [];
         if (self.categories[0] == "ALL"){
             paramsArray.append(NSNull())
         } else {
-            paramsArray.append(self.categories)
+            paramsArray.append(self.categories as AnyObject)
         }
-        self.requestBody["params"] = paramsArray
+        self.requestBody["params"] = paramsArray as AnyObject?
     }
     
-    override func parseResponse (response : JSON){
-        print("Request : \(self.description)\nResponseData: \(response.description)")
+    override func parseResponse (_ response : JSON){
+        //print("Request : \(self.description)\nResponseData: \(response.description)")
         //do somthing usefull with the result
         
-        if let articles = response["result"]["map"].dictionaryObject {
-            if articles["ResultCode"] as! String == "0"{
-                let name = articles["name"] as! String
-                let title = articles["title"] as! String
-                let url = articles["url"] as! String
+        if let map = response["result"]["map"].dictionary {
+            if map["ResultCode"]?.string == "0"{
+                let name = map["name"]?.string
+                let title = map["title"]?.string
+                let url = map["url"]?.string
                 let score = 100
-                let license = articles["license"] as! String?
-                let result : SearchResult = SearchResult(title: title, name: name, url: url, score: score, license: license)
+                
+                var licenseResult: LicenseResult? = .none
+                if let lic = map["license"]?.dictionary {
+                    if let licenseMap = lic["map"]?.dictionary {
+                        let licCss = licenseMap["css"]?.string
+                        let licUrl = licenseMap["url"]?.string
+                        let licId = licenseMap["id"]?.string
+                        let licTitle = licenseMap["title"]?.string
+                        licenseResult = LicenseResult(withCss: licCss, withTitle: licTitle, withUrl: licUrl, withId: licId)
+                        
+                    }
+                }
+                
+                let result : SearchResult = SearchResult(title: title, name: name, url: url, score: score, licenseResult: licenseResult)
                 SearchHolder.sharedInstance.selectedItem = result
             } else {
-                super.handleResponseError(self.description, article: articles)
+                super.handleResponseError(self.description, article: map)
                 SearchHolder.sharedInstance.resultMessage = "Zur Zeit können leider keine Zufallsartikel vom Server generiert werden."
             }
             
@@ -71,6 +85,10 @@ class GetRandomArticleRequest: BaseRequest {
         
         
         
+    }
+    
+    deinit {
+        print("\(self.description) deinit")
     }
     
     

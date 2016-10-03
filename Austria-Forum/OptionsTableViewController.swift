@@ -7,38 +7,39 @@
 //
 
 import UIKit
+import CoreLocation
+import UserNotifications
 
-class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, OptionsLocationDelegate {
     
-    let pickerOptions : [String] = ["5s debug","1 Minute", "5 Minuten" , "10 Minuten" , "15 Minuten", "30 Minuten" , "60 Minuten"]
-    let pickerValues : [Int] = [5,1 * 60,5 * 60,10 * 60,15 * 60,30 * 60,60 * 60]
+    var pickerOptions : [String] = ["1 Minute", "5 Minuten" , "10 Minuten" , "15 Minuten", "30 Minuten" , "60 Minuten", "2 Stunden"]
+    var pickerValues : [Int] = [1 * 60,5 * 60,10 * 60,15 * 60,30 * 60,60 * 60, 120*60]
     
-    let pushPickerOptions : [String] = ["always","5m debug","20 Meter","50 Meter","100 Meter","250 Meter","500 Meter","1 Km","2 Km"]
-    let pushPickerValues : [Int] = [0,5,20,50,100,250,500,1000,2000]
+    var pushPickerOptions : [String] = ["20 Meter","50 Meter","100 Meter","250 Meter","500 Meter","1 Km","2 Km"]
+    var pushPickerValues : [Int] = [20,50,100,250,500,1000,2000]
     
-    let categoryPickerOptions : [String] = ["Alle","AEIOU","Alltagskultur","AustriaWiki","Bilder & Videos","Community","Geography","Kunst & Kultur","Natur","Politik & Geschichte","Videos","Wissenschaft & Wirtschaft","Biographien","Essays", "Web Books", "force Fail"]
-    let categoryPickerValues : [String] = ["ALL","AEIOU","Alltagskultur","AustriaWiki","Bilder_und_Videos","Community","Geography","Kunst_und_Kultur","Natur","Politik_und_Geschichte","Videos","Wissenschaft_und_Wirtschaft","Wissenssammlungen/Biographien","Wissenssammlungen/Essays", "Web_Books", "not_existing"]
-    
-    
-    let sectionTitlePretty : [String] = ["Ortungseinstellungen", "Zufalls Artikel Einstellungen"]
-    
-    let rowTitlePrettySectionOne : [String] = ["Erlaube Push Notifications", "Lokalisierung im Hintergrund", "Lokalisierung auch wenn Austria-Forum geschlossen ist", "Push Notification nicht öfters als alle..." , "Lokalisierung nicht öfters als alle ..."]
-    
-    let rowTitlePrettySectionTwo : [String] = ["Suche in allen Kategorien" , "Wähle zu durchsuchende"]
-    
-    let isRowExpandableSectionOne : [Bool] = [false, false, false, true, true]
-    var rowIsExpandedSectionOne : [Bool] = [false, false, false, false, false]
+    var categoryPickerOptions : [String] = ["Alle","AEIOU","Alltagskultur","AustriaWiki","Bilder & Videos","Community","Geography","Kunst & Kultur","Natur","Politik & Geschichte","Videos","Wissenschaft & Wirtschaft","Biographien","Essays", "Web Books"]
+    var categoryPickerValues : [String] = ["ALL","AEIOU","Alltagskultur","AustriaWiki","Bilder_und_Videos","Community","Geography","Kunst_und_Kultur","Natur","Politik_und_Geschichte","Videos","Wissenschaft_und_Wirtschaft","Wissenssammlungen/Biographien","Wissenssammlungen/Essays", "Web_Books"]
     
     
+    //    let sectionTitlePretty : [String] = ["Ortungseinstellungen", "Zufalls Artikel Einstellungen"]
+    //
+    //    let rowTitlePrettySectionOne : [String] = ["Erlaube Push Notifications", "Lokalisierung im Hintergrund", "Lokalisierung auch wenn Austria-Forum geschlossen ist", "Push Notification nicht öfters als alle..." , "Lokalisierung nicht öfters als alle ..."]
+    //
+    //    let rowTitlePrettySectionTwo : [String] = ["Suche in allen Kategorien" , "Wähle zu durchsuchende"]
+    //
+    //    let isRowExpandableSectionOne : [Bool] = [false, false, false, true, true]
+    //    var rowIsExpandedSectionOne : [Bool] = [false, false, false, false, false]
+    //
     
+    let infoSection = 2
+    let infoxRow = 1
     
-    
-    //TODO delete me
-    var test : Bool = false
     
     @IBOutlet weak var switchAllowPushNotificationOutlet: UISwitch!
     @IBOutlet weak var switchAllowBackgroundLocation: UISwitch!
     @IBOutlet weak var switchAllowSignificantChange: UISwitch!
+    @IBOutlet weak var switchDisableToolbar: UISwitch!
     
     
     @IBOutlet weak var intervalPicker: UIPickerView!
@@ -50,20 +51,29 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
     let pushIntervalPickerTag : Int = 1
     let categoryPickerTag : Int = 2
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.backgroundColor = UIColor(red: 243.0/255, green: 243.0/255, blue: 243.0/255, alpha: 1)
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
-        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert, categories: nil))
-        switchAllowPushNotificationOutlet.setOn(UserData.sharedInstance.allowPushNotification!, animated: false)
-        self.navigationController?.navigationBarHidden = false
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        self.navigationController?.isNavigationBarHidden = false
         
-        self.setSwitchOptionValues()
+        MyLocationManager.sharedInstance.optionsLocationDelegate = self
+        MyLocationManager.sharedInstance.requestAlways()
+        self.askUserForPushAllowence()
+        
+        
+        self.registerObserverForSystemPreferenceChange()
+        self.synchronizeAppSettingsWithSystemSettings()
+        
         self.setPickerSelection()
         
         self.tableView.allowsSelection = true
-        
-        
+        self.adaptPickerAlpha()
+
+
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -72,72 +82,211 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        //for debug options
+       // self.addDebugOptions()
+        //===
+        super.viewWillAppear(animated)
+    }
+    
+    func receivedAlwaysPermissions() {
+        UserData.sharedInstance.locationSignifacantChangeAllowed = true;
+        DispatchQueue.main.async(execute: {
+            self.synchronizeAppSettingsWithSystemSettings()
+        })
+    }
+    
+    fileprivate func addDebugOptions(){
+        pickerOptions.insert("5s debug", at: 0)
+        pickerValues.insert(5, at: 0)
+        
+        pushPickerValues.insert(0, at: 0)
+        pushPickerOptions.insert("always", at: 0)
+        
+        categoryPickerValues.append("not_existing")
+        categoryPickerOptions.append("force fail");
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //Always set the current controller as the delegate to ReachabilityHelper
-        //not the options view controller ...
+        synchronizeAppSettingsWithSystemSettings()
+        
+        self.trackViewControllerTitleToAnalytics()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+        super.viewDidDisappear(animated)
+    }
+    
+    
+    deinit {
+        print("\(self.description) deinit")
     }
     
     func setSwitchOptionValues() {
         self.switchAllowBackgroundLocation.setOn(UserData.sharedInstance.locationDistanceChangeAllowed!, animated: false)
         self.switchAllowPushNotificationOutlet.setOn(UserData.sharedInstance.allowPushNotification!, animated: false)
         self.switchAllowSignificantChange.setOn(UserData.sharedInstance.locationSignifacantChangeAllowed!, animated: false)
+        self.switchDisableToolbar.setOn(UserData.sharedInstance.disableToolbar!, animated: false)
     }
     
     func setPickerSelection(){
-        let pushTimeIndex = self.pickerValues.indexOf(UserData.sharedInstance.notificationIntervalInSeconds!)
+        let pushTimeIndex = self.pickerValues.index(of: UserData.sharedInstance.notificationIntervalInSeconds!)
         self.intervalPicker.selectRow(pushTimeIndex!, inComponent: 0, animated: false)
         
-        let distanceIndex = self.pushPickerValues.indexOf(UserData.sharedInstance.locationChangeValue!)
+        let distanceIndex = self.pushPickerValues.index(of: UserData.sharedInstance.locationChangeValue!)
         self.pushIntervalPicker.selectRow(distanceIndex!, inComponent: 0, animated: false)
         
-        let categoryIndex = self.categoryPickerValues.indexOf(UserData.sharedInstance.categorySelected!)
+        let categoryIndex = self.categoryPickerValues.index(of: UserData.sharedInstance.categorySelected!)
         self.categoryPicker.selectRow(categoryIndex!, inComponent: 0, animated: false)
     }
     
+    fileprivate func synchronizeAppSettingsWithSystemSettings() {
+        var systemPush = false
+        if  isPushSystemAllowed() {
+            systemPush = true
+        }
+        var systemLocation = false
+        if isLocationAllowedBySystem() {
+            systemLocation = true
+        }
+        if systemPush == false && UserData.sharedInstance.allowPushNotification != systemPush {
+            UserData.sharedInstance.allowPushNotification = systemPush
+        }
+        if systemLocation == false && (UserData.sharedInstance.locationDistanceChangeAllowed! || UserData.sharedInstance.locationSignifacantChangeAllowed!){
+            UserData.sharedInstance.locationDistanceChangeAllowed = systemPush
+            UserData.sharedInstance.locationSignifacantChangeAllowed = systemPush
+        }
+        setSwitchOptionValues()
+        self.adaptPickerAlpha()
+    }
+    
+    func isLocationAllowedBySystem() -> Bool {
+        let status = CLLocationManager.authorizationStatus()
+        if status == .notDetermined || status == .denied || status == .restricted || status == .authorizedWhenInUse{
+            return false
+        }else {
+            return true
+        }
+    }
+    
+    fileprivate func registerObserverForSystemPreferenceChange () {
+        NotificationCenter.default.addObserver(self, selector: #selector(OptionsTableViewController.appBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+    }
+    
+    func appBecomeActive (){
+        DispatchQueue.main.async(execute: {
+            self.synchronizeAppSettingsWithSystemSettings()
+        })
+    }
+    
+    
+    func activateBackgroundLocationBasedOnSettings(){
+        if self.switchAllowPushNotificationOutlet.isOn {
+            //resett push date on pushswitch reallow
+            UserData.sharedInstance.lastNotificationDate = Date()
+            MyLocationManager.sharedInstance.startIfAllowed()
+        } else {
+            MyLocationManager.sharedInstance.stopTracking()
+        }
+    }
     
     
     // MARK: - IBActions
     
-    @IBAction func switchAllowPushNotificationsAction(sender: UISwitch) {
+    @IBAction func switchAllowPushNotificationsAction(_ sender: UISwitch) {
         if self.isPushSystemAllowed(){
-            UserData.sharedInstance.allowPushNotification = sender.on
+            UserData.sharedInstance.allowPushNotification = sender.isOn
+            activateBackgroundLocationBasedOnSettings()
+        } else {
+            switchAllowPushNotificationOutlet.setOn(false, animated: true)
+            self.showToSettingsPushHint()
         }
+        self.adaptPickerAlpha()
     }
     
-    @IBAction func switchAllowBackgroundLocationAction(sender: UISwitch) {
-        let locationAuthorizationSystemSetting = MyLocationManager.sharedInstance.isAllowedBySystem()
+    @IBAction func switchAllowBackgroundLocationAction(_ sender: UISwitch) {
+        let locationAuthorizationSystemSetting = isLocationAllowedBySystem()
         if locationAuthorizationSystemSetting == false{
+            switchAllowBackgroundLocation.setOn(false, animated: true)
             self.hintToLocationSettings()
         } else {
-            UserData.sharedInstance.locationDistanceChangeAllowed = sender.on
+            UserData.sharedInstance.locationDistanceChangeAllowed = sender.isOn
+            if sender.isOn {
+                UserData.sharedInstance.locationSignifacantChangeAllowed = !sender.isOn
+                switchAllowSignificantChange.setOn(!sender.isOn, animated: true)
+            }
             self.handleOptionsSwitch()
         }
     }
     
-    @IBAction func switchAllowSignificantChangeAction(sender: UISwitch) {
-        let locationAuthorizationSystemSetting = MyLocationManager.sharedInstance.isAllowedBySystem()
+    @IBAction func switchAllowSignificantChangeAction(_ sender: UISwitch) {
+        let locationAuthorizationSystemSetting = isLocationAllowedBySystem()
         if locationAuthorizationSystemSetting == false{
+            switchAllowSignificantChange.setOn(false, animated: true)
             self.hintToLocationSettings()
         } else {
-            UserData.sharedInstance.locationSignifacantChangeAllowed = sender.on
+            UserData.sharedInstance.locationSignifacantChangeAllowed = sender.isOn
+            if sender.isOn {
+                UserData.sharedInstance.locationDistanceChangeAllowed = !sender.isOn
+                switchAllowBackgroundLocation.setOn(!sender.isOn, animated: true)
+            }
             self.handleOptionsSwitch()
         }
     }
+    @IBAction func switchDisableToolbar(_ sender: UISwitch) {
+        UserData.sharedInstance.disableToolbar = sender.isOn
+    }
     
-    private func handleOptionsSwitch() {
+    fileprivate func handleOptionsSwitch() {
+        adaptPickerAlpha()
         MyLocationManager.sharedInstance.startIfAllowed()
     }
     
-    private func isPushSystemAllowed () -> Bool {
-        let notificationSettings = UIApplication.sharedApplication().currentUserNotificationSettings()
+    fileprivate func adaptPickerAlpha(){
+        if switchAllowSignificantChange.isOn {
+            self.pushIntervalPicker.isUserInteractionEnabled = false
+            UIView.animate(withDuration: 0.2, animations: {
+                self.pushIntervalPicker.alpha = 0.2
+            })
+        } else if switchAllowBackgroundLocation.isOn{
+            self.pushIntervalPicker.isUserInteractionEnabled = true
+            UIView.animate(withDuration: 0.2, animations: {
+                self.pushIntervalPicker.alpha = 1
+            })
+        } else {
+            self.pushIntervalPicker.isUserInteractionEnabled = false
+            UIView.animate(withDuration: 0.2, animations: {
+                self.pushIntervalPicker.alpha = 0.2
+            })
+        }
+       
+        if !switchAllowPushNotificationOutlet.isOn {
+            UIView.animate(withDuration: 0.2, animations: {
+            self.intervalPicker.alpha = 0.2
+            })
+            self.intervalPicker.isUserInteractionEnabled = false
+        } else {
+            UIView.animate(withDuration: 0.2, animations: {
+            self.intervalPicker.alpha = 1
+            })
+            self.intervalPicker.isUserInteractionEnabled = true
+        
+        } 
+        
+    }
+    
+    fileprivate func isPushSystemAllowed () -> Bool {
+        let notificationSettings = UIApplication.shared.currentUserNotificationSettings
+        print("notificationSettings?.types.rawValue \(notificationSettings?.types.rawValue)")
         if notificationSettings?.types.rawValue != 7 {
-            self.showToSettingsPushHint()
             return false
         }
         else {
@@ -145,34 +294,36 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
         }
     }
     
-    private func showToSettingsPushHint() {
-        let alertController : UIAlertController = UIAlertController(title: "Mitteilungszentrale", message: "Austria-Forum darf zur Zeit keine vollständigen Mitteiungen schicken. Wenn Sie das ganze Potential ausschöpfen wollen, können sie diese in den Einstellungen aktivieren.", preferredStyle: UIAlertControllerStyle.Alert)
-        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.Cancel, handler: {
+    fileprivate func showToSettingsPushHint() {
+        let alertController : UIAlertController = UIAlertController(title: "Mitteilungszentrale", message: "Austria-Forum darf zur Zeit keine vollständigen Mitteilungen schicken. Wenn Sie das ganze Potential ausschöpfen wollen, können sie diese in den System-Einstellungen aktivieren.", preferredStyle: UIAlertControllerStyle.alert)
+        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.cancel, handler: {
             cancleAction in
             print("pressed cancle")
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.switchAllowPushNotificationOutlet.setOn(false, animated: true)
             })
             
         })
-        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.Default, handler: {
+        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.default, handler: {
             alertAction  in
             print("go to settings")
-            let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.sharedApplication().openURL(settingsUrl!)
+            DispatchQueue.main.async(execute: {
+                let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+                UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+            })
         })
         alertController.addAction(actionAbort)
         alertController.addAction(actionToSettings)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
         
     }
     
-    private func hintToLocationSettings() {
-        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Froum darf zur Zeit nicht auf ihren Standort zugreifen. Sie können dies in den Einstellungen ändern wenn Sie wollen.", preferredStyle: UIAlertControllerStyle.Alert)
-        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.Cancel, handler: {
+    fileprivate func hintToLocationSettings() {
+        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum hat derzeit keine Berechtigung Lokalisierung im Hintergrund durchzuführen. Wollen Sie das in den Einstellungen ändern?", preferredStyle: UIAlertControllerStyle.alert)
+        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.cancel, handler: {
             cancleAction in
             print("pressed cancle")
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.switchAllowBackgroundLocation.setOn(false, animated: true)
                 self.switchAllowSignificantChange.setOn(false, animated: true)
                 
@@ -180,25 +331,53 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
             
             
         })
-        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.Default, handler: {
+        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.default, handler: {
             alertAction  in
             print("go to settings")
-            let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.sharedApplication().openURL(settingsUrl!)
+            let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
         })
         alertController.addAction(actionAbort)
         alertController.addAction(actionToSettings)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
+        
+    }
+    
+    fileprivate func askUserForPushAllowence(){
+        //Old notification
+        //    application.registerUserNotificationSettings(UIUserNotificationSettings(types: [UIUserNotificationType.alert,  UIUserNotificationType.badge , UIUserNotificationType.sound], categories: nil))
+                UNUserNotificationCenter.current().requestAuthorization(
+                    options: [.alert,.sound,.badge],
+                    completionHandler: { (granted,error) in
+                        if !UserData.sharedInstance.wasPushPermissionAsked! {
+                            UserData.sharedInstance.wasPushPermissionAsked = true
+                            self.setAFPushSetting(granted: granted)
+                        }
+                    })
+    
+    }
+    
+    private func setAFPushSetting(granted: Bool){
+        if granted {
+            print("changed Notification setting to : \(granted)")
+            UserData.sharedInstance.allowPushNotification = true
+            } else {
+            print("changed Notification setting to : \(granted)")
+            UserData.sharedInstance.allowPushNotification = false
+        }
+        DispatchQueue.main.async(execute: {
+                self.synchronizeAppSettingsWithSystemSettings()
+        })
         
     }
     
     
     //MARK: Picker View Delegates
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         if pickerView.tag == self.locationIntervalPickerTag {
             return self.pickerOptions.count
@@ -211,7 +390,7 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
         return 0
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView.tag == self.locationIntervalPickerTag {
             return self.pickerOptions[row]
         } else if pickerView.tag == self.pushIntervalPickerTag{
@@ -222,7 +401,7 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
         return ""
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == self.locationIntervalPickerTag {
             UserData.sharedInstance.notificationIntervalInSeconds = self.pickerValues[row]
             self.handleOptionsSwitch()
@@ -233,109 +412,5 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
             UserData.sharedInstance.categorySelected = self.categoryPickerValues[row]
         }
     }
-    
-    // MARK: - Table view data source
-    /*
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    // #warning Incomplete implementation, return the number of sections
-    return 3
-    }
-    
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // #warning Incomplete implementation, return the number of rows
-    return 3
-    }
-    
-    
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("optionCell", forIndexPath: indexPath)
-    
-    // Configure the cell...
-    cell.textLabel?.text = self.options[indexPath.row]
-    return cell
-    }
-    */
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        switch indexPath.section {
-        case 0:
-            if isRowExpandableSectionOne[indexPath.row] {
-                rowIsExpandedSectionOne[indexPath.row] = !rowIsExpandedSectionOne[indexPath.row]
-            }
-            break
-        case 1:
-            //for multiple category selection we start another tableview
-            break
-        default:
-            break
-        }
-        
-        
-        tableView.beginUpdates()
-        tableView.endUpdates()
-        
-    }
-    
-    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.beginUpdates()
-        tableView.endUpdates()
-    }
-    
-    
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        
-        return indexPath
-    }
-    
-    
-    
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    
-    
-    
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
-    
-    
-    
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        
-    }
-    
-    
-    
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    
-    
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
 }
 
