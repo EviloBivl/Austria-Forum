@@ -309,7 +309,11 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
             print("go to settings")
             DispatchQueue.main.async(execute: {
                 let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
-                UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(settingsUrl!)
+                }
             })
         })
         alertController.addAction(actionAbort)
@@ -335,7 +339,11 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
             alertAction  in
             print("go to settings")
             let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(settingsUrl!)
+            }
         })
         alertController.addAction(actionAbort)
         alertController.addAction(actionToSettings)
@@ -344,16 +352,18 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
     }
     
     fileprivate func askUserForPushAllowence(){
-        //Old notification
-        //    application.registerUserNotificationSettings(UIUserNotificationSettings(types: [UIUserNotificationType.alert,  UIUserNotificationType.badge , UIUserNotificationType.sound], categories: nil))
-                UNUserNotificationCenter.current().requestAuthorization(
-                    options: [.alert,.sound,.badge],
-                    completionHandler: { (granted,error) in
-                        if !UserData.sharedInstance.wasPushPermissionAsked! {
-                            UserData.sharedInstance.wasPushPermissionAsked = true
-                            self.setAFPushSetting(granted: granted)
-                        }
-                    })
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: [.alert,.sound,.badge],
+                completionHandler: { (granted,error) in
+                    if !UserData.sharedInstance.wasPushPermissionAsked! {
+                        UserData.sharedInstance.wasPushPermissionAsked = true
+                        self.setAFPushSetting(granted: granted)
+                    }
+            })
+        } else {
+            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [UIUserNotificationType.alert,  UIUserNotificationType.badge , UIUserNotificationType.sound], categories: nil))
+        }
     
     }
     

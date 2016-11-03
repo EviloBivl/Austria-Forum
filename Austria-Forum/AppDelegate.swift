@@ -19,7 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        UNUserNotificationCenter.current().delegate = self
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self
+        } else {
+           //nothing here...
+        }
         
         // Handle launching with options
         if let launchOptions = launchOptions {
@@ -72,9 +76,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
     }
     
+
+    
   
 
     
+   
+    
+    @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Swift.Void){
         
         let notificationUserInfo : [AnyHashable : Any] = response.notification.request.content.userInfo
@@ -92,6 +101,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let iosVersion = UIDevice.current.systemVersion
         let user = "\(name) - \(model) - iOS:\(iosVersion)"
         Crashlytics.sharedInstance().setUserName(user)
+    }
+    
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+        print("didRevieceLocalNotification")
+        if let sr = notification.userInfo{
+            if let _ = sr["url"]{
+                print("started with url: \(sr["url"] as! String)")
+                //Note: We ignore the license for now - because we load it in getPageInfo afterwards anyway
+                SearchHolder.sharedInstance.selectedItem = Helper.getSearchResultNotificationUserInfoNoLicense(userinfo: sr)
+                Answers.logCustomEvent(withName: DetailViewController.answersEventFromPush, customAttributes: ["Article" : sr["title"]!, "Distance" : sr["distance"]! ])
+                
+            }
+        }
     }
     
 //    func fireNotificationFromTerminated(){

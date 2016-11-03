@@ -46,6 +46,7 @@
 		5C9B19001C197A2E0076B648 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C9B18FE1C197A2E0076B648 /* LaunchScreen.storyboard */; };
 		5C9B190B1C197A2E0076B648 /* Austria_ForumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B190A1C197A2E0076B648 /* Austria_ForumTests.swift */; };
 		5C9B19161C197A2E0076B648 /* Austria_ForumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B19151C197A2E0076B648 /* Austria_ForumUITests.swift */; };
+		5CB99DC41DCB2E6500658F73 /* Search100.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CB99DC31DCB2E6500658F73 /* Search100.png */; };
 		5CBBFAC11C64B74E00C20437 /* GetPageInfoFromUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBFAC01C64B74E00C20437 /* GetPageInfoFromUrls.swift */; };
 		5CBBFAC41C64E50700C20437 /* LicenseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBFAC31C64E50600C20437 /* LicenseManager.swift */; };
 		5CBBFADF1C64EBA200C20437 /* by-nc-nd.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CBBFAD71C64EBA200C20437 /* by-nc-nd.png */; };
@@ -151,6 +152,7 @@
 		5C9B19111C197A2E0076B648 /* Austria-ForumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Austria-ForumUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C9B19151C197A2E0076B648 /* Austria_ForumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Austria_ForumUITests.swift; sourceTree = "<group>"; };
 		5C9B19171C197A2E0076B648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CB99DC31DCB2E6500658F73 /* Search100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Search100.png; sourceTree = "<group>"; };
 		5CBBFAC01C64B74E00C20437 /* GetPageInfoFromUrls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPageInfoFromUrls.swift; sourceTree = "<group>"; };
 		5CBBFAC31C64E50600C20437 /* LicenseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LicenseManager.swift; sourceTree = "<group>"; };
 		5CBBFAD71C64EBA200C20437 /* by-nc-nd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "by-nc-nd.png"; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 			children = (
 				5C4A6AB31C3AC1E40010499B /* af_logo.png */,
 				5CC360FE1C70E2BA00095F21 /* Back.png */,
+				5CB99DC31DCB2E6500658F73 /* Search100.png */,
 				5CC360FF1C70E2BA00095F21 /* Bookmark.png */,
 				5CC361001C70E2BA00095F21 /* Calendar.png */,
 				5CC361011C70E2BA00095F21 /* Forward.png */,
@@ -618,6 +621,7 @@
 				5CBBFAE51C64EBA200C20437 /* cc-zero.png in Resources */,
 				5CBBFADF1C64EBA200C20437 /* by-nc-nd.png in Resources */,
 				5CBBFAE11C64EBA200C20437 /* by-nc.png in Resources */,
+				5CB99DC41DCB2E6500658F73 /* Search100.png in Resources */,
 				5CC3610A1C70E2BA00095F21 /* Back.png in Resources */,
 				5C9B18FD1C197A2E0076B648 /* Assets.xcassets in Resources */,
 				5CC361121C70E2BA00095F21 /* Settings_3.png in Resources */,
@@ -974,7 +978,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1016,7 +1020,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -1036,7 +1040,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Austria-Forum/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "at.tugraz.Austria-Forum";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1057,7 +1061,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Austria-Forum/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "at.tugraz.Austria-Forum";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -240,7 +240,12 @@ extension LocationTableViewController : NetworkDelegation {
                 self.performSegue(withIdentifier: "toSettings", sender: self)
             } else {
                 let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
-                UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(settingsUrl!)
+                }
                 
             }
         })
@@ -261,7 +266,11 @@ extension LocationTableViewController : NetworkDelegation {
         let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.default, handler: {
             alertAction  in
             let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(settingsUrl!)
+            }
         })
         alertController.addAction(actionAbort)
         alertController.addAction(actionToSettings)

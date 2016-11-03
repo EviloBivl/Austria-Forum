@@ -74,7 +74,11 @@ class AboutViewController: UIViewController, UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         print("should interact with url: \(URL.absoluteString)")
-        UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(URL)
+        }
         return false
     }
     

@@ -306,13 +306,21 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
             if let licenseUrl = license.url{
                 answersAttributes["License"] = license.id
                 let url = URL(string: licenseUrl)!
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
             }
         } else if let licenseUrl = LicenseManager.getLinkForLicense("AF"){
             // fallbacl license url
             answersAttributes["License"] = "AF"
             let url = URL(string: licenseUrl)!
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
         }
         self.logToAnswers(answersEventLicense, customAttributes: answersAttributes as [String : AnyObject]?)
         self.trackAnalyticsEvent(withCategory: answersEventLicense, action: answersAttributes["License"]!)
@@ -443,7 +451,11 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
                 self.performSegue(withIdentifier: "toSettings", sender: self)
             } else {
                 let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
-                UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(settingsUrl!)
+                }
                 
             }
         })
@@ -653,7 +665,12 @@ extension DetailViewController : WKNavigationDelegate {
         
         if (!(navigationAction.request.url?.absoluteString.contains("austria-forum.org"))! && !(navigationAction.request.url?.absoluteString.contains("embed"))!) {
             if wkNavigatioinCount > 1 {
-                UIApplication.shared.open(navigationAction.request.url!, options: [:], completionHandler: nil)
+                let url = navigationAction.request.url
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url!)
+                }
             }
             decisionHandler(WKNavigationActionPolicy.cancel)
         } else {

@@ -26,7 +26,12 @@ public class Helper {
         
     }
     
-    class func fireNotificationWithInfosFromLocaionResult(lr : LocationArticleResult) {
+    
+     @available(iOS 10.0, *)
+     class func notificationForiOS10(lr : LocationArticleResult) {
+        
+        
+        
         let content = UNMutableNotificationContent()
         
         content.title = "Es wurde ein Artikel in Ihrer Nähe gefunden!"
@@ -56,5 +61,20 @@ public class Helper {
         UNUserNotificationCenter.current().add(
             request, withCompletionHandler: nil)
     }
+    
+    class func notificationForiOS9(lr: LocationArticleResult){
+        let localNotification : UILocalNotification = UILocalNotification()
+        localNotification.fireDate = Date()
+        localNotification.soundName = UILocalNotificationDefaultSoundName
+        localNotification.alertBody = "\(lr.title) befindet sich nur \(lr.distanceString) entfernt."
+        localNotification.timeZone = NSTimeZone.default
+        localNotification.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber + 1
+        //print("previous app badge number: \(UIApplication.sharedApplication().applicationIconBadgeNumber)")
+                
+        UIApplication.shared.scheduleLocalNotification(localNotification)
+    }
+    
+  
+
     
 }

@@ -65,7 +65,7 @@ class ToolBar: UIToolbar {
                     aToolBarItem.image = UIImage.renderedImageInGraphicContext("Marker.png", size: size)
                     break
                 case search:
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Search.png", size: size)
+                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Search100.png", size: size)
                     break
                 case back:
                     let smallerSize = CGSize(width: size.width-5, height: size.height-5)

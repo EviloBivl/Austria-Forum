@@ -59,11 +59,7 @@ class MyLocationManager : NSObject{
         } else {
             locationManager.distanceFilter = Double(UserData.sharedInstance.locationChangeValue!)
         }
-        if #available(iOS 9.0, *) {
-            locationManager.allowsBackgroundLocationUpdates = true
-        } else {
-            // we don't need this in earlier verions
-        }
+        locationManager.allowsBackgroundLocationUpdates = true
         locationManager.startUpdatingLocation()
         
         
@@ -251,7 +247,11 @@ extension MyLocationManager : NetworkDelegation {
     }
     
     fileprivate func createAndFireNotification (_ lr : LocationArticleResult){
-        Helper.fireNotificationWithInfosFromLocaionResult(lr: lr)
+        if #available(iOS 10.0, *) {
+            Helper.notificationForiOS10(lr: lr)
+        } else {
+            Helper.notificationForiOS9(lr: lr)
+        }
     }
     
     /*fileprivate func createAndFireNotification(_ msg: String){
