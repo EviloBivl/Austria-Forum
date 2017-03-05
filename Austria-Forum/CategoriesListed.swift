@@ -90,7 +90,8 @@ struct CategoriesListed {
         "Community",
         "Web_Books",
         "Web-Books",
-        "web_books"]
+        "web_books",
+        "Unternehmen"]
     
     static let categoriesBeautiful = [
         
@@ -161,7 +162,8 @@ struct CategoriesListed {
         "Community",
         "Web Book",
         "Web Book",
-        "Web book"]
+        "Web book",
+        "Unternehmen in Österreich"]
     
 
 }

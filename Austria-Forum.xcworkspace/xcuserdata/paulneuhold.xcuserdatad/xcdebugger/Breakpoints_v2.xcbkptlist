@@ -231,13 +231,13 @@
                   symbolName = "Austria_Forum.afTableViewCell.lTitleNameTVC.getter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UILabel&gt;"
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/paulneuhold/Desktop/Submit%20Apps/Source/iOS/Austria-Forum/Austria-Forum/afTableViewCell.swift"
-                  timestampString = "499853603.995952"
+                  urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/afTableViewCell.swift"
+                  timestampString = "510421644.017094"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "27">
+                  offsetFromSymbolStart = "40">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -246,13 +246,13 @@
                   symbolName = "Austria_Forum.afTableViewCell.lTitleNameTVC.setter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UILabel&gt;"
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/paulneuhold/Desktop/Submit%20Apps/Source/iOS/Austria-Forum/Austria-Forum/afTableViewCell.swift"
-                  timestampString = "499853603.999873"
+                  urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/afTableViewCell.swift"
+                  timestampString = "510421644.018938"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "42">
+                  offsetFromSymbolStart = "52">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -261,8 +261,8 @@
                   symbolName = "Austria_Forum.afTableViewCell.init (style : __C.UITableViewCellStyle, reuseIdentifier : Swift.Optional&lt;Swift.String&gt;) -&gt; Austria_Forum.afTableViewCell"
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/paulneuhold/Desktop/Submit%20Apps/Source/iOS/Austria-Forum/Austria-Forum/afTableViewCell.swift"
-                  timestampString = "499853604.003519"
+                  urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/afTableViewCell.swift"
+                  timestampString = "510421644.020352"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
@@ -276,13 +276,13 @@
                   symbolName = "Austria_Forum.afTableViewCell.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Austria_Forum.afTableViewCell&gt;"
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/paulneuhold/Desktop/Submit%20Apps/Source/iOS/Austria-Forum/Austria-Forum/afTableViewCell.swift"
-                  timestampString = "499853604.006311"
+                  urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/afTableViewCell.swift"
+                  timestampString = "510421644.021757"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "88">
+                  offsetFromSymbolStart = "96">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -550,11 +550,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "499853598.764984"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "392"
-            endingLineNumber = "392"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
             landmarkName = "pickerView(_:numberOfRowsInComponent:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -566,11 +566,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "496945088.665732"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "switchAllowBackgroundLocationAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -582,11 +582,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "496945088.665732"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "switchAllowBackgroundLocationAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -598,11 +598,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "496945088.665732"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "setPickerSelection()"
             landmarkType = "7">
          </BreakpointContent>
@@ -822,11 +822,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "496945088.665732"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "synchronizeAppSettingsWithSystemSettings()"
             landmarkType = "7">
          </BreakpointContent>
@@ -885,13 +885,13 @@
                   symbolName = "Austria_Forum.AppDelegate.application (__ObjC.UIApplication, didFinishLaunchingWithOptions : Swift.Optional&lt;Swift.Dictionary&lt;__C.UIApplicationLaunchOptionsKey, Any&gt;&gt;) -&gt; Swift.Bool"
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/paulneuhold/Desktop/Submit%20Apps/Source/iOS/Austria-Forum/Austria-Forum/AppDelegate.swift"
-                  timestampString = "499853604.067172"
+                  urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/AppDelegate.swift"
+                  timestampString = "510421644.07035"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "29"
                   endingLineNumber = "29"
-                  offsetFromSymbolStart = "271">
+                  offsetFromSymbolStart = "236">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -900,13 +900,13 @@
                   symbolName = "Austria_Forum.AppDelegate.application (__ObjC.UIApplication, didFinishLaunchingWithOptions : Swift.Optional&lt;Swift.Dictionary&lt;__C.UIApplicationLaunchOptionsKey, Any&gt;&gt;) -&gt; Swift.Bool"
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/paulneuhold/Desktop/Submit%20Apps/Source/iOS/Austria-Forum/Austria-Forum/AppDelegate.swift"
-                  timestampString = "499853604.069892"
+                  urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/AppDelegate.swift"
+                  timestampString = "510421644.07184"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "29"
                   endingLineNumber = "29"
-                  offsetFromSymbolStart = "380">
+                  offsetFromSymbolStart = "340">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -1221,11 +1221,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "496945088.665732"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "switchAllowBackgroundLocationAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1237,11 +1237,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "496945088.665732"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "switchAllowSignificantChangeAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1349,7 +1349,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/LocationTableViewController.swift"
-            timestampString = "496946879.15504"
+            timestampString = "510423438.526389"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "43"
@@ -1397,11 +1397,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "499853598.764984"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "setAFPushSetting(granted:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1413,11 +1413,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "499853598.764984"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "371"
-            endingLineNumber = "371"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
             landmarkName = "setAFPushSetting(granted:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1461,11 +1461,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "496945088.665732"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "synchronizeAppSettingsWithSystemSettings()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1477,11 +1477,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "496945414.491904"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "receivedAlwaysPermissions()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1509,11 +1509,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/OptionsTableViewController.swift"
-            timestampString = "499853598.764984"
+            timestampString = "510421643.825318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "312"
-            endingLineNumber = "312"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
             landmarkName = "showToSettingsPushHint()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1531,6 +1531,38 @@
             startingLineNumber = "35"
             endingLineNumber = "35"
             landmarkName = "notificationForiOS10(lr:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Austria-Forum/OptionsTableViewController.swift"
+            timestampString = "510421643.825318"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "setSwitchOptionValues()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Austria-Forum/OptionsTableViewController.swift"
+            timestampString = "510421514.281549"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

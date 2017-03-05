@@ -74,12 +74,6 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
         self.adaptPickerAlpha()
 
 
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -161,8 +155,8 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
             UserData.sharedInstance.allowPushNotification = systemPush
         }
         if systemLocation == false && (UserData.sharedInstance.locationDistanceChangeAllowed! || UserData.sharedInstance.locationSignifacantChangeAllowed!){
-            UserData.sharedInstance.locationDistanceChangeAllowed = systemPush
-            UserData.sharedInstance.locationSignifacantChangeAllowed = systemPush
+            UserData.sharedInstance.locationDistanceChangeAllowed = systemLocation
+            UserData.sharedInstance.locationSignifacantChangeAllowed = systemLocation
         }
         setSwitchOptionValues()
         self.adaptPickerAlpha()
@@ -170,10 +164,10 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
     
     func isLocationAllowedBySystem() -> Bool {
         let status = CLLocationManager.authorizationStatus()
-        if status == .notDetermined || status == .denied || status == .restricted || status == .authorizedWhenInUse{
-            return false
-        }else {
+        if status == .authorizedAlways {
             return true
+        }else {
+            return false
         }
     }
     

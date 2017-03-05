@@ -13,6 +13,7 @@ class afLocationTableViewCell: UITableViewCell {
     @IBOutlet weak var labelTitel: UILabel!
     @IBOutlet weak var labelCategory: UILabel!
     @IBOutlet weak var labelDistance: UILabel!
+    @IBOutlet weak var ivResult: UIImageView!
     
     
     override func awakeFromNib() {
@@ -21,7 +22,6 @@ class afLocationTableViewCell: UITableViewCell {
         self.labelTitel.text = ""
         self.labelCategory.text = ""
         self.labelDistance.text = ""
-
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

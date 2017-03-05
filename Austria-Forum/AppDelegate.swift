@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let sr = Helper.getSearchResultNotificationUserInfoNoLicense(userinfo: notificationUserInfo)
         SearchHolder.sharedInstance.selectedItem = sr
-        Answers.logCustomEvent(withName: DetailViewController.answersEventFromPush, customAttributes: ["Article" : notificationUserInfo["title"], "Distance" : notificationUserInfo["distance"]])
+        Answers.logCustomEvent(withName: DetailViewController.answersEventFromPush, customAttributes: ["Article" : notificationUserInfo["title"] ?? "nil", "Distance" : notificationUserInfo["distance"] ?? "nil"])
         
         completionHandler()
     }
@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 print("started with url: \(sr["url"] as! String)")
                 //Note: We ignore the license for now - because we load it in getPageInfo afterwards anyway
                 SearchHolder.sharedInstance.selectedItem = Helper.getSearchResultNotificationUserInfoNoLicense(userinfo: sr)
-                Answers.logCustomEvent(withName: DetailViewController.answersEventFromPush, customAttributes: ["Article" : sr["title"]!, "Distance" : sr["distance"]! ])
+                Answers.logCustomEvent(withName: DetailViewController.answersEventFromPush, customAttributes: ["Article" : sr["title"] ?? "nil", "Distance" : sr["distance"] ?? "nil" ])
                 
             }
         }
