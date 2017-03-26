@@ -15,18 +15,21 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="84"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lYQ-o9-yAu" id="i7B-bT-ozm">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="84"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="83"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VnY-Yg-zpP">
-                        <rect key="frame" x="76" y="37" width="60" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <rect key="frame" x="76" y="52" width="52" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-LI-oz1">
-                        <rect key="frame" x="73" y="12" width="43" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title:  This is an article with an extraordinary long Name. Thats it!" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-LI-oz1">
+                        <rect key="frame" x="76" y="12" width="236" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="cWf-SB-2jZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -38,7 +41,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20,23 km" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAh-s4-Mfe">
-                        <rect key="frame" x="8" y="56" width="60" height="15.5"/>
+                        <rect key="frame" x="8" y="52" width="60" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="7w3-IG-H7u"/>
                         </constraints>
@@ -49,15 +52,16 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="FAh-s4-Mfe" firstAttribute="top" secondItem="siG-pB-oq9" secondAttribute="bottom" constant="4" id="5DZ-Dy-Laz"/>
+                    <constraint firstItem="FAh-s4-Mfe" firstAttribute="top" secondItem="siG-pB-oq9" secondAttribute="bottom" id="5DZ-Dy-Laz"/>
                     <constraint firstAttribute="leadingMargin" secondItem="FAh-s4-Mfe" secondAttribute="leading" id="6Ht-XX-6Q8"/>
+                    <constraint firstItem="siG-pB-oq9" firstAttribute="leading" secondItem="i7B-bT-ozm" secondAttribute="leadingMargin" constant="10" id="Hfe-sk-07l"/>
                     <constraint firstAttribute="topMargin" secondItem="8LH-LI-oz1" secondAttribute="top" constant="-4" id="NEW-gi-AS5"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="FAh-s4-Mfe" secondAttribute="bottom" constant="4" id="X2K-yP-kJ5"/>
                     <constraint firstItem="siG-pB-oq9" firstAttribute="top" secondItem="i7B-bT-ozm" secondAttribute="topMargin" constant="4" id="ZP3-1Y-Wyi"/>
                     <constraint firstItem="VnY-Yg-zpP" firstAttribute="top" secondItem="8LH-LI-oz1" secondAttribute="bottom" constant="4" id="deD-qX-xUi"/>
                     <constraint firstItem="VnY-Yg-zpP" firstAttribute="leading" secondItem="FAh-s4-Mfe" secondAttribute="trailing" constant="8" id="kcw-xw-zy5"/>
                     <constraint firstItem="siG-pB-oq9" firstAttribute="centerX" secondItem="FAh-s4-Mfe" secondAttribute="centerX" id="tiX-sX-Lso"/>
-                    <constraint firstItem="8LH-LI-oz1" firstAttribute="leading" secondItem="FAh-s4-Mfe" secondAttribute="trailing" constant="5" id="v6o-Ut-4Tr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="8LH-LI-oz1" secondAttribute="trailing" id="u4r-8d-Ia0"/>
+                    <constraint firstItem="8LH-LI-oz1" firstAttribute="leading" secondItem="FAh-s4-Mfe" secondAttribute="trailing" constant="8" id="v6o-Ut-4Tr"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -66,7 +70,7 @@
                 <outlet property="labelDistance" destination="FAh-s4-Mfe" id="Py3-0T-ozr"/>
                 <outlet property="labelTitel" destination="8LH-LI-oz1" id="WsZ-WR-2R1"/>
             </connections>
-            <point key="canvasLocation" x="152" y="221"/>
+            <point key="canvasLocation" x="154" y="220"/>
         </tableViewCell>
     </objects>
     <resources>

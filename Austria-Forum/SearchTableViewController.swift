@@ -57,7 +57,7 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         //Register Custom Cell
         let nib = UINib(nibName: "afTableCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "afTableCell")
-        self.tableView.rowHeight = 60
+        self.tableView.rowHeight = 65
         
     }
     

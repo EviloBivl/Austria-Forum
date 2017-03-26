@@ -33,7 +33,7 @@ class LocationTableViewController: UITableViewController, LocationControllerDele
         //Register Custom Cell
         let nib = UINib(nibName: "afLocationTableViewCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "afLocationTableViewCell")
-        self.tableView.rowHeight = 84
+        self.tableView.rowHeight = 75
         self.tableView.tableFooterView = UIView()
         
         self.loadingView = Bundle.main.loadNibNamed("LoadingScreen", owner: self, options: nil)![0] as? LoadingScreen

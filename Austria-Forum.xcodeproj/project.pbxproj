@@ -36,6 +36,7 @@
 		5C55A5701C514C9E00F86B37 /* LocationArticleHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55A56F1C514C9E00F86B37 /* LocationArticleHolder.swift */; };
 		5C55A5721C514D0100F86B37 /* LocationArticleResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55A5711C514D0100F86B37 /* LocationArticleResult.swift */; };
 		5C5BA4881D905E0F00E63F0D /* repair.js in Resources */ = {isa = PBXBuildFile; fileRef = 5C5BA4871D905E0F00E63F0D /* repair.js */; };
+		5C80A1671E8823DD00B05836 /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C80A1661E8823DD00B05836 /* forward.png */; };
 		5C84A6FB1C907EBE006C3CC0 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C84A6FA1C907EBE006C3CC0 /* home.png */; };
 		5C8F0BAC1C1F1358003E2895 /* ReachabilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8F0BAB1C1F1358003E2895 /* ReachabilityHelper.swift */; };
 		5C8F0BAE1C1F25BB003E2895 /* ReachabilityDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8F0BAD1C1F25BB003E2895 /* ReachabilityDelegate.swift */; };
@@ -135,6 +136,7 @@
 		5C55A56F1C514C9E00F86B37 /* LocationArticleHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationArticleHolder.swift; sourceTree = "<group>"; };
 		5C55A5711C514D0100F86B37 /* LocationArticleResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationArticleResult.swift; sourceTree = "<group>"; };
 		5C5BA4871D905E0F00E63F0D /* repair.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = repair.js; sourceTree = "<group>"; };
+		5C80A1661E8823DD00B05836 /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward.png; sourceTree = "<group>"; };
 		5C84A6FA1C907EBE006C3CC0 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		5C8F0BAB1C1F1358003E2895 /* ReachabilityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityHelper.swift; sourceTree = "<group>"; };
 		5C8F0BAD1C1F25BB003E2895 /* ReachabilityDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityDelegate.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				5C84A6FA1C907EBE006C3CC0 /* home.png */,
 				5CC361021C70E2BA00095F21 /* Hearts_Filled.png */,
 				5CC361031C70E2BA00095F21 /* Hearts.png */,
+				5C80A1661E8823DD00B05836 /* forward.png */,
 				5CC361041C70E2BA00095F21 /* Marker.png */,
 				5CC361051C70E2BA00095F21 /* Search.png */,
 				5CC361061C70E2BA00095F21 /* Settings_3.png */,
@@ -624,6 +627,7 @@
 				5CEA75371C197E9E0069D333 /* Podfile in Resources */,
 				5CC3610E1C70E2BA00095F21 /* Hearts_Filled.png in Resources */,
 				5C84A6FB1C907EBE006C3CC0 /* home.png in Resources */,
+				5C80A1671E8823DD00B05836 /* forward.png in Resources */,
 				5CBBFAE31C64EBA200C20437 /* by-sa.png in Resources */,
 				5C4EA6401C52831600E5B758 /* afLocationTableViewCell.xib in Resources */,
 				5CBBFAE61C64EBA200C20437 /* publicdomain.png in Resources */,
