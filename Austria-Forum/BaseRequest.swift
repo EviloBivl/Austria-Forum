@@ -13,8 +13,8 @@ import SwiftyJSON
 class BaseRequest : NSObject {
     
     //TODO: Change this to the live Url
-    let urlAF: String = "http://www.austria-forum.org/JSON-RPC"
-    static let urlAFStatic = "austria-forum.org"
+    let urlAF: String = "https://austria-forum.org/JSON-RPC"
+ //   static let urlAFStatic = "austria-forum.org"
  //   let urlAF: String = "http://192.168.178.21:8080/JSON-RPC"
  //   static let urlAFStatic = "http://192.168.178.21:8080"
     var requestHeader : [String:String] = [:]

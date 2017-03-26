@@ -19,7 +19,7 @@ class UserData : NSObject {
     
     static let sharedInstance = UserData()
     fileprivate var userDefaults : UserDefaults?
-    
+    static let AF_URL = "https://austria-forum.org"
     
     /**
      If you set this property it will also get stored as Object in the NSUserDefaults with the key UserDefaultKeys.kLastVisitedString
@@ -29,7 +29,7 @@ class UserData : NSObject {
             if let val = self.getValueForKey(UserDefaultKeys.kLastVisitedString) as? String {
                 return val
             } else {
-                return "http://www.austria-forum.org"
+                return UserData.AF_URL
             }
         }
         set{

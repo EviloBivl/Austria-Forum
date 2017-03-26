@@ -93,7 +93,7 @@ enum LicenseName : String{
 }
 
 enum LicenseUrl : String {
-    case AF = "http://austria-forum.org/af/Lizenzen/AF"
+    case AF = "https://austria-forum.org/af/Lizenzen/AF"
     case PD = "https://creativecommons.org/about/pdm/"
     case CC0 = "https://creativecommons.org/publicdomain/zero/1.0/"
     case CCBY = "https://creativecommons.org/licenses/by/4.0/"

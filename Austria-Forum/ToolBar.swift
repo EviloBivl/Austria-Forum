@@ -30,7 +30,7 @@ class ToolBar: UIToolbar {
     fileprivate(set) var likedImage : UIImage?
     fileprivate(set) var notLikedImage : UIImage?
     
-    var size : CGSize = CGSize(width: 30, height: 30)
+    var size : CGSize = CGSize(width: 25, height: 25)
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -69,11 +69,11 @@ class ToolBar: UIToolbar {
                     break
                 case back:
                     let smallerSize = CGSize(width: size.width-5, height: size.height-5)
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Back.png", size: smallerSize)
+                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("back.png", size: smallerSize)
                     break
                 case forward:
                     let smallerSize = CGSize(width: size.width-5, height: size.height-5)
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Forward.png", size: smallerSize)
+                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("forward.png", size: smallerSize)
                     break
                 case like:
                     aToolBarItem.image = UIImage.renderedImageInGraphicContext("Hearts.png", size: size)

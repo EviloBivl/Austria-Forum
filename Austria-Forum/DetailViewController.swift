@@ -74,24 +74,9 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     // MARK: - Lifecycle
     required init?(coder aDecoder: NSCoder) {
-//        Use this in order to load the repair.js script to execute it on pageload so we can fake the css heading.
-//
-//        let config = WKWebViewConfiguration()
-//        let scriptURL = NSBundle.mainBundle().pathForResource("repair", ofType: "js")
-//
-//        do {
-//        let scriptContent = try String(contentsOfFile:scriptURL!, encoding:NSUTF8StringEncoding)
-//        let script = WKUserScript(source: scriptContent, injectionTime: .AtDocumentEnd, forMainFrameOnly: true)
-//        config.userContentController.addUserScript(script)
-//
-//        } catch  {
-//
-//        }
-//        self.webKitView = WKWebView(frame: CGRectZero, configuration: config)
-        
         self.webKitView = WKWebView(frame: CGRect.zero)
         super.init(coder: aDecoder)
-        
+
     }
     
     override func viewDidLoad() {
@@ -195,11 +180,11 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     }
     
     fileprivate func removeObservers(){
-        // self.webKitView.removeObserver(self, forKeyPath: "URL")
-        // self.webKitView.removeObserver(self, forKeyPath: "estimatedProgress")
+        self.webKitView.removeObserver(self, forKeyPath: "URL")
+        self.webKitView.removeObserver(self, forKeyPath: "estimatedProgress")
         print("\n\n Removing Observers \n\n")
-        //        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
-        //        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
         //        webKitView.removeObserver(self, forKeyPath: "URL", context: nil)
         //        webKitView.removeObserver(self, forKeyPath: "estimatedProgress", context: nil)
         //
@@ -413,7 +398,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
             return
         }
         
-        SearchHolder.sharedInstance.selectedItem = SearchResult(title: "Austria-Forum", name: "Austria-Forum", url: "http://austria-forum.org/", score: 100, licenseResult: nil)
+        SearchHolder.sharedInstance.selectedItem = SearchResult(title: "Austria-Forum", name: "Austria-Forum", url: UserData.AF_URL, score: 100, licenseResult: nil)
         self.logToAnswers(answersEventHome, customAttributes: nil)
         self.trackAnalyticsEvent(withCategory: answersEventHome, action: "Going Home")
         self.setDetailItem()

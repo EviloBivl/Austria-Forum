@@ -95,7 +95,7 @@ class AboutViewController: UIViewController, UITextViewDelegate {
     fileprivate func buildAndSetContentText(){
 
         let afAttributeLink : NSMutableAttributedString = NSMutableAttributedString(string: "austria-forum.org")
-        afAttributeLink.addAttribute(NSLinkAttributeName, value: "http://austria-forum.org", range: NSMakeRange(0, afAttributeLink.length))
+        afAttributeLink.addAttribute(NSLinkAttributeName, value: UserData.AF_URL, range: NSMakeRange(0, afAttributeLink.length))
         let fullContentText = NSMutableAttributedString(string: "Alle angezeigten Inhalte dieser App wurden zur Verfügung gestellt von ")
         fullContentText.append(afAttributeLink)
         contentTextView.attributedText = fullContentText

@@ -988,7 +988,7 @@
             startingLineNumber = "50"
             endingLineNumber = "50"
             landmarkName = "getLinkForLicense(_:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1062,11 +1062,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "496934679.471727"
+            timestampString = "512069555.598853"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "250"
-            endingLineNumber = "250"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
             landmarkName = "saveCurrentArticleAsFavourite(webBook:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1078,11 +1078,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "496934679.471727"
+            timestampString = "512069555.598853"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "saveCurrentArticleAsFavourite(webBook:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1094,11 +1094,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "499853598.764984"
+            timestampString = "512069555.598853"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "380"
-            endingLineNumber = "380"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
             landmarkName = "shareContentButton(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1301,11 +1301,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "499853598.764984"
+            timestampString = "512069555.598853"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "683"
-            endingLineNumber = "683"
+            startingLineNumber = "668"
+            endingLineNumber = "668"
             landmarkName = "webView(_:decidePolicyFor:decisionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1317,11 +1317,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "499853598.764984"
+            timestampString = "512069555.598853"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
             landmarkName = "loadArticleFromMonthlyPool(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1333,11 +1333,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "499853598.764984"
+            timestampString = "512069555.598853"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "669"
-            endingLineNumber = "669"
+            startingLineNumber = "654"
+            endingLineNumber = "654"
             landmarkName = "webView(_:decidePolicyFor:decisionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1445,11 +1445,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "499853598.764984"
+            timestampString = "512069555.598853"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "427"
-            endingLineNumber = "427"
+            startingLineNumber = "412"
+            endingLineNumber = "412"
             landmarkName = "shouldPerformSegue(withIdentifier:sender:)"
             landmarkType = "7">
          </BreakpointContent>

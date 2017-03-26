@@ -19,7 +19,7 @@ class SearchHolder {
                 //ok do nothing
             } else {
                 //default to af license
-                self.selectedItem?.licenseResult = LicenseResult(withCss: "af", withTitle: "af", withUrl: "http://austria-forum.org/af/Lizenzen/AF", withId: "AF")
+                self.selectedItem?.licenseResult = LicenseResult(withCss: "af", withTitle: "af", withUrl:  UserData.AF_URL + "/af/Lizenzen/AF", withId: "AF")
             }
         }
     }
