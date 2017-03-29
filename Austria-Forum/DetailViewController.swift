@@ -640,8 +640,8 @@ extension DetailViewController : WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void){
         
-        print("url of property:\(self.webKitView.url?.absoluteString)")
-        print("request of navigation \(navigationAction.request.url?.absoluteString)")
+        print("url of property:\(String(describing: self.webKitView.url?.absoluteString))")
+        print("request of navigation \(String(describing: navigationAction.request.url?.absoluteString))")
         
         let urlIsFormatted : Bool = (navigationAction.request.url?.absoluteString.contains("?skin=page"))! ||
                                     (navigationAction.request.url?.absoluteString.contains("&skin=page"))!
@@ -712,7 +712,7 @@ extension DetailViewController : WKNavigationDelegate {
             
             
         } else {
-            print("did not add \(self.loadingView?.debugDescription)")
+            print("did not add \(String(describing: self.loadingView?.debugDescription))")
         }
         
     }
@@ -744,7 +744,7 @@ extension DetailViewController : WKNavigationDelegate {
             }
             //the url is not the same anymore rebuild it with the skin and load it
             let url : URL? = URL(string: prepareUrlForloading(url: stringUrl))
-            print("\(#function) loading \(url?.absoluteString)")
+            print("\(#function) loading \(String(describing: url?.absoluteString))")
             self.webKitView.load(URLRequest(url: url!))
         } else {
             let loadUrl = UserData.sharedInstance.lastVisitedString!.replacingOccurrences(of: "?skin=page", with: "")
@@ -752,7 +752,7 @@ extension DetailViewController : WKNavigationDelegate {
                 return
             }
             let url : URL? = URL(string: prepareUrlForloading(url: loadUrl))
-            print("\(#function) loading \(url?.absoluteString)")
+            print("\(#function) loading \(String(describing: url?.absoluteString))")
             self.webKitView.load(URLRequest(url: url!))
         }
     }

@@ -28,7 +28,7 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
     
     
     // MARK: - Properties
-    var myData : Array<String>= []
+    var myData : Array<String> = []
     var categories : Array<String> = []
     var delegate: ArticleSelectionDelegate?
     let searchController = UISearchController(searchResultsController: nil)

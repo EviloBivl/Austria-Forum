@@ -559,7 +559,7 @@
 				TargetAttributes = {
 					5C9B18EC1C197A2E0076B648 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = K4XFJA86D8;
+						DevelopmentTeam = 7KAMFQR46N;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1038,6 +1038,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7KAMFQR46N;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Austria-Forum/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1059,6 +1060,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7KAMFQR46N;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Austria-Forum/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

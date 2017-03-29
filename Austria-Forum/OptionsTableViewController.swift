@@ -279,7 +279,7 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
     
     fileprivate func isPushSystemAllowed () -> Bool {
         let notificationSettings = UIApplication.shared.currentUserNotificationSettings
-        print("notificationSettings?.types.rawValue \(notificationSettings?.types.rawValue)")
+        print("notificationSettings?.types.rawValue \(String(describing: notificationSettings?.types.rawValue))")
         if notificationSettings?.types.rawValue != 7 {
             return false
         }

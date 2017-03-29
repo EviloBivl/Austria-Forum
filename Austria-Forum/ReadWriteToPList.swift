@@ -37,7 +37,7 @@ class ReadWriteToPList {
             if let bundlePath = Bundle.main.path(forResource: "Favourites", ofType: "plist") {
                 
                 let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
-                print("Bundle Favourites.plist file is --> \(resultDictionary?.description)")
+                print("Bundle Favourites.plist file is --> \(String(describing: resultDictionary?.description))")
                 
                 do {
                     try fileManager.copyItem(atPath: bundlePath, toPath: path)

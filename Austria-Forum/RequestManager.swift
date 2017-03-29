@@ -100,7 +100,7 @@ class RequestManager : NSObject {
                         
                         print("====== REQUEST STARTED WITH ===== FOR ID:  \(idFromReq)    =====")
                         print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(idFromReq)    =====")
-                        print("\(jsonResp.result.value)")
+                        print("\(String(describing: jsonResp.result.value))")
                         print("=======================================================")
                         let methodString = RequestID.getStringForRawValue(idFromReq)
                         
