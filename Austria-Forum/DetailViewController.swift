@@ -48,16 +48,17 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     let userActionEvent = "User Action"
     let userNavigation = "Navigation"
     
-    let answersEventLicense = "License"
-    let answersEventRandom = "Random Article"
-    let answersEventMonthly = "Monthly Article"
-    let answersEventAddFavs = "Add Favourite"
-    static let answersEventFromPush = "Start From Push"
-    let answersEventLocation = "Location Articles"
-    let answersEventHome = "Home Navigation"
-    let answersEventFavs = "Open Favourites"
-    let answersEventShare = "Share Article"
-    let answersEventSearch = "Search Articles"
+    ///Answer Constants
+    public static let answersEventLicense = "License"
+    public static let answersEventRandom = "Random Article"
+    public static let answersEventMonthly = "Monthly Article"
+    public static let answersEventAddFavs = "Add Favourite"
+    public static let answersEventFromPush = "Start From Push"
+    public static let answersEventLocation = "Location Articles"
+    public static let answersEventHome = "Home Navigation"
+    public static let answersEventFavs = "Open Favourites"
+    public static let answersEventShare = "Share Article"
+    public static let answersEventSearch = "Search Articles"
     
     
     
@@ -143,6 +144,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         self.pleaseSetupUpThisWebKitForMeDearXCodeAndFuckThisStupidLeakyWebViewShit()
         self.registerObserverForAppLaunchingFromLocalNotification()
         self.registerObserverForOrientationChange()
+       
         
     }
     
@@ -177,6 +179,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     fileprivate func registerObserverForOrientationChange(){
         NotificationCenter.default.addObserver(self, selector: #selector(DetailViewController.deviceRotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+
     }
     
     fileprivate func removeObservers(){
@@ -185,12 +188,10 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         print("\n\n Removing Observers \n\n")
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-        //        webKitView.removeObserver(self, forKeyPath: "URL", context: nil)
-        //        webKitView.removeObserver(self, forKeyPath: "estimatedProgress", context: nil)
-        //
     }
     
-    func deviceRotated(){
+    public func deviceRotated(){
+        print("Device rotated")
         if(UIDeviceOrientationIsLandscape(UIDevice.current.orientation))
         {
             if let disableToolbar = UserData.sharedInstance.disableToolbar{
@@ -224,44 +225,8 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     }
     
     fileprivate func saveCurrentArticleAsFavourite(webBook: Bool? = false){
-        var  activeArticle : [String:String] = [:]
-        
-        if let activeArticleInWebView = SearchHolder.sharedInstance.selectedItem, let currentCategory = SearchHolder.sharedInstance.currentCategory {
-            activeArticle["title"] = activeArticleInWebView.title
-            activeArticle["url"] = activeArticleInWebView.url?.replacingOccurrences(of: "?skin=page", with: "")
-            activeArticle["category"] = currentCategory
-        } else if let activeTitle = SearchHolder.sharedInstance.currentTitle, let activeUrl = self.webKitView.url?.absoluteString , let currentCategory = SearchHolder.sharedInstance.currentCategory {
-            activeArticle["title"] = activeTitle
-            activeArticle["url"] = activeUrl.replacingOccurrences(of: "?skin=page", with: "")
-            activeArticle["category"] = currentCategory
-        } else if let activeUrl = self.webKitView.url?.absoluteString , let currentCategory = SearchHolder.sharedInstance.currentCategory {
-            activeArticle["title"] = self.webKitView.url?.path ?? activeUrl
-            activeArticle["url"] = activeUrl.replacingOccurrences(of: "?skin=page", with: "")
-            activeArticle["category"] = currentCategory
-        }
-        
-        if let webBook = webBook {
-            if webBook {
-                if let activeUrl = self.webKitView.url?.absoluteString {
-                    activeArticle["title"] = self.webKitView.title ?? activeUrl
-                    activeArticle["url"] = activeUrl.replacingOccurrences(of: "?skin=page", with: "")
-                    activeArticle["category"] = "Web Book"
-                }
-            }
-        }
-        
-        if !activeArticle.isEmpty {
-            _ = pListWorker?.loadFavourites()
-            if pListWorker?.isFavourite(activeArticle) == false {
-                _ = pListWorker?.saveFavourite(activeArticle)
-                self.trackAnalyticsEvent(withCategory: answersEventAddFavs, action: activeArticle["title"]!, label: "\(activeArticle["url"]!)  \(activeArticle["category"]!)")
-            } else {
-                _ = pListWorker?.removeFavourite(activeArticle)
-            }
-            FavouritesHolder.sharedInstance.refresh()
+        if Helper.saveCurrentArticleAsFavourite(withCurrentUrl: self.webKitView.url, andWithTitle: self.webKitView.title, isWebBook: webBook){
             self.updateFavouriteIcon()
-        } else {
-            print("No Article Loaded for saving as Favourite")
         }
     }
     
@@ -307,29 +272,29 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
                 UIApplication.shared.openURL(url)
             }
         }
-        self.logToAnswers(answersEventLicense, customAttributes: answersAttributes as [String : AnyObject]?)
-        self.trackAnalyticsEvent(withCategory: answersEventLicense, action: answersAttributes["License"]!)
+        self.logToAnswers(DetailViewController.answersEventLicense, customAttributes: answersAttributes as [String : AnyObject]?)
+        Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventLicense, action: answersAttributes["License"]!)
     }
     
     @IBAction func loadRandomArticle(_ sender: AnyObject) {
-        self.logToAnswers(answersEventRandom, customAttributes: ["Rnd Article - Category" : UserData.sharedInstance.categorySelected! as AnyObject])
-        self.trackAnalyticsEvent(withCategory: answersEventRandom, action: UserData.sharedInstance.categorySelected!)
+        self.logToAnswers(DetailViewController.answersEventRandom, customAttributes: ["Rnd Article - Category" : UserData.sharedInstance.categorySelected! as AnyObject])
+        Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventRandom, action: UserData.sharedInstance.categorySelected!)
         self.showLoadingScreen()
         RequestManager.sharedInstance.getRandomArticle(self, categories: [UserData.sharedInstance.categorySelected!])
     }
     
     @IBAction func loadArticleFromMonthlyPool(_ sender: AnyObject) {
-        self.logToAnswers(answersEventMonthly, customAttributes: ["Monthly Article" : "requested" as AnyObject])
+        self.logToAnswers(DetailViewController.answersEventMonthly, customAttributes: ["Monthly Article" : "requested" as AnyObject])
         
         if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload() {
             self.showLoadingScreen()
             RequestManager.sharedInstance.getArticleFromMonthlyPool(self, month: "notset", year: "notset")
-            self.trackAnalyticsEvent(withCategory: answersEventMonthly, action: "Load Article From Server")
+            Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventMonthly, action: "Load Article From Server")
         } else {
             if (ReachabilityHelper.sharedInstance.connection == ReachabilityType.no_INTERNET){
                 self.noInternet()
             } else {
-                self.trackAnalyticsEvent(withCategory: answersEventMonthly, action: "Load Article from Storage")
+                Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventMonthly, action: "Load Article from Storage")
                 self.detailItem = UserData.sharedInstance.articleOfTheMonth
             }
         }
@@ -345,16 +310,16 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     @IBAction func shareContentButton(_ sender: UIBarButtonItem) {
         if let sr = SearchHolder.sharedInstance.selectedItem {
-            self.trackAnalyticsEvent(withCategory: answersEventShare, action: sr.title ?? "got Nil Title", label: sr.url ?? "got Nil Url")
-            self.logToAnswers(answersEventShare, customAttributes: ["Article" : sr.title as AnyObject? ?? "got Nil Title" as AnyObject])
+            Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventShare, action: sr.title ?? "got Nil Title", label: sr.url ?? "got Nil Url")
+            self.logToAnswers(DetailViewController.answersEventShare, customAttributes: ["Article" : sr.title as AnyObject? ?? "got Nil Title" as AnyObject])
         } else if let currentUrl = self.webKitView.url?.absoluteString {
-            self.trackAnalyticsEvent(withCategory: answersEventShare, action: "Webbook" , label: currentUrl )
-            self.logToAnswers(answersEventShare, customAttributes: ["Article" : "Webbook" as AnyObject])
+            Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventShare, action: "Webbook" , label: currentUrl )
+            self.logToAnswers(DetailViewController.answersEventShare, customAttributes: ["Article" : "Webbook" as AnyObject])
         }
         
         if let currentAfUrl = self.webKitView.url?.absoluteString {
             if currentAfUrl != "" {
-                let stringUrl = currentAfUrl.replacingOccurrences(of: "?skin=page", with: "")
+                let stringUrl = currentAfUrl.removeAFSkin()
                 let url = URL(string: stringUrl)
                 let items = [url!]
                 let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
@@ -399,8 +364,8 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         }
         
         SearchHolder.sharedInstance.selectedItem = SearchResult(title: "Austria-Forum", name: "Austria-Forum", url: UserData.AF_URL, score: 100, licenseResult: nil)
-        self.logToAnswers(answersEventHome, customAttributes: nil)
-        self.trackAnalyticsEvent(withCategory: answersEventHome, action: "Going Home")
+        self.logToAnswers(DetailViewController.answersEventHome, customAttributes: nil)
+        Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventHome, action: "Going Home")
         self.setDetailItem()
     }
     
@@ -410,11 +375,11 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
         if identifier == "toLocationArticles" {
-            self.logToAnswers(answersEventLocation, customAttributes: nil)
+            self.logToAnswers(DetailViewController.answersEventLocation, customAttributes: nil)
         } else if identifier == "toSearchArticle" {
-            self.logToAnswers(answersEventSearch, customAttributes: nil )
+            self.logToAnswers(DetailViewController.answersEventSearch, customAttributes: nil )
         } else if identifier == "toFavourites"{
-            self.logToAnswers(answersEventFavs, customAttributes: nil )
+            self.logToAnswers(DetailViewController.answersEventFavs, customAttributes: nil )
         }
         print("performing segue \(identifier)")
         
@@ -663,9 +628,9 @@ extension DetailViewController : WKNavigationDelegate {
                 decisionHandler(WKNavigationActionPolicy.allow)
             }
             else if !urlIsFormatted{
-                let url = prepareUrlForloading(url: (navigationAction.request.url?.absoluteString)!)
+                let url = navigationAction.request.url?.absoluteString.getSkinnedAFUrl()
                 wkNavigatioinCount = 0
-                self.webKitView.load(URLRequest(url: URL(string: url)!))
+                self.webKitView.load(URLRequest(url: URL(string: url!)!))
                 decisionHandler(WKNavigationActionPolicy.cancel)
             } else {
                 decisionHandler(WKNavigationActionPolicy.allow)
@@ -693,7 +658,7 @@ extension DetailViewController : WKNavigationDelegate {
         self.updateFavouriteIcon()
         UserData.sharedInstance.lastVisitedString = SearchHolder.sharedInstance.currentUrl
         
-        self.getPageInfoFromUrl(SearchHolder.sharedInstance.currentUrl!.replacingOccurrences(of: "?skin=page", with: ""))
+        self.getPageInfoFromUrl(SearchHolder.sharedInstance.currentUrl!.removeAFSkin())
     }
     
     
@@ -722,7 +687,7 @@ extension DetailViewController : WKNavigationDelegate {
         let toolBarItems = self.bottomToolBar.items!
         for item in toolBarItems {
             if item.tag == self.favouriteIconTag {
-                if self.pListWorker!.isFavourite(["url": (self.webKitView.url?.absoluteString)!]){
+                if self.pListWorker!.isFavourite(["url": (self.webKitView.url?.absoluteString.removeAFSkin())!]){
                     item.image = self.bottomToolBar.likedImage
                 } else {
                     item.image = self.bottomToolBar.notLikedImage
@@ -735,23 +700,23 @@ extension DetailViewController : WKNavigationDelegate {
     func refreshWebView(){
         //load the new set artivle into the webView
         if var stringUrl = self.detailItem?.url, var selectedUrl = SearchHolder.sharedInstance.currentUrl {
-            stringUrl = stringUrl.replacingOccurrences(of: "?skin=page", with: "")
-            selectedUrl = selectedUrl.replacingOccurrences(of: "?skin=page", with: "")
+            stringUrl = stringUrl.removeAFSkin()
+            selectedUrl = selectedUrl.removeAFSkin()
             //we don't want to reload the webview if the url didn't change
-            let webKitUrl = self.webKitView.url?.absoluteString.replacingOccurrences(of: "?skin=page", with: "")
+            let webKitUrl = self.webKitView.url?.absoluteString.removeAFSkin()
             if webKitUrl == stringUrl {
                 return
             }
             //the url is not the same anymore rebuild it with the skin and load it
-            let url : URL? = URL(string: prepareUrlForloading(url: stringUrl))
+            let url : URL? = URL(string: stringUrl.getSkinnedAFUrl())
             print("\(#function) loading \(String(describing: url?.absoluteString))")
             self.webKitView.load(URLRequest(url: url!))
         } else {
-            let loadUrl = UserData.sharedInstance.lastVisitedString!.replacingOccurrences(of: "?skin=page", with: "")
-            if self.webKitView.url?.absoluteString.replacingOccurrences(of: "?skin=page", with: "") == loadUrl {
+            let loadUrl = UserData.sharedInstance.lastVisitedString!.removeAFSkin()
+            if self.webKitView.url?.absoluteString.removeAFSkin() == loadUrl {
                 return
             }
-            let url : URL? = URL(string: prepareUrlForloading(url: loadUrl))
+            let url : URL? = URL(string: loadUrl.getSkinnedAFUrl())
             print("\(#function) loading \(String(describing: url?.absoluteString))")
             self.webKitView.load(URLRequest(url: url!))
         }
@@ -830,7 +795,7 @@ extension DetailViewController : NetworkDelegation {
         self.loadingView?.labelMessage.text = "Ups! Der Austria-Forum Server ist zur Zeit nicht erreichbar"
         self.perform(#selector(DetailViewController.hideLoadingScreen), with: nil, afterDelay: 3)
         print("\(#function) loading \(UserData.sharedInstance.lastVisitedString!)")
-        self.webKitView.load(URLRequest(url: URL(string: self.prepareUrlForloading(url: UserData.sharedInstance.lastVisitedString!))!))
+        self.webKitView.load(URLRequest(url: URL(string: (UserData.sharedInstance.lastVisitedString?.getSkinnedAFUrl())!)!))
     }
     func onRequestSuccess(_ from: String){
         //  print("Returned from method_ \(from)")
@@ -856,7 +821,7 @@ extension DetailViewController : NetworkDelegation {
             self.loadingView?.labelMessage.text = SearchHolder.sharedInstance.resultMessage
             self.perform(#selector(DetailViewController.hideLoadingScreen), with: nil, afterDelay: 3)
             print("\(#function) loading \(UserData.sharedInstance.lastVisitedString!)")
-            self.webKitView.load(URLRequest(url: URL(string: self.prepareUrlForloading(url: UserData.sharedInstance.lastVisitedString!))!))
+            self.webKitView.load(URLRequest(url: URL(string: (UserData.sharedInstance.lastVisitedString?.getSkinnedAFUrl())!)!))
         }
         
         //update the license tag when we are getting a succes from the server

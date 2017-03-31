@@ -15,6 +15,7 @@
 		5C268E2C1C1B4A4E007CC4CD /* SearchHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C268E2B1C1B4A4E007CC4CD /* SearchHolder.swift */; };
 		5C2C047F1CC2284100FC25AE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C047E1CC2284100FC25AE /* GoogleService-Info.plist */; };
 		5C2C04811CC3725800FC25AE /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C04801CC3725800FC25AE /* ViewController+Extension.swift */; };
+		5C2C6B001E8E266000C38941 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C6AFF1E8E266000C38941 /* String+Extension.swift */; };
 		5C46015F1D3EAA34008A5634 /* LicenseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46015E1D3EAA34008A5634 /* LicenseResult.swift */; };
 		5C4601601D3EAA34008A5634 /* LicenseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46015E1D3EAA34008A5634 /* LicenseResult.swift */; };
 		5C4601611D3EAA34008A5634 /* LicenseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46015E1D3EAA34008A5634 /* LicenseResult.swift */; };
@@ -117,6 +118,7 @@
 		5C268E2B1C1B4A4E007CC4CD /* SearchHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHolder.swift; sourceTree = "<group>"; };
 		5C2C047E1CC2284100FC25AE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5C2C04801CC3725800FC25AE /* ViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
+		5C2C6AFF1E8E266000C38941 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		5C46015E1D3EAA34008A5634 /* LicenseResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LicenseResult.swift; sourceTree = "<group>"; };
 		5C4A6AAF1C3AB8C30010499B /* afTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = afTableCell.xib; sourceTree = "<group>"; };
 		5C4A6AB11C3AB9E80010499B /* afTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = afTableViewCell.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 				5CC360F81C70DBA100095F21 /* UIImage+Extension.swift */,
 				5C2C04801CC3725800FC25AE /* ViewController+Extension.swift */,
 				5CE5DA081D9E3A9E005C036D /* Helper.swift */,
+				5C2C6AFF1E8E266000C38941 /* String+Extension.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -867,6 +870,7 @@
 				5C9B18F61C197A2E0076B648 /* SearchTableViewController.swift in Sources */,
 				5C4EA6421C52834900E5B758 /* afLocationTableViewCell.swift in Sources */,
 				5CCC3F1F1C413B9C00ADBBDB /* FavouritesTableViewController.swift in Sources */,
+				5C2C6B001E8E266000C38941 /* String+Extension.swift in Sources */,
 				5C55A5701C514C9E00F86B37 /* LocationArticleHolder.swift in Sources */,
 				5CC361171C70E4C300095F21 /* ToolBar.swift in Sources */,
 				5CE5DA091D9E3A9E005C036D /* Helper.swift in Sources */,

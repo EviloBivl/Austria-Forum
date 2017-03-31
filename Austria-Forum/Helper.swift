@@ -74,7 +74,78 @@ public class Helper {
         UIApplication.shared.scheduleLocalNotification(localNotification)
     }
     
-  
 
+    
+    class func saveCurrentArticleAsFavourite(withCurrentUrl : URL?, andWithTitle title: String?, isWebBook webBook: Bool? = false) -> Bool{
+        let pListWorker : ReadWriteToPList? = ReadWriteToPList()
+        
+        var  activeArticle : [String:String] = [:]
+        
+        if let activeArticleInWebView = SearchHolder.sharedInstance.selectedItem, let currentCategory = SearchHolder.sharedInstance.currentCategory {
+            activeArticle["title"] = activeArticleInWebView.title
+            activeArticle["url"] = activeArticleInWebView.url?.removeAFSkin()
+            activeArticle["category"] = currentCategory
+       
+        } else if let activeUrlString = withCurrentUrl?.absoluteString, let activeTitle = SearchHolder.sharedInstance.currentTitle, let currentCategory = SearchHolder.sharedInstance.currentCategory {
+            activeArticle["title"] = activeTitle
+            activeArticle["url"] = activeUrlString.removeAFSkin()
+            activeArticle["category"] = currentCategory
+        
+        } else if let activeUrlString = withCurrentUrl?.absoluteString , let currentCategory = SearchHolder.sharedInstance.currentCategory {
+            activeArticle["title"] = withCurrentUrl?.path ?? activeUrlString
+            activeArticle["url"] = activeUrlString.removeAFSkin()
+            activeArticle["category"] = currentCategory
+        }
+        
+        if let webBook = webBook {
+            if webBook {
+                
+                activeArticle["title"] = title ?? withCurrentUrl?.path ?? withCurrentUrl?.absoluteString
+                activeArticle["url"] = withCurrentUrl?.absoluteString.removeAFSkin()
+                activeArticle["category"] = "Web Book"
+                
+            }
+        }
+        
+        if !activeArticle.isEmpty {
+            _ = pListWorker?.loadFavourites()
+            if pListWorker?.isFavourite(activeArticle) == false {
+                _ = pListWorker?.saveFavourite(activeArticle)
+                Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventAddFavs, action: activeArticle["title"]!, label: "\(activeArticle["url"]!)  \(activeArticle["category"]!)")
+            } else {
+                _ = pListWorker?.removeFavourite(activeArticle)
+            }
+            FavouritesHolder.sharedInstance.refresh()
+            return true
+        } else {
+            print("No Article Loaded for saving as Favourite")
+            return false
+        }
+    }
+    
+    class func trackViewControllerTitleToAnalytics(){
+        //        let tracker = GAI.sharedInstance().defaultTracker
+        //
+        //        if let title = self.title {
+        //            print("Sending Title: \(title) to Analytics")
+        //            tracker.set(kGAIScreenName, value: title)
+        //            let builder = GAIDictionaryBuilder.createScreenView()
+        //            tracker.send(builder.build() as [NSObject : AnyObject])
+        //        }
+    }
+    
+    ///not working at the moment due to memory leaks from Analytics SDK
+    class func trackAnalyticsEvent(withCategory: String, action: String, label: String = "") {
+        //        let tracker = GAI.sharedInstance().defaultTracker
+        //
+        //        if label != "" {
+        //            let builder = GAIDictionaryBuilder.createEventWithCategory(withCategory, action: action, label: label, value: nil)
+        //            tracker.send(builder.build() as [NSObject : AnyObject])
+        //        } else {
+        //            let builder = GAIDictionaryBuilder.createEventWithCategory(withCategory, action: action, label: label, value: nil)
+        //            tracker.send(builder.build() as [NSObject : AnyObject])
+        //        }
+        
+    }
     
 }
