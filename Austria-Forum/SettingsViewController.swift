@@ -10,7 +10,15 @@ import UIKit
 import CoreLocation
 import UserNotifications
 
-class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, OptionsLocationDelegate {
+class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, OptionsLocationDelegate {
+    
+    var viewModel : SettingsViewModel?
+    
+    class func create(viewModel: SettingsViewModel) -> SettingsViewController {
+        let controller = StoryboardScene.SettingsViewController.settingsViewController.instantiate()
+        controller.viewModel = viewModel
+        return controller
+    }
     
     var pickerOptions : [String] = ["1 Minute", "5 Minuten" , "10 Minuten" , "15 Minuten", "30 Minuten" , "60 Minuten", "2 Stunden"]
     var pickerValues : [Int] = [1 * 60,5 * 60,10 * 60,15 * 60,30 * 60,60 * 60, 120*60]
@@ -45,6 +53,7 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
     @IBOutlet weak var intervalPicker: UIPickerView!
     @IBOutlet weak var pushIntervalPicker: UIPickerView!
     @IBOutlet weak var categoryPicker: UIPickerView!
+    @IBOutlet weak var aboutCell: UITableViewCell!
     
     //Tags for the pickers
     let locationIntervalPickerTag : Int = 0
@@ -172,7 +181,7 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
     }
     
     fileprivate func registerObserverForSystemPreferenceChange () {
-        NotificationCenter.default.addObserver(self, selector: #selector(OptionsTableViewController.appBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.appBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     func appBecomeActive (){
@@ -373,6 +382,15 @@ class OptionsTableViewController: UITableViewController, UIPickerViewDelegate, U
                 self.synchronizeAppSettingsWithSystemSettings()
         })
         
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        
+        if cell == aboutCell {
+            let controller = AboutViewController.create(viewModel: AboutViewModel())
+            navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     

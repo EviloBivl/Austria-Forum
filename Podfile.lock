@@ -4,6 +4,7 @@ PODS:
     - Fabric (~> 1.6.3)
   - Fabric (1.6.11)
   - ReachabilitySwift (3)
+  - SwiftGen (5.2.1)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
@@ -11,6 +12,7 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - ReachabilitySwift
+  - SwiftGen
   - SwiftyJSON
 
 SPEC CHECKSUMS:
@@ -18,8 +20,9 @@ SPEC CHECKSUMS:
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
+  SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 9aebb0297e2f4c7cea2780d9fcf36d275ba2d7a6
+PODFILE CHECKSUM: 7a954dccc83eb38d980c21ea78dcbcdbe83e66e5
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.4.0

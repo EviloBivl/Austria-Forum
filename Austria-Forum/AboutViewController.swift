@@ -11,6 +11,14 @@ import UIKit
 
 class AboutViewController: UIViewController, UITextViewDelegate {
     
+    var viewModel: AboutViewModel?
+    
+    class func create(viewModel: AboutViewModel) -> AboutViewController {
+       let controller = StoryboardScene.AboutViewController.aboutViewController.instantiate()
+       controller.viewModel = viewModel
+       return controller
+    }
+    
     
     //MARK: IBOutlets
     
@@ -32,6 +40,9 @@ class AboutViewController: UIViewController, UITextViewDelegate {
 //        }
         
     }
+    
+    
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

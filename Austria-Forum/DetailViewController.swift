@@ -34,6 +34,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     @IBOutlet weak var licenseTag: UIButton!
     
+    
     var scrollDirection : ScrollDirection?
     var lastScrollOffset : CGPoint?
     var loadingView : LoadingScreen?
@@ -138,6 +139,8 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     //MARK: - Custom Functions
     
     fileprivate func initScene(){
+        
+        
         //properties configurations
         self.configureProperties()
         //webkit
@@ -168,7 +171,9 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         //hide license tag on start up
         self.licenseTag.isHidden = true
         
-        
+        //set delegates
+        topToolBar.customDelegate = self
+        bottomToolBar.customDelegate = self
         
     }
     
@@ -828,6 +833,18 @@ extension DetailViewController : NetworkDelegation {
         self.updateLicenseTag()
     }
     
+}
+
+extension DetailViewController: ToolbarDelegate {
+    func didPressToolbarButton(with itemType: ToolBar.ToolbarItemType) {
+        switch itemType {
+        case .settings:
+            let controller = SettingsViewController.create(viewModel: SettingsViewModel())
+            navigationController?.pushViewController(controller, animated: true)
+        default:
+            break
+        }
+    }
 }
 
 

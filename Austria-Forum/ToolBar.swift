@@ -8,25 +8,31 @@
 
 import UIKit
 
+protocol ToolbarDelegate: class {
+    func didPressToolbarButton(with itemType: ToolBar.ToolbarItemType)
+}
+
 class ToolBar: UIToolbar {
     
+    public enum ToolbarItemType : Int {
+        //toptoolbar tags
+        case settings = 10
+        case random = 11
+        case monthly = 12
+        case location = 13
+        case search = 14
+        case home = 15
+        
+        //bottom toolbartags
+        case back = 20
+        case forward = 21
+        case like = 22
+        case favourites = 23
+        case share = 24
+    }
     
-    //toptoolbar tags
-    fileprivate let settings = 10
-    fileprivate let random = 11
-    fileprivate let monthly = 12
-    fileprivate let location = 13
-    fileprivate let search = 14
-    fileprivate let home = 15
-    
-    
-    //bottom toolbartags
-    fileprivate let back = 20
-    fileprivate let forward = 21
-    fileprivate let like = 22
-    fileprivate let favourites = 23
-    fileprivate let share = 24
-    
+    weak var customDelegate: ToolbarDelegate?
+   
     fileprivate(set) var likedImage : UIImage?
     fileprivate(set) var notLikedImage : UIImage?
     
@@ -37,9 +43,20 @@ class ToolBar: UIToolbar {
         self.setUpIcons()
     }
     
+    
     func redrawIconsWithSize(_ size: CGSize){
         self.size = size
         self.setUpIcons()
+    }
+    
+    @objc func didPressToolbarButton(sender: UIBarButtonItem){
+        guard let itemType = ToolbarItemType.init(rawValue: sender.tag) else { return }
+        switch itemType {
+        case .settings:
+            customDelegate?.didPressToolbarButton(with: itemType)
+        default:
+            break
+        }
     }
     
     fileprivate func setUpIcons(){
@@ -48,48 +65,47 @@ class ToolBar: UIToolbar {
         notLikedImage =  UIImage.renderedImageInGraphicContext("Hearts.png", size: size)
         
         if let items = self.items {
-            
-            for aToolBarItem in items {
-                
-                switch aToolBarItem.tag {
-                case settings:
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Settings_3.png", size: size)
+            for item in items {
+                if let itemTag = ToolbarItemType.init(rawValue: item.tag) {
+                item.action = #selector(didPressToolbarButton(sender:))
+                switch itemTag {
+                case .settings:
+                    item.image = UIImage.renderedImageInGraphicContext("Settings_3.png", size: size)
                     break
-                case random:
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Shuffle.png", size: size)
+                case .random:
+                    item.image = UIImage.renderedImageInGraphicContext("Shuffle.png", size: size)
                     break
-                case monthly:
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Calendar.png", size: size)
+                case .monthly:
+                    item.image = UIImage.renderedImageInGraphicContext("Calendar.png", size: size)
                     break
-                case location:
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Marker.png", size: size)
+                case .location:
+                    item.image = UIImage.renderedImageInGraphicContext("Marker.png", size: size)
                     break
-                case search:
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Search100.png", size: size)
+                case .search:
+                    item.image = UIImage.renderedImageInGraphicContext("Search100.png", size: size)
                     break
-                case back:
+                case .back:
                     let smallerSize = CGSize(width: size.width-5, height: size.height-5)
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("back.png", size: smallerSize)
+                    item.image = UIImage.renderedImageInGraphicContext("back.png", size: smallerSize)
                     break
-                case forward:
+                case .forward:
                     let smallerSize = CGSize(width: size.width-5, height: size.height-5)
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("forward.png", size: smallerSize)
+                    item.image = UIImage.renderedImageInGraphicContext("forward.png", size: smallerSize)
                     break
-                case like:
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Hearts.png", size: size)
+                case .like:
+                    item.image = UIImage.renderedImageInGraphicContext("Hearts.png", size: size)
                     break
-                case favourites:
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Bookmark.png", size: size)
+                case .favourites:
+                    item.image = UIImage.renderedImageInGraphicContext("Bookmark.png", size: size)
                     break
-                case share:
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("Upload.png", size: size)
+                case .share:
+                    item.image = UIImage.renderedImageInGraphicContext("Upload.png", size: size)
                     break
-                case home:
-                    aToolBarItem.image = UIImage.renderedImageInGraphicContext("home.png", size: size)
-                    break
-                default:
+                case .home:
+                    item.image = UIImage.renderedImageInGraphicContext("home.png", size: size)
                     break
                 }
+            }
             }
         }
     }

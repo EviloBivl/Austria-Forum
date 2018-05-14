@@ -74,11 +74,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/AppDelegate.swift"
-            timestampString = "471569010.017818"
+            timestampString = "548021463.615684"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "11"
-            endingLineNumber = "11">
+            endingLineNumber = "11"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -232,12 +234,12 @@
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/afTableViewCell.swift"
-                  timestampString = "512637376.251415"
+                  timestampString = "548021021.559005"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "27">
+                  offsetFromSymbolStart = "14">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -247,42 +249,42 @@
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/afTableViewCell.swift"
-                  timestampString = "512637376.253963"
+                  timestampString = "548021021.562731"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "42">
+                  offsetFromSymbolStart = "90">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Austria_Forum.afTableViewCell.init (style : __C.UITableViewCellStyle, reuseIdentifier : Swift.Optional&lt;Swift.String&gt;) -&gt; Austria_Forum.afTableViewCell"
+                  symbolName = "Austria_Forum.afTableViewCell.init(style: __C.UITableViewCellStyle, reuseIdentifier: Swift.Optional&lt;Swift.String&gt;) -&gt; Austria_Forum.afTableViewCell"
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/afTableViewCell.swift"
-                  timestampString = "512637376.25663"
+                  timestampString = "548021021.5659781"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "152">
+                  offsetFromSymbolStart = "257">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Austria_Forum.afTableViewCell.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Austria_Forum.afTableViewCell&gt;"
+                  symbolName = "Austria_Forum.afTableViewCell.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;Austria_Forum.afTableViewCell&gt;"
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/afTableViewCell.swift"
-                  timestampString = "512637376.25979"
+                  timestampString = "548021021.56963"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
                   endingLineNumber = "14"
-                  offsetFromSymbolStart = "88">
+                  offsetFromSymbolStart = "185">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -507,8 +509,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "71"
             endingLineNumber = "71"
-            landmarkName = "UserData"
-            landmarkType = "3">
+            landmarkName = "optionLocationUpdateInterval"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -523,8 +525,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "182"
             endingLineNumber = "182"
-            landmarkName = "UserData"
-            landmarkType = "3">
+            landmarkName = "articleOfTheMonth"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -539,8 +541,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "193"
             endingLineNumber = "193"
-            landmarkName = "UserData"
-            landmarkType = "3">
+            landmarkName = "articleOfTheMonth"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -619,8 +621,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "189"
             endingLineNumber = "189"
-            landmarkName = "UserData"
-            landmarkType = "3">
+            landmarkName = "articleOfTheMonth"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -651,8 +653,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "187"
             endingLineNumber = "187"
-            landmarkName = "UserData"
-            landmarkType = "3">
+            landmarkName = "articleOfTheMonth"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -662,7 +664,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/AppDelegate.swift"
-            timestampString = "496871261.142902"
+            timestampString = "548021463.616836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "15"
@@ -693,30 +695,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Austria-Forum/ToolBar.swift"
-            timestampString = "479232008.72093"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "awakeFromNib()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Austria-Forum/RequestManager.swift"
             timestampString = "496611608.590697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "97"
             endingLineNumber = "97"
-            landmarkName = "performRequest(_:delegate:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -763,8 +749,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "155"
             endingLineNumber = "155"
-            landmarkName = "getStringForRawValue(_:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -870,45 +856,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/AppDelegate.swift"
-            timestampString = "499853598.764984"
+            timestampString = "548021463.617308"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "29"
             endingLineNumber = "29"
             landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Austria_Forum.AppDelegate.application (__ObjC.UIApplication, didFinishLaunchingWithOptions : Swift.Optional&lt;Swift.Dictionary&lt;__C.UIApplicationLaunchOptionsKey, Any&gt;&gt;) -&gt; Swift.Bool"
-                  moduleName = "Austria-Forum"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/AppDelegate.swift"
-                  timestampString = "512637376.325414"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "29"
-                  endingLineNumber = "29"
-                  offsetFromSymbolStart = "271">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Austria_Forum.AppDelegate.application (__ObjC.UIApplication, didFinishLaunchingWithOptions : Swift.Optional&lt;Swift.Dictionary&lt;__C.UIApplicationLaunchOptionsKey, Any&gt;&gt;) -&gt; Swift.Bool"
-                  moduleName = "Austria-Forum"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/AppDelegate.swift"
-                  timestampString = "512637376.328598"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "29"
-                  endingLineNumber = "29"
-                  offsetFromSymbolStart = "380">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -998,7 +952,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/AppDelegate.swift"
-            timestampString = "499853598.764984"
+            timestampString = "548021463.617583"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
@@ -1062,11 +1016,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "512633355.29224"
+            timestampString = "548021463.6178319"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "shareContentButton(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1083,8 +1037,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "181"
             endingLineNumber = "181"
-            landmarkName = "UserData"
-            landmarkType = "3">
+            landmarkName = "articleOfTheMonth"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1115,8 +1069,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "85"
             endingLineNumber = "85"
-            landmarkName = "UserData"
-            landmarkType = "3">
+            landmarkName = "lastNotificationDate"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1131,8 +1085,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
             endingLineNumber = "26"
-            landmarkName = "MyLocationManager"
-            landmarkType = "3">
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
@@ -1269,11 +1223,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "512633355.29224"
+            timestampString = "548021463.6182719"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "633"
-            endingLineNumber = "633"
+            startingLineNumber = "638"
+            endingLineNumber = "638"
             landmarkName = "webView(_:decidePolicyFor:decisionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1285,11 +1239,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "512633355.29224"
+            timestampString = "548021463.618335"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "289"
-            endingLineNumber = "289"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
             landmarkName = "loadArticleFromMonthlyPool(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1301,11 +1255,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "512633355.29224"
+            timestampString = "548021463.6183881"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "619"
-            endingLineNumber = "619"
+            startingLineNumber = "624"
+            endingLineNumber = "624"
             landmarkName = "webView(_:decidePolicyFor:decisionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1413,11 +1367,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "512633355.29224"
+            timestampString = "548021463.618521"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "377"
-            endingLineNumber = "377"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
             landmarkName = "shouldPerformSegue(withIdentifier:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1541,11 +1495,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "512633312.233397"
+            timestampString = "548021463.618669"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
+            startingLineNumber = "373"
+            endingLineNumber = "373"
             landmarkName = "loadHome(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1617,47 +1571,47 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Austria-Forum/DetailViewController.swift"
-            timestampString = "512636137.20579"
+            timestampString = "548021463.618752"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "690"
-            endingLineNumber = "690"
+            startingLineNumber = "695"
+            endingLineNumber = "695"
             landmarkName = "updateFavouriteIcon()"
             landmarkType = "7">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Austria_Forum.DetailViewController.updateFavouriteIcon () -&gt; ()"
+                  symbolName = "Austria_Forum.DetailViewController.updateFavouriteIcon() -&gt; ()"
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/DetailViewController.swift"
-                  timestampString = "512637376.411601"
+                  timestampString = "548021021.748117"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "690"
-                  endingLineNumber = "690"
-                  offsetFromSymbolStart = "653">
+                  startingLineNumber = "695"
+                  endingLineNumber = "695"
+                  offsetFromSymbolStart = "1059">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Austria_Forum.DetailViewController.updateFavouriteIcon () -&gt; ()"
+                  symbolName = "Austria_Forum.DetailViewController.updateFavouriteIcon() -&gt; ()"
                   moduleName = "Austria-Forum"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/paulneuhold/app_ios_austriaforum/Austria-Forum/DetailViewController.swift"
-                  timestampString = "512637376.413451"
+                  timestampString = "548021021.75033"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "690"
-                  endingLineNumber = "690"
-                  offsetFromSymbolStart = "2242">
+                  startingLineNumber = "695"
+                  endingLineNumber = "695"
+                  offsetFromSymbolStart = "2802">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -1675,6 +1629,22 @@
             startingLineNumber = "118"
             endingLineNumber = "118"
             landmarkName = "isFavourite(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Austria-Forum/ToolBar.swift"
+            timestampString = "548021463.61883"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "didPressToolbarButton(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

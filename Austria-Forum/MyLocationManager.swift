@@ -59,7 +59,11 @@ class MyLocationManager : NSObject{
         } else {
             locationManager.distanceFilter = Double(UserData.sharedInstance.locationChangeValue!)
         }
-        locationManager.allowsBackgroundLocationUpdates = true
+        if #available(iOS 9.0, *) {
+            locationManager.allowsBackgroundLocationUpdates = true
+        } else {
+            // Fallback on earlier versions
+        }
         locationManager.startUpdatingLocation()
         
         
