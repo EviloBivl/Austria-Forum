@@ -9,9 +9,15 @@
 import UIKit
 import CoreLocation
 
-class LocationTableViewController: UITableViewController, LocationControllerDelegate, LocationErrorDelegate {
+class NearbyArticlesViewController: UITableViewController, LocationControllerDelegate, LocationErrorDelegate {
     
+    var viewModel: NearbyArticlesViewModel?
     
+    class func create(viewModel: NearbyArticlesViewModel) -> NearbyArticlesViewController {
+        let controller = StoryboardScene.NearbyArticlesViewController.nearbyArticlesViewController.instantiate()
+        controller.viewModel = viewModel
+        return controller
+    }
     
     var locationData : Array <String> = []
     var locationCategories : Array <String> = []
@@ -41,7 +47,7 @@ class LocationTableViewController: UITableViewController, LocationControllerDele
         
         //Register Pull to refresh
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: #selector(LocationTableViewController.pullToRefresh), for: UIControlEvents.valueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(NearbyArticlesViewController.pullToRefresh), for: UIControlEvents.valueChanged)
         self.refreshControl?.beginRefreshing()
         
     }
@@ -182,7 +188,7 @@ class LocationTableViewController: UITableViewController, LocationControllerDele
     
 }
 
-extension LocationTableViewController : NetworkDelegation {
+extension NearbyArticlesViewController : NetworkDelegation {
     
     func onRequestFailed(){
         print("no location articles")
@@ -279,7 +285,7 @@ extension LocationTableViewController : NetworkDelegation {
     
 }
 
-extension LocationTableViewController : ReachabilityDelegate {
+extension NearbyArticlesViewController : ReachabilityDelegate {
     func noInternet() {
         
         self.noInternetView = Bundle.main.loadNibNamed("LoadingScreen", owner: self, options: nil)![0] as? LoadingScreen
@@ -298,7 +304,7 @@ extension LocationTableViewController : ReachabilityDelegate {
             v.viewLoadingHolder.layer.masksToBounds = true;
             print("added no Internet Notification")
         }
-        self.perform(#selector(LocationTableViewController.hideNoInternetView), with: self, afterDelay: 1)
+        self.perform(#selector(NearbyArticlesViewController.hideNoInternetView), with: self, afterDelay: 1)
         
     }
     

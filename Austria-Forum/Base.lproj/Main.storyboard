@@ -10,125 +10,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--SearchViewController-->
-        <scene sceneID="Uvq-cJ-l5q">
-            <objects>
-                <tableViewController title="SearchViewController" id="ZwQ-rb-KNo" customClass="SearchTableViewController" customModule="Austria_Forum" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="lLe-ZC-h5K">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="1b6-HM-3fX">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1b6-HM-3fX" id="fMr-83-PBA">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="ZwQ-rb-KNo" id="fJ1-h7-kCN"/>
-                            <outlet property="delegate" destination="ZwQ-rb-KNo" id="QZ5-oY-fo1"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Suche im Austria Forum" id="vh5-AP-WDz"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="92L-Bb-W6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2343" y="-2831"/>
-        </scene>
-        <!--FavoritesViewController-->
-        <scene sceneID="Ybf-S0-nDO">
-            <objects>
-                <tableViewController title="FavoritesViewController" id="MRN-DW-gJ2" customClass="FavouritesTableViewController" customModule="Austria_Forum" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Tnj-1r-11h">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="favouriteCell" textLabel="FOC-Zj-5uJ" detailTextLabel="Uho-ma-b4C" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="vaI-mq-XGH">
-                                <rect key="frame" x="0.0" y="28" width="375" height="60"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vaI-mq-XGH" id="oi3-dL-CrA">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FOC-Zj-5uJ">
-                                            <rect key="frame" x="16" y="11.5" width="30" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Uho-ma-b4C">
-                                            <rect key="frame" x="16" y="32" width="40.5" height="13.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="MRN-DW-gJ2" id="iOb-wq-Utw"/>
-                            <outlet property="delegate" destination="MRN-DW-gJ2" id="0BY-3R-iUd"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Lesezeichen" id="UM9-9b-EgO"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nB2-O1-Qh5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2191" y="-1377"/>
-        </scene>
-        <!--LocationViewController-->
-        <scene sceneID="uQk-QN-qW6">
-            <objects>
-                <tableViewController title="LocationViewController" id="HT7-3d-lor" customClass="LocationTableViewController" customModule="Austria_Forum" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="R6L-ev-VpY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="locationCell" textLabel="Lsh-wb-vZG" detailTextLabel="3Fn-HT-IyU" style="IBUITableViewCellStyleValue1" id="Hrb-WF-D6a">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hrb-WF-D6a" id="Qbs-Ii-lAi">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Lsh-wb-vZG">
-                                            <rect key="frame" x="16" y="12" width="31.5" height="19.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3Fn-HT-IyU">
-                                            <rect key="frame" x="317.5" y="12" width="41.5" height="19.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="HT7-3d-lor" id="plH-WF-wPt"/>
-                            <outlet property="delegate" destination="HT7-3d-lor" id="28P-QB-zu9"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Artikel in der Nähe" id="Gxw-k0-2K6"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hAV-TU-xIA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2343" y="-2175"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="uBG-L1-5dV">
             <objects>
@@ -168,9 +49,6 @@
                                     <constraint firstAttribute="height" constant="30" id="wxn-h8-h6x"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="publicdomain.png"/>
-                                <connections>
-                                    <action selector="loadLicenseButton:" destination="k5S-Qj-ZYD" eventType="touchUpInside" id="Qnf-wx-THZ"/>
-                                </connections>
                             </button>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veV-Go-xHX" customClass="ToolBar" customModule="Austria_Forum" customModuleProvider="target">
                                 <rect key="frame" x="-4" y="623" width="383" height="44"/>
@@ -178,35 +56,15 @@
                                     <constraint firstAttribute="height" constant="44" id="8Br-yp-uNk"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem tag="20" title="B" id="DAA-Wl-4qM">
-                                        <connections>
-                                            <action selector="back:" destination="k5S-Qj-ZYD" id="Ig8-9A-fVv"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem tag="20" title="B" id="DAA-Wl-4qM"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="8QW-SC-n76"/>
-                                    <barButtonItem tag="21" title="F" id="dGM-Rm-ibp">
-                                        <connections>
-                                            <action selector="forward:" destination="k5S-Qj-ZYD" id="sWb-WY-Dfp"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem tag="21" title="F" id="dGM-Rm-ibp"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hSN-DU-cKK"/>
-                                    <barButtonItem tag="22" title="L" id="KPc-Ae-vns">
-                                        <connections>
-                                            <action selector="saveArticleAsFavourite:" destination="k5S-Qj-ZYD" id="5NY-Np-DJX"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem tag="22" title="L" id="KPc-Ae-vns"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Yht-FX-09I"/>
-                                    <barButtonItem tag="23" title="F" id="IUF-FN-giH">
-                                        <connections>
-                                            <segue destination="MRN-DW-gJ2" kind="show" identifier="toFavourites" id="Zfu-aJ-i6A"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem tag="23" title="F" id="IUF-FN-giH"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="87P-Eg-wFZ"/>
-                                    <barButtonItem tag="24" title="U" id="YoC-Oc-Ol9">
-                                        <connections>
-                                            <action selector="shareContentButton:" destination="k5S-Qj-ZYD" id="a9d-bp-LDM"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem tag="24" title="U" id="YoC-Oc-Ol9"/>
                                 </items>
                             </toolbar>
                             <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEE-VP-jOh" customClass="ToolBar" customModule="Austria_Forum" customModuleProvider="target">
@@ -215,35 +73,15 @@
                                     <constraint firstAttribute="height" constant="44" id="vDl-kv-m8u"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem tag="15" title="H" id="kK2-HC-D4f">
-                                        <connections>
-                                            <action selector="loadHome:" destination="k5S-Qj-ZYD" id="siR-5S-Xxf"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem tag="15" title="H" id="kK2-HC-D4f"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="zvg-jy-R9a"/>
-                                    <barButtonItem tag="11" title="R" id="BPu-Bn-7oW">
-                                        <connections>
-                                            <action selector="loadRandomArticle:" destination="k5S-Qj-ZYD" id="5JM-Lt-sU8"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem tag="11" title="R" id="BPu-Bn-7oW"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="y20-R4-VBj"/>
-                                    <barButtonItem tag="12" title="M" id="V8s-rY-B4s">
-                                        <connections>
-                                            <action selector="loadArticleFromMonthlyPool:" destination="k5S-Qj-ZYD" id="M1z-Xn-i9U"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem tag="12" title="M" id="V8s-rY-B4s"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="P2C-RU-Lug"/>
-                                    <barButtonItem tag="13" title="L" id="WoR-RL-Z3A">
-                                        <connections>
-                                            <segue destination="HT7-3d-lor" kind="show" identifier="toLocationArticles" id="owf-jD-xkx"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem tag="13" title="L" id="WoR-RL-Z3A"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="A70-oi-Tch"/>
-                                    <barButtonItem tag="14" title="S" id="gUl-qk-DD1">
-                                        <connections>
-                                            <segue destination="ZwQ-rb-KNo" kind="show" identifier="toSearchArticle" id="tnR-8C-9OK"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem tag="14" title="S" id="gUl-qk-DD1"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="bBS-rD-rT0"/>
                                     <barButtonItem tag="10" title="S" id="cq9-xe-N8R"/>
                                 </items>
@@ -277,7 +115,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rxN-Cm-CTh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3057" y="-2189"/>
+            <point key="canvasLocation" x="-2559" y="-2956"/>
         </scene>
     </scenes>
     <resources>

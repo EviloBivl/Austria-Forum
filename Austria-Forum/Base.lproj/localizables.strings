@@ -1,0 +1,52 @@
+/* 
+  localizables.strings
+  Austria-Forum
+
+  Created by Paul Neuhold on 16.05.18.
+  Copyright © 2018 Paul Neuhold. All rights reserved.
+*/
+
+/// BASE (ENGLISH)
+
+/// Content
+"APP_TITLE" = "Austria-Forum";
+"AF_SHORT_URL" = "austria-forum.org";
+"CONTENT_ALL_CONTENT_FROM_AF" = "The Content shown in this App is provided by the ";
+"CONTENT_ICONS_SOURCE" = "The icons used in the toolbars are provided by ";
+"TITLE_LICENSE" = "License";
+
+"TITLE_VERSION" = "Version";
+"TITLE_USED_LIBS" = "Used libraries";
+"TITLE_USED_CONTENT" = "Contents";
+"TITLE_DEVELOPERS" = "Developers";
+"TITLE_APP_DEV" = "App development";
+"TITLE_API_DEV" = "Api development";
+"TITLE_USED_ICONS" = "Used Icons";
+
+"NAV_TITLE_SETTINGS" = "Settings";
+"NAV_TITLE_ABOUT_SHORT" = "About A-F";
+"NAV_TITLE_ABOUT_LONG" = "About the Austria-Forum App";
+
+
+/// Names and Urls - not translated
+"ICONS8_URL_SOURCE" = "http://www.icons8.com";
+"ICONS8_URL_TEXT" = "icons8.com";
+
+"TITLE_ALALMOFIRE" = "Alamofire";
+"URL_ALALMOFIRE" = "https://github.com/Alamofire/Alamofire";
+"LICENSE_ALMOFIRE" = "https://github.com/Alamofire/Alamofire/blob/master/LICENSE";
+
+"TITLE_SWIFTYJSON" = "SwiftyJSON";
+"URL_SWIFTYJSON" = "https://github.com/SwiftyJSON/SwiftyJSON";
+"LICENSE_SWIFTYJSON" = "https://github.com/SwiftyJSON/SwiftyJSON/blob/master/LICENSE";
+
+
+"TITLE_REACHABILITY" = "Reachability";
+"URL_REACHABILITY" = "https://github.com/ashleymills/Reachability.swift";
+"LICENSE_REACHABILITY" = "https://github.com/ashleymills/Reachability.swift/blob/master/LICENSE";
+
+
+"TITLE_FABRIC" = "Fabric";
+"URL_FABRIC" = "https://fabric.io";
+"LICENSE_FABRIC" = "https://fabric.io/privacy";
+///

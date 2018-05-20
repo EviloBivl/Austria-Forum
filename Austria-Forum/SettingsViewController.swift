@@ -19,16 +19,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
         controller.viewModel = viewModel
         return controller
     }
-    
-    var pickerOptions : [String] = ["1 Minute", "5 Minuten" , "10 Minuten" , "15 Minuten", "30 Minuten" , "60 Minuten", "2 Stunden"]
-    var pickerValues : [Int] = [1 * 60,5 * 60,10 * 60,15 * 60,30 * 60,60 * 60, 120*60]
-    
-    var pushPickerOptions : [String] = ["20 Meter","50 Meter","100 Meter","250 Meter","500 Meter","1 Km","2 Km"]
-    var pushPickerValues : [Int] = [20,50,100,250,500,1000,2000]
-    
-    var categoryPickerOptions : [String] = ["Alle","AEIOU","Alltagskultur","AustriaWiki","Bilder & Videos","Community","Geography","Kunst & Kultur","Natur","Politik & Geschichte","Videos","Wissenschaft & Wirtschaft","Biographien","Essays", "Web Books"]
-    var categoryPickerValues : [String] = ["ALL","AEIOU","Alltagskultur","AustriaWiki","Bilder_und_Videos","Community","Geography","Kunst_und_Kultur","Natur","Politik_und_Geschichte","Videos","Wissenschaft_und_Wirtschaft","Wissenssammlungen/Biographien","Wissenssammlungen/Essays", "Web_Books"]
-    
+
     
     //    let sectionTitlePretty : [String] = ["Ortungseinstellungen", "Zufalls Artikel Einstellungen"]
     //
@@ -60,36 +51,36 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     let pushIntervalPickerTag : Int = 1
     let categoryPickerTag : Int = 2
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //for debug options
+        //viewModel?.addDebugOptions()
+        //===
+        super.viewWillAppear(animated)
+    }
+    
+    
+    private func setupUI(){
         self.tableView.backgroundColor = UIColor(red: 243.0/255, green: 243.0/255, blue: 243.0/255, alpha: 1)
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         self.navigationController?.isNavigationBarHidden = false
+        self.viewModel?.delegate = self
         
         MyLocationManager.sharedInstance.optionsLocationDelegate = self
         MyLocationManager.sharedInstance.requestAlways()
         self.askUserForPushAllowence()
         
         
-        self.registerObserverForSystemPreferenceChange()
         self.synchronizeAppSettingsWithSystemSettings()
-        
         self.setPickerSelection()
         
         self.tableView.allowsSelection = true
         self.adaptPickerAlpha()
-
-
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        //for debug options
-       // self.addDebugOptions()
-        //===
-        super.viewWillAppear(animated)
+        
     }
     
     func receivedAlwaysPermissions() {
@@ -100,37 +91,19 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     }
     
     fileprivate func addDebugOptions(){
-        pickerOptions.insert("5s debug", at: 0)
-        pickerValues.insert(5, at: 0)
-        
-        pushPickerValues.insert(0, at: 0)
-        pushPickerOptions.insert("always", at: 0)
-        
-        categoryPickerValues.append("not_existing")
-        categoryPickerOptions.append("force fail");
-        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        guard let viewModel = viewModel else { return }
+        viewModel.addDebugOptions()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.registerObserverForSystemPreferenceChange()
         synchronizeAppSettingsWithSystemSettings()
-        
-        self.trackViewControllerTitleToAnalytics()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
         super.viewDidDisappear(animated)
-    }
-    
-    
-    deinit {
-        print("\(self.description) deinit")
     }
     
     func setSwitchOptionValues() {
@@ -141,14 +114,15 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     }
     
     func setPickerSelection(){
-        let pushTimeIndex = self.pickerValues.index(of: UserData.sharedInstance.notificationIntervalInSeconds!)
-        self.intervalPicker.selectRow(pushTimeIndex!, inComponent: 0, animated: false)
+        guard let viewModel = viewModel else { return }
+        let pushTimeIndex = viewModel.pushPickerValues.index(of: UserData.sharedInstance.notificationIntervalInSeconds!)
+        intervalPicker.selectRow(pushTimeIndex!, inComponent: 0, animated: false)
         
-        let distanceIndex = self.pushPickerValues.index(of: UserData.sharedInstance.locationChangeValue!)
-        self.pushIntervalPicker.selectRow(distanceIndex!, inComponent: 0, animated: false)
+        let distanceIndex = viewModel.distancePickerValues.index(of: UserData.sharedInstance.locationChangeValue!)
+        pushIntervalPicker.selectRow(distanceIndex!, inComponent: 0, animated: false)
         
-        let categoryIndex = self.categoryPickerValues.index(of: UserData.sharedInstance.categorySelected!)
-        self.categoryPicker.selectRow(categoryIndex!, inComponent: 0, animated: false)
+        let categoryIndex = viewModel.categoryPickerValues.index(of: UserData.sharedInstance.categorySelected!)
+        categoryPicker.selectRow(categoryIndex!, inComponent: 0, animated: false)
     }
     
     fileprivate func synchronizeAppSettingsWithSystemSettings() {
@@ -253,6 +227,10 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
         MyLocationManager.sharedInstance.startIfAllowed()
     }
     
+    func updateUI(){
+        handleOptionsSwitch()
+    }
+    
     fileprivate func adaptPickerAlpha(){
         if switchAllowSignificantChange.isOn {
             self.pushIntervalPicker.isUserInteractionEnabled = false
@@ -281,9 +259,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
             self.intervalPicker.alpha = 1
             })
             self.intervalPicker.isUserInteractionEnabled = true
-        
-        } 
-        
+        }
     }
     
     fileprivate func isPushSystemAllowed () -> Bool {
@@ -400,39 +376,25 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
-        if pickerView.tag == self.locationIntervalPickerTag {
-            return self.pickerOptions.count
-        } else if pickerView.tag == self.pushIntervalPickerTag {
-            return self.pushPickerOptions.count
-        } else if pickerView.tag == self.categoryPickerTag {
-            return self.categoryPickerOptions.count
-        }
-        
-        return 0
+        return viewModel?.numberOfRows(for: pickerView.tag) ?? 0
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView.tag == self.locationIntervalPickerTag {
-            return self.pickerOptions[row]
-        } else if pickerView.tag == self.pushIntervalPickerTag{
-            return self.pushPickerOptions[row]
-        } else if pickerView.tag == self.categoryPickerTag{
-            return self.categoryPickerOptions[row]
-        }
-        return ""
+        return viewModel?.pickerTitle(for: pickerView.tag, at: row) ?? nil
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView.tag == self.locationIntervalPickerTag {
-            UserData.sharedInstance.notificationIntervalInSeconds = self.pickerValues[row]
-            self.handleOptionsSwitch()
-        } else if pickerView.tag == self.pushIntervalPickerTag{
-            UserData.sharedInstance.locationChangeValue = self.pushPickerValues[row]
-            self.handleOptionsSwitch()
-        } else if pickerView.tag == self.categoryPickerTag {
-            UserData.sharedInstance.categorySelected = self.categoryPickerValues[row]
-        }
+        viewModel?.didSelectPickerView(at: row, with: pickerView.tag)
     }
 }
+
+extension SettingsViewController: ViewModelObserver {
+    func signalUpdate() {
+        updateUI()
+    }
+}
+
+
+
+
 

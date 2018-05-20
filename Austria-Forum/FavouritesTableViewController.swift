@@ -9,8 +9,15 @@
 import UIKit
 
 class FavouritesTableViewController: UITableViewController {
-    
     var noInternetView: LoadingScreen?
+    var viewModel: FavouritesViewModel?
+    
+    class func create(viewModel: FavouritesViewModel) -> FavouritesTableViewController {
+        let controller = StoryboardScene.FavouriteViewController.favouritesTableViewController.instantiate()
+        controller.viewModel = viewModel
+        return controller
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

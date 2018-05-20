@@ -1,0 +1,28 @@
+/* 
+  localizables.strings
+  Austria-Forum
+
+  Created by Paul Neuhold on 16.05.18.
+  Copyright © 2018 Paul Neuhold. All rights reserved.
+*/
+
+/// GERMAN VERSION
+
+/// Content
+"APP_TITLE" = "Austria-Forum";
+"AF_SHORT_URL" = "austria-forum.org";
+"CONTENT_ALL_CONTENT_FROM_AF" = "Alle angezeigten Inhalte dieser App wurden zur Verfügung gestellt von ";
+"CONTENT_ICONS_SOURCE" = "Die in der Toolbar verwendeten Grafiken stammen von ";
+"TITLE_LICENSE" = "Lizenz";
+
+"TITLE_VERSION" = "Version";
+"TITLE_USED_LIBS" = "Verwendete Bibliotheken";
+"TITLE_USED_CONTENT" = "Inhalte";
+"TITLE_DEVELOPERS" = "Entwickler";
+"TITLE_APP_DEV" = "App Entwicklung";
+"TITLE_API_DEV" = "Api Entwicklung";
+"TITLE_USED_ICONS" = "Verwendete Grafiken";
+
+"NAV_TITLE_SETTINGS" = "Einstellungen";
+"NAV_TITLE_ABOUT_SHORT" = "Über A-F";
+"NAV_TITLE_ABOUT_LONG" = "Über die Austria-Forum App";

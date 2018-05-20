@@ -1,0 +1,27 @@
+/* 
+  localizables.strings
+  Austria-Forum
+
+  Created by Paul Neuhold on 16.05.18.
+  Copyright © 2018 Paul Neuhold. All rights reserved.
+*/
+
+"APP_TITLE" = "Austria-Forum";
+"AF_SHORT_URL" = "austria-forum.org";
+"CONTENT_ALL_CONTENT_FROM_AF" = "The Content shown in this App is provided by the ";
+
+"ICONS8_URL_TEXT" = "icons8.com";
+"CONTENT_ICONS_SOURCE" = "The icons used in the toolbars are provided by ";
+"ICONS8_URL_SOURCE" = "http://www.icons8.com";
+
+"TITLE_ALALMOFIRE" = "Alamofire";
+"URL_ALALMOFIRE" = "https://github.com/Alamofire/Alamofire";
+"TITLE_LICENSE" = "License";
+"TITLE_SWIFTYJSON" = "SwiftyJSON";
+"URL_SWIFTYJSON" = "https://github.com/SwiftyJSON/SwiftyJSON";
+"TITLE_REACHABILITY" = "Reachability";
+"URL_REACHABILITY" = "https://github.com/ashleymills/Reachability.swift";
+"TITLE_FABRIC" = "Fabric";
+"URL_FABRIC" = "https://fabric.io";
+
+

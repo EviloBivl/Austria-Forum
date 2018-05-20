@@ -60,6 +60,8 @@ enum StoryboardScene {
   }
   enum FavouriteViewController: StoryboardType {
     static let storyboardName = "FavouriteViewController"
+
+    static let favouritesTableViewController = SceneType<Austria_Forum.FavouritesTableViewController>(storyboard: FavouriteViewController.self, identifier: "FavouritesTableViewController")
   }
   enum LaunchScreen: StoryboardType {
     static let storyboardName = "LaunchScreen"
@@ -71,6 +73,16 @@ enum StoryboardScene {
 
     static let initialScene = InitialSceneType<UINavigationController>(storyboard: Main.self)
   }
+  enum NearbyArticlesViewController: StoryboardType {
+    static let storyboardName = "NearbyArticlesViewController"
+
+    static let nearbyArticlesViewController = SceneType<Austria_Forum.NearbyArticlesViewController>(storyboard: NearbyArticlesViewController.self, identifier: "NearbyArticlesViewController")
+  }
+  enum SearchViewController: StoryboardType {
+    static let storyboardName = "SearchViewController"
+
+    static let searchTableViewController = SceneType<Austria_Forum.SearchTableViewController>(storyboard: SearchViewController.self, identifier: "SearchTableViewController")
+  }
   enum SettingsViewController: StoryboardType {
     static let storyboardName = "SettingsViewController"
 
@@ -79,11 +91,6 @@ enum StoryboardScene {
 }
 
 enum StoryboardSegue {
-  enum Main: String, SegueType {
-    case toFavourites
-    case toLocationArticles
-    case toSearchArticle
-  }
 }
 // swiftlint:enable explicit_type_interface identifier_name line_length type_body_length type_name
 

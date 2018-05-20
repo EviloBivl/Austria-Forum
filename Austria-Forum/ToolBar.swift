@@ -29,6 +29,22 @@ class ToolBar: UIToolbar {
         case like = 22
         case favourites = 23
         case share = 24
+        
+        var viewController: UIViewController? {
+            switch self {
+            case .settings:
+                return SettingsViewController.create(viewModel: SettingsViewModel())
+            case .location:
+                return NearbyArticlesViewController.create(viewModel: NearbyArticlesViewModel())
+            case .search:
+                return SearchTableViewController.create(viewModel: SearchViewModel())
+            case .favourites:
+                return FavouritesTableViewController.create(viewModel: FavouritesViewModel())
+            default:
+                return nil
+            }
+        }
+        
     }
     
     weak var customDelegate: ToolbarDelegate?
@@ -51,13 +67,10 @@ class ToolBar: UIToolbar {
     
     @objc func didPressToolbarButton(sender: UIBarButtonItem){
         guard let itemType = ToolbarItemType.init(rawValue: sender.tag) else { return }
-        switch itemType {
-        case .settings:
-            customDelegate?.didPressToolbarButton(with: itemType)
-        default:
-            break
-        }
+        customDelegate?.didPressToolbarButton(with: itemType)
     }
+    
+    
     
     fileprivate func setUpIcons(){
         

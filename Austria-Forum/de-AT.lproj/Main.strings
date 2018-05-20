@@ -1,0 +1,69 @@
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "3Fn-HT-IyU"; */
+"3Fn-HT-IyU.text" = "Detail";
+
+/* Class = "UIBarButtonItem"; title = "R"; ObjectID = "BPu-Bn-7oW"; */
+"BPu-Bn-7oW.title" = "R";
+
+/* Class = "UIBarButtonItem"; title = "B"; ObjectID = "DAA-Wl-4qM"; */
+"DAA-Wl-4qM.title" = "B";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "FOC-Zj-5uJ"; */
+"FOC-Zj-5uJ.text" = "Title";
+
+/* Class = "UINavigationItem"; title = "Artikel in der Nähe"; ObjectID = "Gxw-k0-2K6"; */
+"Gxw-k0-2K6.title" = "Artikel in der Nähe";
+
+/* Class = "UITableViewController"; title = "LocationViewController"; ObjectID = "HT7-3d-lor"; */
+"HT7-3d-lor.title" = "LocationViewController";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "ICI-FP-GzO"; */
+"ICI-FP-GzO.normalTitle" = "Button";
+
+/* Class = "UIBarButtonItem"; title = "F"; ObjectID = "IUF-FN-giH"; */
+"IUF-FN-giH.title" = "F";
+
+/* Class = "UIBarButtonItem"; title = "L"; ObjectID = "KPc-Ae-vns"; */
+"KPc-Ae-vns.title" = "L";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Lsh-wb-vZG"; */
+"Lsh-wb-vZG.text" = "Title";
+
+/* Class = "UITableViewController"; title = "FavoritesViewController"; ObjectID = "MRN-DW-gJ2"; */
+"MRN-DW-gJ2.title" = "FavoritesViewController";
+
+/* Class = "UINavigationItem"; title = "Lesezeichen"; ObjectID = "UM9-9b-EgO"; */
+"UM9-9b-EgO.title" = "Lesezeichen";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "Uho-ma-b4C"; */
+"Uho-ma-b4C.text" = "Subtitle";
+
+/* Class = "UIBarButtonItem"; title = "M"; ObjectID = "V8s-rY-B4s"; */
+"V8s-rY-B4s.title" = "M";
+
+/* Class = "UIBarButtonItem"; title = "L"; ObjectID = "WoR-RL-Z3A"; */
+"WoR-RL-Z3A.title" = "L";
+
+/* Class = "UIBarButtonItem"; title = "U"; ObjectID = "YoC-Oc-Ol9"; */
+"YoC-Oc-Ol9.title" = "U";
+
+/* Class = "UITableViewController"; title = "SearchViewController"; ObjectID = "ZwQ-rb-KNo"; */
+"ZwQ-rb-KNo.title" = "SearchViewController";
+
+/* Class = "UIBarButtonItem"; title = "S"; ObjectID = "cq9-xe-N8R"; */
+"cq9-xe-N8R.title" = "S";
+
+/* Class = "UIBarButtonItem"; title = "F"; ObjectID = "dGM-Rm-ibp"; */
+"dGM-Rm-ibp.title" = "F";
+
+/* Class = "UIBarButtonItem"; title = "S"; ObjectID = "gUl-qk-DD1"; */
+"gUl-qk-DD1.title" = "S";
+
+/* Class = "UIViewController"; title = "DetailViewController"; ObjectID = "k5S-Qj-ZYD"; */
+"k5S-Qj-ZYD.title" = "DetailViewController";
+
+/* Class = "UIBarButtonItem"; title = "H"; ObjectID = "kK2-HC-D4f"; */
+"kK2-HC-D4f.title" = "H";
+
+/* Class = "UINavigationItem"; title = "Suche im Austria Forum"; ObjectID = "vh5-AP-WDz"; */
+"vh5-AP-WDz.title" = "Suche im Austria Forum";

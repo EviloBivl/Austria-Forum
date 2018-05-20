@@ -281,14 +281,14 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventLicense, action: answersAttributes["License"]!)
     }
     
-    @IBAction func loadRandomArticle(_ sender: AnyObject) {
+    func loadRandomArticle() {
         self.logToAnswers(DetailViewController.answersEventRandom, customAttributes: ["Rnd Article - Category" : UserData.sharedInstance.categorySelected! as AnyObject])
         Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventRandom, action: UserData.sharedInstance.categorySelected!)
         self.showLoadingScreen()
         RequestManager.sharedInstance.getRandomArticle(self, categories: [UserData.sharedInstance.categorySelected!])
     }
     
-    @IBAction func loadArticleFromMonthlyPool(_ sender: AnyObject) {
+    func loadArticleFromMonthlyPool() {
         self.logToAnswers(DetailViewController.answersEventMonthly, customAttributes: ["Monthly Article" : "requested" as AnyObject])
         
         if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload() {
@@ -305,7 +305,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         }
     }
     
-    @IBAction func saveArticleAsFavourite(_ sender: AnyObject) {
+    func saveArticleAsFavourite() {
         if isRightNowAWebBookLoaded(){
             self.saveCurrentArticleAsFavourite(webBook: true)
         } else {
@@ -313,7 +313,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         }
     }
     
-    @IBAction func shareContentButton(_ sender: UIBarButtonItem) {
+    func shareContentButton() {
         if let sr = SearchHolder.sharedInstance.selectedItem {
             Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventShare, action: sr.title ?? "got Nil Title", label: sr.url ?? "got Nil Url")
             self.logToAnswers(DetailViewController.answersEventShare, customAttributes: ["Article" : sr.title as AnyObject? ?? "got Nil Title" as AnyObject])
@@ -328,21 +328,18 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
                 let url = URL(string: stringUrl)
                 let items = [url!]
                 let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
-                //we exclude them because we have massive leaks in the built-in functions
-                activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.copyToPasteboard,UIActivityType.addToReadingList]
-                //support ipads
                 
-                if activityVC.responds(to: #selector(getter: UIViewController.popoverPresentationController)){
-                    activityVC.popoverPresentationController?.barButtonItem = sender
+                //support ipads
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    activityVC.popoverPresentationController?.barButtonItem = bottomToolBar.items?.last
                 }
                 activityVC.completionWithItemsHandler = nil
-                
                 self.present(activityVC, animated: true, completion: nil)
             }
         }
     }
     
-    @IBAction func back(_ sender: UIBarButtonItem) {
+    func back() {
         if self.webKitView.canGoBack{
             self.webKitView.goBack()
         }
@@ -352,7 +349,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
             print("url of back item: \(bItems.url.absoluteString)")
         }
     }
-    @IBAction func forward(_ sender: UIBarButtonItem) {
+    func forward() {
         if self.webKitView.canGoForward {
             self.webKitView.goForward()
         }
@@ -362,7 +359,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         }
     }
     
-    @IBAction func loadHome(_ sender: UIBarButtonItem) {
+    func loadHome() {
         if (ReachabilityHelper.sharedInstance.connection == ReachabilityType.no_INTERNET){
             self.noInternet()
             return
@@ -834,13 +831,46 @@ extension DetailViewController : NetworkDelegation {
     }
     
 }
+/**
+ case settings = 10
+ case random = 11
+ case monthly = 12
+ case location = 13
+ case search = 14
+ case home = 15
+ 
+ //bottom toolbartags
+ case back = 20
+ case forward = 21
+ case like = 22
+ case favourites = 23
+ case share = 24
+ */
 
 extension DetailViewController: ToolbarDelegate {
     func didPressToolbarButton(with itemType: ToolBar.ToolbarItemType) {
         switch itemType {
-        case .settings:
-            let controller = SettingsViewController.create(viewModel: SettingsViewModel())
-            navigationController?.pushViewController(controller, animated: true)
+        case .settings,
+             .location,
+             .search,
+             .favourites:
+            if let controller = itemType.viewController {
+                navigationController?.pushViewController(controller, animated: true)
+            }
+        case .home:
+            loadHome()
+        case .random:
+            loadRandomArticle()
+        case .monthly:
+            loadArticleFromMonthlyPool()
+        case .back:
+            back()
+        case .forward:
+            forward()
+        case .like:
+            saveArticleAsFavourite()
+        case .share:
+            shareContentButton()
         default:
             break
         }

@@ -134,7 +134,12 @@
                         <outlet property="appTitleLabel" destination="nLo-K2-Wxc" id="xHr-GD-f5j"/>
                         <outlet property="appVersionLabel" destination="LqK-oy-hBK" id="BEA-Lo-j9G"/>
                         <outlet property="contentTextView" destination="aP3-hj-L1z" id="P3z-ME-NEH"/>
+                        <outlet property="contentTitleLabel" destination="rlV-yb-TeC" id="Xh2-9v-N1z"/>
+                        <outlet property="developersTextView" destination="1tf-PP-nNq" id="FD9-Cg-9ai"/>
+                        <outlet property="developersTitle" destination="v9x-mY-wQ2" id="WpA-OO-c6m"/>
                         <outlet property="iconsDescription" destination="Mv2-ZY-5sW" id="Ria-Vd-aIb"/>
+                        <outlet property="usedIconsLabel" destination="lRC-PP-O1T" id="68g-dg-NJQ"/>
+                        <outlet property="usedLibsLabel" destination="r17-Ti-ukj" id="gS3-Vv-4cf"/>
                         <outlet property="usedLibsTextView" destination="wCH-Q0-THu" id="6m8-QX-q1F"/>
                     </connections>
                 </viewController>

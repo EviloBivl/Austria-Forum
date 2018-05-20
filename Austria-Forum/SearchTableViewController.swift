@@ -26,13 +26,19 @@ protocol ArticleSelectionDelegate {
 
 class SearchTableViewController: UITableViewController, NetworkDelegation, UISearchResultsUpdating, UISearchBarDelegate  {
     
-    
     // MARK: - Properties
     var myData : Array<String> = []
     var categories : Array<String> = []
     var delegate: ArticleSelectionDelegate?
     let searchController = UISearchController(searchResultsController: nil)
     var noInternetView : LoadingScreen?
+    var viewModel: SearchViewModel?
+    
+    class func create(viewModel: SearchViewModel) -> SearchTableViewController {
+        let controller = StoryboardScene.SearchViewController.searchTableViewController.instantiate()
+        controller.viewModel = viewModel
+        return controller
+    }
     
     
     // MARK: - Override Lifecycle
