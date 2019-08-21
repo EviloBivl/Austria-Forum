@@ -111,21 +111,12 @@ class GetArticlesByLocationRequest: BaseRequest {
             if  distanceInt <= 1000 {
                 distString += "\(distanceInt)" + " m"
             } else {
-                let distFloat = Float(distanceInt)
-                distString += "\(distFloat/1000)"
-                let decimalIndex = distString.characters.index(of: ".")
-                let endIndex = distString.characters.endIndex
-                
-                if let index = decimalIndex {
-                    if distString.distance(from: index, to: endIndex) >= 3{
-                        distString = distString.substring(to: distString.index(index, offsetBy: 3))
-                    }
-                    distString = distString.replacingOccurrences(of: ".", with: ",")
-                }
+                let distDouble = Double(distanceInt) / 1000
+                distString += String(format: "%.2f", distDouble.truncate(places: 2))
+                distString = distString.replacingOccurrences(of: ".", with: ",")
                 distString += " Km"
             }
         }
         return distString
     }
-    
 }

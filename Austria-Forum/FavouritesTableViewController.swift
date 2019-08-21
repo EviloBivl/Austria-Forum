@@ -22,18 +22,7 @@ class FavouritesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
         self.tableView.rowHeight = 60
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -164,7 +153,7 @@ extension FavouritesTableViewController : ReachabilityDelegate {
         self.perform(#selector(FavouritesTableViewController.hideNoInternetView), with: self, afterDelay: 1)
     }
     
-    func hideNoInternetView(){
+    @objc func hideNoInternetView(){
         print("hided no internet notification")
         for v in self.view.subviews {
             if v.tag == 99{

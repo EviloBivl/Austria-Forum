@@ -90,8 +90,9 @@ class SettingsViewModel: ViewModel {
             UserData.sharedInstance.categorySelected = categoryPickerValues[row]
             break
         }
-        
     }
+    
+    
     
     
     func addDebugOptions(){

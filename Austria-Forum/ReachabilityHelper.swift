@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ReachabilitySwift
+import Reachability
 
 enum ReachabilityType {
     case wifi
@@ -40,7 +40,7 @@ class ReachabilityHelper {
     
     fileprivate func addObserver(){
         
-        NotificationCenter.default.addObserver(forName: ReachabilityChangedNotification, object: nil, queue: OperationQueue.main, using: {
+        NotificationCenter.default.addObserver(forName: Notification.Name.reachabilityChanged, object: nil, queue: OperationQueue.main, using: {
             notification in
             self.reachabilityChanged(notification)
         })
@@ -75,8 +75,8 @@ class ReachabilityHelper {
     func removeObserver(){
         reachability?.stopNotifier()
         NotificationCenter.default.removeObserver(self,
-            name: ReachabilityChangedNotification,
-            object: reachability)
+                                                  name: Notification.Name.reachabilityChanged,
+                                                  object: reachability)
     }
     
     

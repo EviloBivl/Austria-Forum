@@ -6,65 +6,67 @@ import Foundation
 // swiftlint:disable file_length
 
 // swiftlint:disable explicit_type_interface identifier_name line_length nesting type_body_length type_name
-enum L10n {
+internal enum L10n {
   /// austria-forum.org
-  static let afShortUrl = L10n.tr("localizables", "AF_SHORT_URL")
+  internal static let afShortUrl = L10n.tr("localizables", "AF_SHORT_URL")
   /// Austria-Forum
-  static let appTitle = L10n.tr("localizables", "APP_TITLE")
+  internal static let appTitle = L10n.tr("localizables", "APP_TITLE")
   /// The Content shown in this App is provided by the 
-  static let contentAllContentFromAf = L10n.tr("localizables", "CONTENT_ALL_CONTENT_FROM_AF")
+  internal static let contentAllContentFromAf = L10n.tr("localizables", "CONTENT_ALL_CONTENT_FROM_AF")
   /// The icons used in the toolbars are provided by 
-  static let contentIconsSource = L10n.tr("localizables", "CONTENT_ICONS_SOURCE")
+  internal static let contentIconsSource = L10n.tr("localizables", "CONTENT_ICONS_SOURCE")
   /// http://www.icons8.com
-  static let icons8UrlSource = L10n.tr("localizables", "ICONS8_URL_SOURCE")
+  internal static let icons8UrlSource = L10n.tr("localizables", "ICONS8_URL_SOURCE")
   /// icons8.com
-  static let icons8UrlText = L10n.tr("localizables", "ICONS8_URL_TEXT")
+  internal static let icons8UrlText = L10n.tr("localizables", "ICONS8_URL_TEXT")
   /// https://github.com/Alamofire/Alamofire/blob/master/LICENSE
-  static let licenseAlmofire = L10n.tr("localizables", "LICENSE_ALMOFIRE")
+  internal static let licenseAlmofire = L10n.tr("localizables", "LICENSE_ALMOFIRE")
   /// https://fabric.io/privacy
-  static let licenseFabric = L10n.tr("localizables", "LICENSE_FABRIC")
+  internal static let licenseFabric = L10n.tr("localizables", "LICENSE_FABRIC")
   /// https://github.com/ashleymills/Reachability.swift/blob/master/LICENSE
-  static let licenseReachability = L10n.tr("localizables", "LICENSE_REACHABILITY")
+  internal static let licenseReachability = L10n.tr("localizables", "LICENSE_REACHABILITY")
   /// https://github.com/SwiftyJSON/SwiftyJSON/blob/master/LICENSE
-  static let licenseSwiftyjson = L10n.tr("localizables", "LICENSE_SWIFTYJSON")
+  internal static let licenseSwiftyjson = L10n.tr("localizables", "LICENSE_SWIFTYJSON")
   /// About the Austria-Forum App
-  static let navTitleAboutLong = L10n.tr("localizables", "NAV_TITLE_ABOUT_LONG")
+  internal static let navTitleAboutLong = L10n.tr("localizables", "NAV_TITLE_ABOUT_LONG")
   /// About A-F
-  static let navTitleAboutShort = L10n.tr("localizables", "NAV_TITLE_ABOUT_SHORT")
+  internal static let navTitleAboutShort = L10n.tr("localizables", "NAV_TITLE_ABOUT_SHORT")
   /// Settings
-  static let navTitleSettings = L10n.tr("localizables", "NAV_TITLE_SETTINGS")
+  internal static let navTitleSettings = L10n.tr("localizables", "NAV_TITLE_SETTINGS")
+  /// How much time should be passed before a possible notification will be triggered
+  internal static let settingsTitlePushinterval = L10n.tr("localizables", "SETTINGS_TITLE_PUSHINTERVAL")
   /// Alamofire
-  static let titleAlalmofire = L10n.tr("localizables", "TITLE_ALALMOFIRE")
+  internal static let titleAlalmofire = L10n.tr("localizables", "TITLE_ALALMOFIRE")
   /// Api development
-  static let titleApiDev = L10n.tr("localizables", "TITLE_API_DEV")
+  internal static let titleApiDev = L10n.tr("localizables", "TITLE_API_DEV")
   /// App development
-  static let titleAppDev = L10n.tr("localizables", "TITLE_APP_DEV")
+  internal static let titleAppDev = L10n.tr("localizables", "TITLE_APP_DEV")
   /// Developers
-  static let titleDevelopers = L10n.tr("localizables", "TITLE_DEVELOPERS")
+  internal static let titleDevelopers = L10n.tr("localizables", "TITLE_DEVELOPERS")
   /// Fabric
-  static let titleFabric = L10n.tr("localizables", "TITLE_FABRIC")
+  internal static let titleFabric = L10n.tr("localizables", "TITLE_FABRIC")
   /// License
-  static let titleLicense = L10n.tr("localizables", "TITLE_LICENSE")
+  internal static let titleLicense = L10n.tr("localizables", "TITLE_LICENSE")
   /// Reachability
-  static let titleReachability = L10n.tr("localizables", "TITLE_REACHABILITY")
+  internal static let titleReachability = L10n.tr("localizables", "TITLE_REACHABILITY")
   /// SwiftyJSON
-  static let titleSwiftyjson = L10n.tr("localizables", "TITLE_SWIFTYJSON")
+  internal static let titleSwiftyjson = L10n.tr("localizables", "TITLE_SWIFTYJSON")
   /// Contents
-  static let titleUsedContent = L10n.tr("localizables", "TITLE_USED_CONTENT")
+  internal static let titleUsedContent = L10n.tr("localizables", "TITLE_USED_CONTENT")
   /// Used Icons
-  static let titleUsedIcons = L10n.tr("localizables", "TITLE_USED_ICONS")
+  internal static let titleUsedIcons = L10n.tr("localizables", "TITLE_USED_ICONS")
   /// Used libraries
-  static let titleUsedLibs = L10n.tr("localizables", "TITLE_USED_LIBS")
+  internal static let titleUsedLibs = L10n.tr("localizables", "TITLE_USED_LIBS")
   /// Version
-  static let titleVersion = L10n.tr("localizables", "TITLE_VERSION")
+  internal static let titleVersion = L10n.tr("localizables", "TITLE_VERSION")
   /// https://github.com/Alamofire/Alamofire
-  static let urlAlalmofire = L10n.tr("localizables", "URL_ALALMOFIRE")
+  internal static let urlAlalmofire = L10n.tr("localizables", "URL_ALALMOFIRE")
   /// https://fabric.io
-  static let urlFabric = L10n.tr("localizables", "URL_FABRIC")
+  internal static let urlFabric = L10n.tr("localizables", "URL_FABRIC")
   /// https://github.com/ashleymills/Reachability.swift
-  static let urlReachability = L10n.tr("localizables", "URL_REACHABILITY")
+  internal static let urlReachability = L10n.tr("localizables", "URL_REACHABILITY")
   /// https://github.com/SwiftyJSON/SwiftyJSON
-  static let urlSwiftyjson = L10n.tr("localizables", "URL_SWIFTYJSON")
+  internal static let urlSwiftyjson = L10n.tr("localizables", "URL_SWIFTYJSON")
 }
 // swiftlint:enable explicit_type_interface identifier_name line_length nesting type_body_length type_name
 

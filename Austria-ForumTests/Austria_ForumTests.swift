@@ -43,7 +43,7 @@ class Austria_ForumTests: XCTestCase {
             assertionFailure("checkIfArticleOfTheMonthNeedsReload returns false although no values are set")
         }
         let url : String = "http://a.glorious.url"
-        UserData.sharedInstance.articleOfTheMonth = url
+        UserData.sharedInstance.articleOfTheMonth = SearchResult(title: nil, name: nil, url: url, score: 0, licenseResult: nil)
         assert(UserData.sharedInstance.getValueForKey(UserDefaultKeys.kArticleOfTheMonthSearchResult) as! String == url, "saving articleOfTheMonth failed")
         
         if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload(){
@@ -57,7 +57,7 @@ class Austria_ForumTests: XCTestCase {
         } else{
             XCTAssert(false, "this should not be the case, since we have nothing set in the kFirstTimeStartingAppString")
         }
-        UserData.sharedInstance.setValueForKey("its set", key: UserDefaultKeys.kFirstTimeStartingAppString)
+        UserData.sharedInstance.setValueForKey("its set" as AnyObject, key: UserDefaultKeys.kFirstTimeStartingAppString)
         if UserData.sharedInstance.checkIfAppStartsTheFirstTime() {
             XCTAssert(false, "kFirstTimeStartingAppString was set, so we shouldn't be here")
         }
@@ -82,7 +82,7 @@ class Austria_ForumTests: XCTestCase {
     func testComputedProperties () {
         
         XCTAssert(UserData.sharedInstance.optionLocationUpdateInterval == 10)
-        UserData.sharedInstance.setValueForKey(15, key: UserDefaultKeys.kOptionLocationUpdateIntervalInt)
+        UserData.sharedInstance.setValueForKey(15 as AnyObject, key: UserDefaultKeys.kOptionLocationUpdateIntervalInt)
         XCTAssert(UserData.sharedInstance.optionLocationUpdateInterval == 15)
         UserData.sharedInstance.optionLocationUpdateInterval = 20
         XCTAssert(UserData.sharedInstance.optionLocationUpdateInterval == 20)
@@ -98,4 +98,4 @@ class Austria_ForumTests: XCTestCase {
     }
     
 }
-Ø
+

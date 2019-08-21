@@ -26,3 +26,6 @@
 "NAV_TITLE_SETTINGS" = "Einstellungen";
 "NAV_TITLE_ABOUT_SHORT" = "Über A-F";
 "NAV_TITLE_ABOUT_LONG" = "Über die Austria-Forum App";
+
+"SETTINGS_TITLE_PUSHINTERVAL" = "Wieviel Zeit soll vergehen bevor eine mögliche Benachrichtigung ausgeschickt wird";
+

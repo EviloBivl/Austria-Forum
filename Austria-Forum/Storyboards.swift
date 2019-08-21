@@ -7,22 +7,22 @@ import UIKit
 // swiftlint:disable superfluous_disable_command
 // swiftlint:disable file_length
 
-protocol StoryboardType {
+internal protocol StoryboardType {
   static var storyboardName: String { get }
 }
 
-extension StoryboardType {
+internal extension StoryboardType {
   static var storyboard: UIStoryboard {
     let name = self.storyboardName
     return UIStoryboard(name: name, bundle: Bundle(for: BundleToken.self))
   }
 }
 
-struct SceneType<T: Any> {
-  let storyboard: StoryboardType.Type
-  let identifier: String
+internal struct SceneType<T: Any> {
+  internal let storyboard: StoryboardType.Type
+  internal let identifier: String
 
-  func instantiate() -> T {
+  internal func instantiate() -> T {
     let identifier = self.identifier
     guard let controller = storyboard.storyboard.instantiateViewController(withIdentifier: identifier) as? T else {
       fatalError("ViewController '\(identifier)' is not of the expected class \(T.self).")
@@ -31,10 +31,10 @@ struct SceneType<T: Any> {
   }
 }
 
-struct InitialSceneType<T: Any> {
-  let storyboard: StoryboardType.Type
+internal struct InitialSceneType<T: Any> {
+  internal let storyboard: StoryboardType.Type
 
-  func instantiate() -> T {
+  internal func instantiate() -> T {
     guard let controller = storyboard.storyboard.instantiateInitialViewController() as? T else {
       fatalError("ViewController is not of the expected class \(T.self).")
     }
@@ -42,9 +42,9 @@ struct InitialSceneType<T: Any> {
   }
 }
 
-protocol SegueType: RawRepresentable { }
+internal protocol SegueType: RawRepresentable { }
 
-extension UIViewController {
+internal extension UIViewController {
   func perform<S: SegueType>(segue: S, sender: Any? = nil) where S.RawValue == String {
     let identifier = segue.rawValue
     performSegue(withIdentifier: identifier, sender: sender)
@@ -52,45 +52,45 @@ extension UIViewController {
 }
 
 // swiftlint:disable explicit_type_interface identifier_name line_length type_body_length type_name
-enum StoryboardScene {
-  enum AboutViewController: StoryboardType {
-    static let storyboardName = "AboutViewController"
+internal enum StoryboardScene {
+  internal enum AboutViewController: StoryboardType {
+    internal static let storyboardName = "AboutViewController"
 
-    static let aboutViewController = SceneType<Austria_Forum.AboutViewController>(storyboard: AboutViewController.self, identifier: "AboutViewController")
+    internal static let aboutViewController = SceneType<Austria_Forum.AboutViewController>(storyboard: AboutViewController.self, identifier: "AboutViewController")
   }
-  enum FavouriteViewController: StoryboardType {
-    static let storyboardName = "FavouriteViewController"
+  internal enum FavouriteViewController: StoryboardType {
+    internal static let storyboardName = "FavouriteViewController"
 
-    static let favouritesTableViewController = SceneType<Austria_Forum.FavouritesTableViewController>(storyboard: FavouriteViewController.self, identifier: "FavouritesTableViewController")
+    internal static let favouritesTableViewController = SceneType<Austria_Forum.FavouritesTableViewController>(storyboard: FavouriteViewController.self, identifier: "FavouritesTableViewController")
   }
-  enum LaunchScreen: StoryboardType {
-    static let storyboardName = "LaunchScreen"
+  internal enum LaunchScreen: StoryboardType {
+    internal static let storyboardName = "LaunchScreen"
 
-    static let initialScene = InitialSceneType<UIViewController>(storyboard: LaunchScreen.self)
+    internal static let initialScene = InitialSceneType<UIViewController>(storyboard: LaunchScreen.self)
   }
-  enum Main: StoryboardType {
-    static let storyboardName = "Main"
+  internal enum Main: StoryboardType {
+    internal static let storyboardName = "Main"
 
-    static let initialScene = InitialSceneType<UINavigationController>(storyboard: Main.self)
+    internal static let initialScene = InitialSceneType<UINavigationController>(storyboard: Main.self)
   }
-  enum NearbyArticlesViewController: StoryboardType {
-    static let storyboardName = "NearbyArticlesViewController"
+  internal enum NearbyArticlesViewController: StoryboardType {
+    internal static let storyboardName = "NearbyArticlesViewController"
 
-    static let nearbyArticlesViewController = SceneType<Austria_Forum.NearbyArticlesViewController>(storyboard: NearbyArticlesViewController.self, identifier: "NearbyArticlesViewController")
+    internal static let nearbyArticlesViewController = SceneType<Austria_Forum.NearbyArticlesViewController>(storyboard: NearbyArticlesViewController.self, identifier: "NearbyArticlesViewController")
   }
-  enum SearchViewController: StoryboardType {
-    static let storyboardName = "SearchViewController"
+  internal enum SearchViewController: StoryboardType {
+    internal static let storyboardName = "SearchViewController"
 
-    static let searchTableViewController = SceneType<Austria_Forum.SearchTableViewController>(storyboard: SearchViewController.self, identifier: "SearchTableViewController")
+    internal static let searchTableViewController = SceneType<Austria_Forum.SearchTableViewController>(storyboard: SearchViewController.self, identifier: "SearchTableViewController")
   }
-  enum SettingsViewController: StoryboardType {
-    static let storyboardName = "SettingsViewController"
+  internal enum SettingsViewController: StoryboardType {
+    internal static let storyboardName = "SettingsViewController"
 
-    static let settingsViewController = SceneType<Austria_Forum.SettingsViewController>(storyboard: SettingsViewController.self, identifier: "SettingsViewController")
+    internal static let settingsViewController = SceneType<Austria_Forum.SettingsViewController>(storyboard: SettingsViewController.self, identifier: "SettingsViewController")
   }
 }
 
-enum StoryboardSegue {
+internal enum StoryboardSegue {
 }
 // swiftlint:enable explicit_type_interface identifier_name line_length type_body_length type_name
 

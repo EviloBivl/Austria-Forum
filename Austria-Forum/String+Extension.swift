@@ -40,11 +40,8 @@ extension String {
         }
     }
     
-    
     func index(of char: Character) -> Int? {
-            if let idx = characters.index(of: char) {
-                return characters.distance(from: startIndex, to: idx)
-            }
-            return nil
+        guard let index = self.index(where: { $0 == char}) else { return nil }
+        return self.distance(from: startIndex, to: index)
     }
 }

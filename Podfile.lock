@@ -1,14 +1,14 @@
 PODS:
-  - Alamofire (4.4.0)
-  - Crashlytics (3.8.4):
-    - Fabric (~> 1.6.3)
-  - Fabric (1.6.11)
-  - ReachabilitySwift (3)
-  - SwiftGen (5.2.1)
-  - SwiftyJSON (3.1.4)
+  - Alamofire (4.7.2)
+  - Crashlytics (3.10.1):
+    - Fabric (~> 1.7.5)
+  - Fabric (1.7.6)
+  - ReachabilitySwift (4.1.0)
+  - SwiftGen (5.3.0)
+  - SwiftyJSON (4.1.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
+  - Alamofire
   - Crashlytics
   - Fabric
   - ReachabilitySwift
@@ -16,13 +16,13 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
-  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
-  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
-  SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
+  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
+  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
+  SwiftGen: 4379bd3640b0a212a0f6ea3c494adba385513d10
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 7a954dccc83eb38d980c21ea78dcbcdbe83e66e5
+PODFILE CHECKSUM: 5a54c2e4279c394a8e6c8f8dea2492ae426ac238
 
 COCOAPODS: 1.4.0

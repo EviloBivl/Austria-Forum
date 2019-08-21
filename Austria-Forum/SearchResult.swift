@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SearchResult {
+public struct SearchResult {
     
     fileprivate(set) var title : String?
     fileprivate(set) var name : String?

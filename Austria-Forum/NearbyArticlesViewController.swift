@@ -52,7 +52,7 @@ class NearbyArticlesViewController: UITableViewController, LocationControllerDel
         
     }
     
-    public func pullToRefresh(){
+    @objc public func pullToRefresh(){
         if (ReachabilityHelper.sharedInstance.connection == ReachabilityType.no_INTERNET){
             noInternet()
         }
@@ -308,7 +308,7 @@ extension NearbyArticlesViewController : ReachabilityDelegate {
         
     }
     
-    func hideNoInternetView(){
+    @objc func hideNoInternetView(){
         print("hided no internet notification")
         for v in self.view.subviews {
             if v.tag == 99{

@@ -204,7 +204,7 @@ extension SearchTableViewController
         self.perform(#selector(SearchTableViewController.hideNoInternetView), with: self, afterDelay: 1)
     }
     
-    func hideNoInternetView(){
+    @objc func hideNoInternetView(){
         print("hided no internet notification")
         for v in self.view.subviews {
             if v.tag == 99{

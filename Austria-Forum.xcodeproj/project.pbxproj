@@ -41,10 +41,15 @@
 		5C6D334420B20472000E30DD /* SearchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C6D334320B20472000E30DD /* SearchViewController.storyboard */; };
 		5C6D334620B2055F000E30DD /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6D334520B2055F000E30DD /* SearchViewModel.swift */; };
 		5C6D334820B20569000E30DD /* NearbyArticlesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6D334720B20569000E30DD /* NearbyArticlesViewModel.swift */; };
+		5C6D334A20B2ABBC000E30DD /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6D334920B2ABBC000E30DD /* Double+Extension.swift */; };
+		5C6D334C20B335E6000E30DD /* Colors.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5C6D334B20B335E6000E30DD /* Colors.txt */; };
+		5C6D334E20B336A6000E30DD /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6D334D20B336A6000E30DD /* Colors.swift */; };
 		5C80A1671E8823DD00B05836 /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C80A1661E8823DD00B05836 /* forward.png */; };
 		5C84A6FB1C907EBE006C3CC0 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C84A6FA1C907EBE006C3CC0 /* home.png */; };
 		5C8F0BAC1C1F1358003E2895 /* ReachabilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8F0BAB1C1F1358003E2895 /* ReachabilityHelper.swift */; };
 		5C8F0BAE1C1F25BB003E2895 /* ReachabilityDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8F0BAD1C1F25BB003E2895 /* ReachabilityDelegate.swift */; };
+		5C906C36219E09330020B734 /* SettingsSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C906C35219E09330020B734 /* SettingsSelectionViewController.swift */; };
+		5C906C38219E09700020B734 /* PushNotificationTimeIntervalSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C906C37219E09700020B734 /* PushNotificationTimeIntervalSelectionViewModel.swift */; };
 		5C9B18F11C197A2E0076B648 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F01C197A2E0076B648 /* AppDelegate.swift */; };
 		5C9B18F61C197A2E0076B648 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F51C197A2E0076B648 /* SearchTableViewController.swift */; };
 		5C9B18F81C197A2E0076B648 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F71C197A2E0076B648 /* DetailViewController.swift */; };
@@ -157,10 +162,15 @@
 		5C6D334320B20472000E30DD /* SearchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchViewController.storyboard; sourceTree = "<group>"; };
 		5C6D334520B2055F000E30DD /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		5C6D334720B20569000E30DD /* NearbyArticlesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyArticlesViewModel.swift; sourceTree = "<group>"; };
+		5C6D334920B2ABBC000E30DD /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		5C6D334B20B335E6000E30DD /* Colors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Colors.txt; sourceTree = "<group>"; };
+		5C6D334D20B336A6000E30DD /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		5C80A1661E8823DD00B05836 /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward.png; sourceTree = "<group>"; };
 		5C84A6FA1C907EBE006C3CC0 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		5C8F0BAB1C1F1358003E2895 /* ReachabilityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityHelper.swift; sourceTree = "<group>"; };
 		5C8F0BAD1C1F25BB003E2895 /* ReachabilityDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityDelegate.swift; sourceTree = "<group>"; };
+		5C906C35219E09330020B734 /* SettingsSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSelectionViewController.swift; sourceTree = "<group>"; };
+		5C906C37219E09700020B734 /* PushNotificationTimeIntervalSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationTimeIntervalSelectionViewModel.swift; sourceTree = "<group>"; };
 		5C9B18ED1C197A2E0076B648 /* Austria-Forum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Austria-Forum.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C9B18F01C197A2E0076B648 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C9B18F51C197A2E0076B648 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
@@ -301,9 +311,9 @@
 			children = (
 				5C9B18EF1C197A2E0076B648 /* Austria-Forum */,
 				5C9B19091C197A2E0076B648 /* Austria-ForumTests */,
+				5CEA75361C197E9E0069D333 /* Podfile */,
 				5C9B19141C197A2E0076B648 /* Austria-ForumUITests */,
 				5C9B18EE1C197A2E0076B648 /* Products */,
-				5CEA75361C197E9E0069D333 /* Podfile */,
 				4AC3A39ECEF3F810E81E681E /* Pods */,
 				6F5DFFE72E8C933D632CE3EF /* Frameworks */,
 			);
@@ -416,7 +426,9 @@
 				5C9B19011C197A2E0076B648 /* Info.plist */,
 				5C4A6AE51C4062EE0010499B /* Favourites.plist */,
 				5CED9E5F20ACBC5D0026A419 /* localizables.strings */,
+				5C6D334D20B336A6000E30DD /* Colors.swift */,
 				5CED9E5B20ACB71E0026A419 /* Localizations.swift */,
+				5C6D334B20B335E6000E30DD /* Colors.txt */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -468,6 +480,7 @@
 				5C4A6ADF1C3E972B0010499B /* SettingsViewController.swift */,
 				5CCC3F1E1C413B9C00ADBBDB /* FavouritesTableViewController.swift */,
 				5CC0B1371CB68ADE0093D7F2 /* AboutViewController.swift */,
+				5C906C35219E09330020B734 /* SettingsSelectionViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -495,6 +508,7 @@
 				5CE5DA081D9E3A9E005C036D /* Helper.swift */,
 				5C2C6AFF1E8E266000C38941 /* String+Extension.swift */,
 				5CED9E6220B1F5EB0026A419 /* Array+Extension.swift */,
+				5C6D334920B2ABBC000E30DD /* Double+Extension.swift */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -524,6 +538,7 @@
 				5CED9E5320AA1CD60026A419 /* SettingsViewModel.swift */,
 				5C6D334520B2055F000E30DD /* SearchViewModel.swift */,
 				5C6D334720B20569000E30DD /* NearbyArticlesViewModel.swift */,
+				5C906C37219E09700020B734 /* PushNotificationTimeIntervalSelectionViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -613,13 +628,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Paul Neuhold";
 				TargetAttributes = {
 					5C9B18EC1C197A2E0076B648 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = K4XFJA86D8;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -632,7 +647,7 @@
 					};
 					5C9B19051C197A2E0076B648 = {
 						CreatedOnToolsVersion = 7.1.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0930;
 						TestTargetID = 5C9B18EC1C197A2E0076B648;
 					};
 					5C9B19101C197A2E0076B648 = {
@@ -680,6 +695,7 @@
 				5C4A6AE61C4062EE0010499B /* Favourites.plist in Resources */,
 				5CC3610C1C70E2BA00095F21 /* Calendar.png in Resources */,
 				5CED9E5D20ACBC5D0026A419 /* localizables.strings in Resources */,
+				5C6D334C20B335E6000E30DD /* Colors.txt in Resources */,
 				5CBBFAE81C64EBE100C20437 /* af_license.png in Resources */,
 				5CBBFAE41C64EBA200C20437 /* by.png in Resources */,
 				5CED9E5020AA190E0026A419 /* FavouriteViewController.storyboard in Resources */,
@@ -783,13 +799,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/ReachabilitySwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReachabilitySwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -805,13 +821,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumUITests/Pods-Austria-ForumUITests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/ReachabilitySwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReachabilitySwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -830,7 +846,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" b36289702f0f75fc1d2e8f5793d30952d391bffd c1ece7467c67d7b735a98fb69d89f24fcec02f7d9971b2318eff5300b63aadb1\necho \"hallo\"\n\n${PODS_ROOT}/SwiftGen/bin/swiftgen storyboards -t swift4 ${PROJECT_DIR}/Austria-Forum > ${PROJECT_DIR}/Austria-Forum/Storyboards.swift\n${PODS_ROOT}/SwiftGen/bin/swiftgen strings -t structured-swift3 ${PROJECT_DIR}/Austria-Forum/Base.lproj/localizables.strings > ${PROJECT_DIR}/Austria-Forum/Localizations.swift\n#/Users/paulneuhold/app_ios_austriaforum/Pods/SwiftGen/bin/swiftgen storyboards -t swift4 /Users/paulneuhold/app_ios_austriaforum/Austria-Forum >\n";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" b36289702f0f75fc1d2e8f5793d30952d391bffd c1ece7467c67d7b735a98fb69d89f24fcec02f7d9971b2318eff5300b63aadb1\necho \"hallo\"\n\n${PODS_ROOT}/SwiftGen/bin/swiftgen storyboards -t swift4 ${PROJECT_DIR}/Austria-Forum > ${PROJECT_DIR}/Austria-Forum/Storyboards.swift\n${PODS_ROOT}/SwiftGen/bin/swiftgen strings -t structured-swift3 ${PROJECT_DIR}/Austria-Forum/Base.lproj/localizables.strings > ${PROJECT_DIR}/Austria-Forum/Localizations.swift\n\n${PODS_ROOT}/SwiftGen/bin/swiftgen colors -t swift3 ${PROJECT_DIR}/Austria-Forum/Colors.txt > ${PROJECT_DIR}/Austria-Forum/Colors.swift\n#/Users/paulneuhold/app_ios_austriaforum/Pods/SwiftGen/bin/swiftgen storyboards -t swift4 /Users/paulneuhold/app_ios_austriaforum/Austria-Forum >\n";
 		};
 		5EBC7B160A33F211BEEDD1DB /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -855,13 +871,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumTests/Pods-Austria-ForumTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/ReachabilitySwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReachabilitySwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -956,12 +972,14 @@
 				5CCC3F211C42542B00ADBBDB /* Extension+Dictionary.swift in Sources */,
 				5C9B18F11C197A2E0076B648 /* AppDelegate.swift in Sources */,
 				5C8F0BAC1C1F1358003E2895 /* ReachabilityHelper.swift in Sources */,
+				5C906C36219E09330020B734 /* SettingsSelectionViewController.swift in Sources */,
 				5C6D334620B2055F000E30DD /* SearchViewModel.swift in Sources */,
 				5CBBFAC41C64E50700C20437 /* LicenseManager.swift in Sources */,
 				5C4EA63E1C5271B900E5B758 /* CategoriesListed.swift in Sources */,
 				5CED9E5420AA1CD60026A419 /* SettingsViewModel.swift in Sources */,
 				5C4A6ADA1C3E63BA0010499B /* LoadingScreen.swift in Sources */,
 				5CE9EEFF1C199E1E0068825C /* FindPagesRequest.swift in Sources */,
+				5C6D334A20B2ABBC000E30DD /* Double+Extension.swift in Sources */,
 				5C55A5721C514D0100F86B37 /* LocationArticleResult.swift in Sources */,
 				5CE9EEFC1C19914A0068825C /* BaseRequest.swift in Sources */,
 				5CED9E6320B1F5EB0026A419 /* Array+Extension.swift in Sources */,
@@ -977,8 +995,10 @@
 				5CC361171C70E4C300095F21 /* ToolBar.swift in Sources */,
 				5CE5DA091D9E3A9E005C036D /* Helper.swift in Sources */,
 				5C8F0BAE1C1F25BB003E2895 /* ReachabilityDelegate.swift in Sources */,
+				5C906C38219E09700020B734 /* PushNotificationTimeIntervalSelectionViewModel.swift in Sources */,
 				5CBBFAC11C64B74E00C20437 /* GetPageInfoFromUrls.swift in Sources */,
 				5CE9EF411C19D3FB0068825C /* StartViewController.swift in Sources */,
+				5C6D334E20B336A6000E30DD /* Colors.swift in Sources */,
 				5C4A6AB21C3AB9E80010499B /* afTableViewCell.swift in Sources */,
 				5CC0B1381CB68ADE0093D7F2 /* AboutViewController.swift in Sources */,
 				5CE9EEFA1C1990CD0068825C /* GetArticleFromMonthlyPool.swift in Sources */,
@@ -1067,14 +1087,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1116,14 +1144,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1169,7 +1205,8 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1193,7 +1230,8 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1210,7 +1248,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-ForumTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Austria-Forum.app/Austria-Forum";
 			};
 			name = Debug;
@@ -1227,7 +1266,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-ForumTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Austria-Forum.app/Austria-Forum";
 			};
 			name = Release;

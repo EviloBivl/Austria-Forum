@@ -195,7 +195,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
-    public func deviceRotated(){
+    @objc public func deviceRotated(){
         print("Device rotated")
         if(UIDeviceOrientationIsLandscape(UIDevice.current.orientation))
         {
@@ -214,7 +214,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         }
     }
     
-    func appBecomeActive(){
+    @objc func appBecomeActive(){
         print("Application Did Become Active Notification - DetailViewController")
         self.setDetailItem()
     }
@@ -455,7 +455,7 @@ extension DetailViewController : ReachabilityDelegate {
         }
     }
     
-    func hideNoInternetView() -> Bool {
+    @objc func hideNoInternetView() -> Bool {
         print("hided no internet notification")
         for v in self.view.subviews {
             if v.tag == 99{
@@ -767,13 +767,13 @@ extension DetailViewController : WKNavigationDelegate {
     }
     
     
-    func hideProgressBar() {
+    @objc func hideProgressBar() {
         self.progressBar.isHidden = true
         self.progressBar.setProgress(0, animated: false)
     }
     
     
-    func hideLoadingScreen() {
+    @objc func hideLoadingScreen() {
         self.loadingView?.activityIndicator.stopAnimating()
         self.loadingView?.removeFromSuperview()
     }
@@ -871,8 +871,6 @@ extension DetailViewController: ToolbarDelegate {
             saveArticleAsFavourite()
         case .share:
             shareContentButton()
-        default:
-            break
         }
     }
 }

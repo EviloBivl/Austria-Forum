@@ -46,18 +46,13 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     @IBOutlet weak var categoryPicker: UIPickerView!
     @IBOutlet weak var aboutCell: UITableViewCell!
     
-    //Tags for the pickers
-    let locationIntervalPickerTag : Int = 0
-    let pushIntervalPickerTag : Int = 1
-    let categoryPickerTag : Int = 2
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //for debug options
+        //===
         //viewModel?.addDebugOptions()
         //===
         super.viewWillAppear(animated)
@@ -65,9 +60,9 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     
     
     private func setupUI(){
-        self.tableView.backgroundColor = UIColor(red: 243.0/255, green: 243.0/255, blue: 243.0/255, alpha: 1)
+        self.tableView.backgroundColor = ColorName.background.color
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        self.navigationController?.isNavigationBarHidden = false
+        
         self.viewModel?.delegate = self
         
         MyLocationManager.sharedInstance.optionsLocationDelegate = self
@@ -158,7 +153,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.appBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
-    func appBecomeActive (){
+    @objc func appBecomeActive (){
         DispatchQueue.main.async(execute: {
             self.synchronizeAppSettingsWithSystemSettings()
         })

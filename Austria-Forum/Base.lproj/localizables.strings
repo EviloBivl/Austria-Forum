@@ -50,3 +50,7 @@
 "URL_FABRIC" = "https://fabric.io";
 "LICENSE_FABRIC" = "https://fabric.io/privacy";
 ///
+
+"SETTINGS_TITLE_PUSHINTERVAL" = "How much time should be passed before a possible notification will be triggered";
+
+
