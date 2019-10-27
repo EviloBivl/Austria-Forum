@@ -41,7 +41,7 @@ extension String {
     }
     
     func index(of char: Character) -> Int? {
-        guard let index = self.index(where: { $0 == char}) else { return nil }
+        guard let index = self.firstIndex(where: { $0 == char}) else { return nil }
         return self.distance(from: startIndex, to: index)
     }
 }

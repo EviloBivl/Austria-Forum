@@ -44,7 +44,7 @@ public class Helper {
         
         let badgeNumber : NSNumber? = (UIApplication.shared.applicationIconBadgeNumber + 1 ) as NSNumber?
         content.badge = badgeNumber
-        content.sound = UNNotificationSound.default()
+        content.sound = UNNotificationSound.default
         
         
         //Set the trigger of the notification -- here a timer.

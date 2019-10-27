@@ -41,7 +41,7 @@ class AboutViewModel: ViewModel {
 
     var contentAttributedString: NSAttributedString {
         let afAttributeLink : NSMutableAttributedString = NSMutableAttributedString(string: L10n.afShortUrl)
-        afAttributeLink.addAttribute( NSAttributedStringKey.link , value: UserData.AF_URL, range: NSMakeRange(0, afAttributeLink.length))
+        afAttributeLink.addAttribute( NSAttributedString.Key.link , value: UserData.AF_URL, range: NSMakeRange(0, afAttributeLink.length))
         let fullContentText = NSMutableAttributedString(string: L10n.contentAllContentFromAf)
         fullContentText.append(afAttributeLink)
         return fullContentText
@@ -49,7 +49,7 @@ class AboutViewModel: ViewModel {
     
     var iconsDescriptionAttributedString: NSAttributedString {
         let icon8Link : NSMutableAttributedString = NSMutableAttributedString(string: L10n.icons8UrlText)
-        icon8Link.addAttribute(NSAttributedStringKey.link, value: L10n.icons8UrlSource, range: NSMakeRange(0, icon8Link.length))
+        icon8Link.addAttribute(NSAttributedString.Key.link, value: L10n.icons8UrlSource, range: NSMakeRange(0, icon8Link.length))
         let fullIconsDescriptionText : NSMutableAttributedString = NSMutableAttributedString(string: L10n.contentIconsSource)
         fullIconsDescriptionText.append(icon8Link)
         return fullIconsDescriptionText
@@ -60,26 +60,26 @@ class AboutViewModel: ViewModel {
         let alamoLink : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleAlalmofire)
         let alamoLicense : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleLicense)
         
-        alamoLink.addAttribute(NSAttributedStringKey.link, value: L10n.urlAlalmofire, range: NSMakeRange(0, alamoLink.length))
-        alamoLicense.addAttribute(NSAttributedStringKey.link, value: L10n.licenseAlmofire, range: NSMakeRange(0, alamoLicense.length))
+        alamoLink.addAttribute(NSAttributedString.Key.link, value: L10n.urlAlalmofire, range: NSMakeRange(0, alamoLink.length))
+        alamoLicense.addAttribute(NSAttributedString.Key.link, value: L10n.licenseAlmofire, range: NSMakeRange(0, alamoLicense.length))
         
         let swiftyJSONLink : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleSwiftyjson)
         let siwftyJSONLizenz : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleLicense)
         
-        swiftyJSONLink.addAttribute(NSAttributedStringKey.link, value: L10n.urlSwiftyjson, range: NSMakeRange(0, swiftyJSONLink.length))
-        siwftyJSONLizenz.addAttribute(NSAttributedStringKey.link, value: L10n.licenseSwiftyjson, range: NSMakeRange(0, siwftyJSONLizenz.length))
+        swiftyJSONLink.addAttribute(NSAttributedString.Key.link, value: L10n.urlSwiftyjson, range: NSMakeRange(0, swiftyJSONLink.length))
+        siwftyJSONLizenz.addAttribute(NSAttributedString.Key.link, value: L10n.licenseSwiftyjson, range: NSMakeRange(0, siwftyJSONLizenz.length))
         
         let reachabilityLink : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleReachability)
         let reachabilityLizenz : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleLicense)
         
-        reachabilityLink.addAttribute(NSAttributedStringKey.link, value: L10n.urlReachability, range: NSMakeRange(0, reachabilityLink.length))
-        reachabilityLizenz.addAttribute(NSAttributedStringKey.link, value: L10n.licenseReachability, range: NSMakeRange(0, reachabilityLizenz.length))
+        reachabilityLink.addAttribute(NSAttributedString.Key.link, value: L10n.urlReachability, range: NSMakeRange(0, reachabilityLink.length))
+        reachabilityLizenz.addAttribute(NSAttributedString.Key.link, value: L10n.licenseReachability, range: NSMakeRange(0, reachabilityLizenz.length))
         
         let fabricLink : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleFabric)
         let fabricLizenz : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleLicense)
         
-        fabricLink.addAttribute(NSAttributedStringKey.link, value: L10n.urlFabric, range: NSMakeRange(0, fabricLink.length))
-        fabricLizenz.addAttribute(NSAttributedStringKey.link, value: L10n.licenseFabric, range: NSMakeRange(0, fabricLizenz.length))
+        fabricLink.addAttribute(NSAttributedString.Key.link, value: L10n.urlFabric, range: NSMakeRange(0, fabricLink.length))
+        fabricLizenz.addAttribute(NSAttributedString.Key.link, value: L10n.licenseFabric, range: NSMakeRange(0, fabricLizenz.length))
         
         let openBracket = NSMutableAttributedString(string: " (")
         let closeBracket = NSMutableAttributedString(string: ")")

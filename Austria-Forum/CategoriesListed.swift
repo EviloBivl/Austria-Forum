@@ -11,7 +11,7 @@ struct CategoriesListed {
         if let url = url {
         for str in categoriesRaw {
                 if url.contains(str) {
-                    let beautyIndex = categoriesRaw.index(of: str)
+                    let beautyIndex = categoriesRaw.firstIndex(of: str)
                     return categoriesBeautiful[beautyIndex!]
                 }
             }

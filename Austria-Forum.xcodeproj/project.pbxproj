@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2CC56A251FE33D40E039C361 /* Pods_Austria_ForumUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACD8EB8EBBAE6B78124C905 /* Pods_Austria_ForumUITests.framework */; };
 		46527D07A81998CA57F1F8F8 /* Pods_Austria_Forum.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 101AC65B372ECA8D993DA862 /* Pods_Austria_Forum.framework */; };
 		5C268E241C1AFA04007CC4CD /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C268E231C1AFA04007CC4CD /* UserData.swift */; };
 		5C268E281C1B43D3007CC4CD /* NetworkDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C268E271C1B43D3007CC4CD /* NetworkDelegation.swift */; };
@@ -17,8 +16,6 @@
 		5C2C04811CC3725800FC25AE /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C04801CC3725800FC25AE /* ViewController+Extension.swift */; };
 		5C2C6B001E8E266000C38941 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C6AFF1E8E266000C38941 /* String+Extension.swift */; };
 		5C46015F1D3EAA34008A5634 /* LicenseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46015E1D3EAA34008A5634 /* LicenseResult.swift */; };
-		5C4601601D3EAA34008A5634 /* LicenseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46015E1D3EAA34008A5634 /* LicenseResult.swift */; };
-		5C4601611D3EAA34008A5634 /* LicenseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46015E1D3EAA34008A5634 /* LicenseResult.swift */; };
 		5C4A6AB01C3AB8C30010499B /* afTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C4A6AAF1C3AB8C30010499B /* afTableCell.xib */; };
 		5C4A6AB21C3AB9E80010499B /* afTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4A6AB11C3AB9E80010499B /* afTableViewCell.swift */; };
 		5C4A6AB41C3AC1E40010499B /* af_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C4A6AB31C3AC1E40010499B /* af_logo.png */; };
@@ -37,7 +34,7 @@
 		5C55A5701C514C9E00F86B37 /* LocationArticleHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55A56F1C514C9E00F86B37 /* LocationArticleHolder.swift */; };
 		5C55A5721C514D0100F86B37 /* LocationArticleResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C55A5711C514D0100F86B37 /* LocationArticleResult.swift */; };
 		5C5BA4881D905E0F00E63F0D /* repair.js in Resources */ = {isa = PBXBuildFile; fileRef = 5C5BA4871D905E0F00E63F0D /* repair.js */; };
-		5C6D334220B20463000E30DD /* NearbyArticlesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C6D334120B20463000E30DD /* NearbyArticlesViewController.storyboard */; };
+		5C6D334220B20463000E30DD /* NearbyArticles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C6D334120B20463000E30DD /* NearbyArticles.storyboard */; };
 		5C6D334420B20472000E30DD /* SearchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C6D334320B20472000E30DD /* SearchViewController.storyboard */; };
 		5C6D334620B2055F000E30DD /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6D334520B2055F000E30DD /* SearchViewModel.swift */; };
 		5C6D334820B20569000E30DD /* NearbyArticlesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6D334720B20569000E30DD /* NearbyArticlesViewModel.swift */; };
@@ -55,8 +52,6 @@
 		5C9B18F81C197A2E0076B648 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B18F71C197A2E0076B648 /* DetailViewController.swift */; };
 		5C9B18FD1C197A2E0076B648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C9B18FC1C197A2E0076B648 /* Assets.xcassets */; };
 		5C9B19001C197A2E0076B648 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C9B18FE1C197A2E0076B648 /* LaunchScreen.storyboard */; };
-		5C9B190B1C197A2E0076B648 /* Austria_ForumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B190A1C197A2E0076B648 /* Austria_ForumTests.swift */; };
-		5C9B19161C197A2E0076B648 /* Austria_ForumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9B19151C197A2E0076B648 /* Austria_ForumUITests.swift */; };
 		5CB99DC41DCB2E6500658F73 /* Search100.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CB99DC31DCB2E6500658F73 /* Search100.png */; };
 		5CBBFAC11C64B74E00C20437 /* GetPageInfoFromUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBFAC01C64B74E00C20437 /* GetPageInfoFromUrls.swift */; };
 		5CBBFAC41C64E50700C20437 /* LicenseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBFAC31C64E50600C20437 /* LicenseManager.swift */; };
@@ -86,8 +81,6 @@
 		5CCC3F1F1C413B9C00ADBBDB /* FavouritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCC3F1E1C413B9C00ADBBDB /* FavouritesTableViewController.swift */; };
 		5CCC3F211C42542B00ADBBDB /* Extension+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCC3F201C42542B00ADBBDB /* Extension+Dictionary.swift */; };
 		5CD36C111E8820E200CE82FF /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CD36C0F1E8820E200CE82FF /* back.png */; };
-		5CE5DA051D99AF3A005C036D /* SearchHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C268E2B1C1B4A4E007CC4CD /* SearchHolder.swift */; };
-		5CE5DA061D99AF3B005C036D /* SearchHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C268E2B1C1B4A4E007CC4CD /* SearchHolder.swift */; };
 		5CE5DA091D9E3A9E005C036D /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE5DA081D9E3A9E005C036D /* Helper.swift */; };
 		5CE9EEF81C198C9D0068825C /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE9EEF71C198C9D0068825C /* RequestManager.swift */; };
 		5CE9EEFA1C1990CD0068825C /* GetArticleFromMonthlyPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE9EEF91C1990CD0068825C /* GetArticleFromMonthlyPool.swift */; };
@@ -99,33 +92,18 @@
 		5CED9E4820AA13A50026A419 /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CED9E4720AA13A50026A419 /* AboutViewModel.swift */; };
 		5CED9E4A20AA13CE0026A419 /* FavouritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CED9E4920AA13CE0026A419 /* FavouritesViewModel.swift */; };
 		5CED9E4C20AA17E50026A419 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CED9E4B20AA17E50026A419 /* ViewModel.swift */; };
-		5CED9E4E20AA19020026A419 /* AboutViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CED9E4D20AA19020026A419 /* AboutViewController.storyboard */; };
+		5CED9E4E20AA19020026A419 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CED9E4D20AA19020026A419 /* About.storyboard */; };
 		5CED9E5020AA190E0026A419 /* FavouriteViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CED9E4F20AA190E0026A419 /* FavouriteViewController.storyboard */; };
 		5CED9E5220AA1B8A0026A419 /* Storyboards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CED9E5120AA1B8A0026A419 /* Storyboards.swift */; };
 		5CED9E5420AA1CD60026A419 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CED9E5320AA1CD60026A419 /* SettingsViewModel.swift */; };
-		5CED9E5620AA1D180026A419 /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CED9E5520AA1D180026A419 /* SettingsViewController.storyboard */; };
+		5CED9E5620AA1D180026A419 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CED9E5520AA1D180026A419 /* Settings.storyboard */; };
 		5CED9E5C20ACB71E0026A419 /* Localizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CED9E5B20ACB71E0026A419 /* Localizations.swift */; };
 		5CED9E5D20ACBC5D0026A419 /* localizables.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CED9E5F20ACBC5D0026A419 /* localizables.strings */; };
 		5CED9E6320B1F5EB0026A419 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CED9E6220B1F5EB0026A419 /* Array+Extension.swift */; };
-		942D15293A7ACAF56931CD28 /* Pods_Austria_ForumTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 245F84DFF2C770BC910B0535 /* Pods_Austria_ForumTests.framework */; };
+		8C48498B230E5A500048DB12 /* Storyboard Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C484989230E5A500048DB12 /* Storyboard Segues.swift */; };
+		8C48498C230E5A500048DB12 /* Storyboard Scenes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C48498A230E5A500048DB12 /* Storyboard Scenes.swift */; };
+		8C5EC201230E5E2D0029EB2F /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8C5EC200230E5E2D0029EB2F /* swiftgen.yml */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		5C9B19071C197A2E0076B648 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5C9B18E51C197A2E0076B648 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5C9B18EC1C197A2E0076B648;
-			remoteInfo = "Austria-Forum";
-		};
-		5C9B19121C197A2E0076B648 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5C9B18E51C197A2E0076B648 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5C9B18EC1C197A2E0076B648;
-			remoteInfo = "Austria-Forum";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		101AC65B372ECA8D993DA862 /* Pods_Austria_Forum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Austria_Forum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,7 +136,7 @@
 		5C55A56F1C514C9E00F86B37 /* LocationArticleHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationArticleHolder.swift; sourceTree = "<group>"; };
 		5C55A5711C514D0100F86B37 /* LocationArticleResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationArticleResult.swift; sourceTree = "<group>"; };
 		5C5BA4871D905E0F00E63F0D /* repair.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = repair.js; sourceTree = "<group>"; };
-		5C6D334120B20463000E30DD /* NearbyArticlesViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NearbyArticlesViewController.storyboard; sourceTree = "<group>"; };
+		5C6D334120B20463000E30DD /* NearbyArticles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NearbyArticles.storyboard; sourceTree = "<group>"; };
 		5C6D334320B20472000E30DD /* SearchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchViewController.storyboard; sourceTree = "<group>"; };
 		5C6D334520B2055F000E30DD /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		5C6D334720B20569000E30DD /* NearbyArticlesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyArticlesViewModel.swift; sourceTree = "<group>"; };
@@ -178,10 +156,8 @@
 		5C9B18FC1C197A2E0076B648 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C9B18FF1C197A2E0076B648 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C9B19011C197A2E0076B648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5C9B19061C197A2E0076B648 /* Austria-ForumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Austria-ForumTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C9B190A1C197A2E0076B648 /* Austria_ForumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Austria_ForumTests.swift; sourceTree = "<group>"; };
 		5C9B190C1C197A2E0076B648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5C9B19111C197A2E0076B648 /* Austria-ForumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Austria-ForumUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C9B19151C197A2E0076B648 /* Austria_ForumUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Austria_ForumUITests.swift; sourceTree = "<group>"; };
 		5C9B19171C197A2E0076B648 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5CB99DC31DCB2E6500658F73 /* Search100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Search100.png; sourceTree = "<group>"; };
@@ -224,11 +200,11 @@
 		5CED9E4720AA13A50026A419 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		5CED9E4920AA13CE0026A419 /* FavouritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewModel.swift; sourceTree = "<group>"; };
 		5CED9E4B20AA17E50026A419 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		5CED9E4D20AA19020026A419 /* AboutViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AboutViewController.storyboard; sourceTree = "<group>"; };
+		5CED9E4D20AA19020026A419 /* About.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = About.storyboard; sourceTree = "<group>"; };
 		5CED9E4F20AA190E0026A419 /* FavouriteViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FavouriteViewController.storyboard; sourceTree = "<group>"; };
 		5CED9E5120AA1B8A0026A419 /* Storyboards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboards.swift; sourceTree = "<group>"; };
 		5CED9E5320AA1CD60026A419 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		5CED9E5520AA1D180026A419 /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
+		5CED9E5520AA1D180026A419 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		5CED9E5720ACB4B00026A419 /* de-AT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "de-AT"; path = "de-AT.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		5CED9E5820ACB4B00026A419 /* de-AT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "de-AT"; path = "de-AT.lproj/Main.strings"; sourceTree = "<group>"; };
 		5CED9E5B20ACB71E0026A419 /* Localizations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizations.swift; sourceTree = "<group>"; };
@@ -236,6 +212,9 @@
 		5CED9E6120ACBD090026A419 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/localizables.strings; sourceTree = "<group>"; };
 		5CED9E6220B1F5EB0026A419 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		6E1A3AFC5FF9F30EF1849FB4 /* Pods-Austria-ForumUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Austria-ForumUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Austria-ForumUITests/Pods-Austria-ForumUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8C484989230E5A500048DB12 /* Storyboard Segues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Storyboard Segues.swift"; sourceTree = "<group>"; };
+		8C48498A230E5A500048DB12 /* Storyboard Scenes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Storyboard Scenes.swift"; sourceTree = "<group>"; };
+		8C5EC200230E5E2D0029EB2F /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = swiftgen.yml; sourceTree = "<group>"; };
 		8F8B61866F5E5D554BD9CB7D /* Pods-Austria-Forum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Austria-Forum.release.xcconfig"; path = "Pods/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum.release.xcconfig"; sourceTree = "<group>"; };
 		BF0E9B30E34F75B3F65FCBFE /* Pods-Austria-ForumTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Austria-ForumTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Austria-ForumTests/Pods-Austria-ForumTests.release.xcconfig"; sourceTree = "<group>"; };
 		FACD8EB8EBBAE6B78124C905 /* Pods_Austria_ForumUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Austria_ForumUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,22 +227,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				46527D07A81998CA57F1F8F8 /* Pods_Austria_Forum.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C9B19031C197A2E0076B648 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				942D15293A7ACAF56931CD28 /* Pods_Austria_ForumTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C9B190E1C197A2E0076B648 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2CC56A251FE33D40E039C361 /* Pods_Austria_ForumUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,8 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				5C9B18ED1C197A2E0076B648 /* Austria-Forum.app */,
-				5C9B19061C197A2E0076B648 /* Austria-ForumTests.xctest */,
-				5C9B19111C197A2E0076B648 /* Austria-ForumUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -450,10 +411,10 @@
 				5C4A6ADB1C3E63D20010499B /* LoadingScreen.xib */,
 				5C4A6AAF1C3AB8C30010499B /* afTableCell.xib */,
 				5C4EA63F1C52831600E5B758 /* afLocationTableViewCell.xib */,
-				5CED9E4D20AA19020026A419 /* AboutViewController.storyboard */,
+				5CED9E4D20AA19020026A419 /* About.storyboard */,
 				5CED9E4F20AA190E0026A419 /* FavouriteViewController.storyboard */,
-				5CED9E5520AA1D180026A419 /* SettingsViewController.storyboard */,
-				5C6D334120B20463000E30DD /* NearbyArticlesViewController.storyboard */,
+				5CED9E5520AA1D180026A419 /* Settings.storyboard */,
+				5C6D334120B20463000E30DD /* NearbyArticles.storyboard */,
 				5C6D334320B20472000E30DD /* SearchViewController.storyboard */,
 			);
 			name = "UI Files";
@@ -500,6 +461,8 @@
 		5CE9EEF51C198C050068825C /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				8C48498A230E5A500048DB12 /* Storyboard Scenes.swift */,
+				8C484989230E5A500048DB12 /* Storyboard Segues.swift */,
 				5CED9E5120AA1B8A0026A419 /* Storyboards.swift */,
 				5C9B18F01C197A2E0076B648 /* AppDelegate.swift */,
 				5CCC3F201C42542B00ADBBDB /* Extension+Dictionary.swift */,
@@ -509,6 +472,7 @@
 				5C2C6AFF1E8E266000C38941 /* String+Extension.swift */,
 				5CED9E6220B1F5EB0026A419 /* Array+Extension.swift */,
 				5C6D334920B2ABBC000E30DD /* Double+Extension.swift */,
+				8C5EC200230E5E2D0029EB2F /* swiftgen.yml */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -566,7 +530,6 @@
 				5C9B18EB1C197A2E0076B648 /* Resources */,
 				5C268E1F1C1AE406007CC4CD /* ShellScript */,
 				3E690F0A404A5DB562F88316 /* [CP] Embed Pods Frameworks */,
-				3A9F67E8F1A9667E4CFAC5BB /* [CP] Copy Pods Resources */,
 				3A9C7D46B8B34D9545E786EB /* Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -577,49 +540,6 @@
 			productName = "Austria-Forum";
 			productReference = 5C9B18ED1C197A2E0076B648 /* Austria-Forum.app */;
 			productType = "com.apple.product-type.application";
-		};
-		5C9B19051C197A2E0076B648 /* Austria-ForumTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5C9B191D1C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumTests" */;
-			buildPhases = (
-				AD16BBC6910DDF9CD89973D4 /* [CP] Check Pods Manifest.lock */,
-				5C9B19021C197A2E0076B648 /* Sources */,
-				5C9B19031C197A2E0076B648 /* Frameworks */,
-				5C9B19041C197A2E0076B648 /* Resources */,
-				7A26A0CB3C026FD722AF0BE7 /* [CP] Embed Pods Frameworks */,
-				88F27F278A208DFDAB979301 /* [CP] Copy Pods Resources */,
-				5EBC7B160A33F211BEEDD1DB /* Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5C9B19081C197A2E0076B648 /* PBXTargetDependency */,
-			);
-			name = "Austria-ForumTests";
-			productName = "Austria-ForumTests";
-			productReference = 5C9B19061C197A2E0076B648 /* Austria-ForumTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		5C9B19101C197A2E0076B648 /* Austria-ForumUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5C9B19201C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumUITests" */;
-			buildPhases = (
-				84E17E61C3BED566842EF414 /* [CP] Check Pods Manifest.lock */,
-				5C9B190D1C197A2E0076B648 /* Sources */,
-				5C9B190E1C197A2E0076B648 /* Frameworks */,
-				5C9B190F1C197A2E0076B648 /* Resources */,
-				4FC6D76DD24B94674C2C71BE /* [CP] Embed Pods Frameworks */,
-				B10DCB60126228EFA969ABBD /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5C9B19131C197A2E0076B648 /* PBXTargetDependency */,
-			);
-			name = "Austria-ForumUITests";
-			productName = "Austria-ForumUITests";
-			productReference = 5C9B19111C197A2E0076B648 /* Austria-ForumUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -634,7 +554,7 @@
 					5C9B18EC1C197A2E0076B648 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = K4XFJA86D8;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -645,15 +565,6 @@
 							};
 						};
 					};
-					5C9B19051C197A2E0076B648 = {
-						CreatedOnToolsVersion = 7.1.1;
-						LastSwiftMigration = 0930;
-						TestTargetID = 5C9B18EC1C197A2E0076B648;
-					};
-					5C9B19101C197A2E0076B648 = {
-						CreatedOnToolsVersion = 7.1.1;
-						TestTargetID = 5C9B18EC1C197A2E0076B648;
-					};
 				};
 			};
 			buildConfigurationList = 5C9B18E81C197A2E0076B648 /* Build configuration list for PBXProject "Austria-Forum" */;
@@ -661,6 +572,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"de-AT",
@@ -671,8 +583,6 @@
 			projectRoot = "";
 			targets = (
 				5C9B18EC1C197A2E0076B648 /* Austria-Forum */,
-				5C9B19051C197A2E0076B648 /* Austria-ForumTests */,
-				5C9B19101C197A2E0076B648 /* Austria-ForumUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -686,7 +596,7 @@
 				5C4A6AB41C3AC1E40010499B /* af_logo.png in Resources */,
 				5CC3610B1C70E2BA00095F21 /* Bookmark.png in Resources */,
 				5C6D334420B20472000E30DD /* SearchViewController.storyboard in Resources */,
-				5CED9E4E20AA19020026A419 /* AboutViewController.storyboard in Resources */,
+				5CED9E4E20AA19020026A419 /* About.storyboard in Resources */,
 				5C9B19001C197A2E0076B648 /* LaunchScreen.storyboard in Resources */,
 				5C4A6ADC1C3E63D20010499B /* LoadingScreen.xib in Resources */,
 				5CC361101C70E2BA00095F21 /* Marker.png in Resources */,
@@ -709,10 +619,11 @@
 				5CC3610E1C70E2BA00095F21 /* Hearts_Filled.png in Resources */,
 				5C84A6FB1C907EBE006C3CC0 /* home.png in Resources */,
 				5C80A1671E8823DD00B05836 /* forward.png in Resources */,
-				5CED9E5620AA1D180026A419 /* SettingsViewController.storyboard in Resources */,
+				5CED9E5620AA1D180026A419 /* Settings.storyboard in Resources */,
 				5CBBFAE31C64EBA200C20437 /* by-sa.png in Resources */,
 				5C4EA6401C52831600E5B758 /* afLocationTableViewCell.xib in Resources */,
 				5CBBFAE61C64EBA200C20437 /* publicdomain.png in Resources */,
+				8C5EC201230E5E2D0029EB2F /* swiftgen.yml in Resources */,
 				5CC361151C70E2BA00095F21 /* Upload.png in Resources */,
 				5C4A6AB01C3AB8C30010499B /* afTableCell.xib in Resources */,
 				5C2C047F1CC2284100FC25AE /* GoogleService-Info.plist in Resources */,
@@ -720,23 +631,9 @@
 				5CC3610F1C70E2BA00095F21 /* Hearts.png in Resources */,
 				5CD36C111E8820E200CE82FF /* back.png in Resources */,
 				5CC361141C70E2BA00095F21 /* Shuffle.png in Resources */,
-				5C6D334220B20463000E30DD /* NearbyArticlesViewController.storyboard in Resources */,
+				5C6D334220B20463000E30DD /* NearbyArticles.storyboard in Resources */,
 				5CCAECED1C23204100713BB7 /* Main.storyboard in Resources */,
 				5CBBFAE21C64EBA200C20437 /* by-nd.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C9B19041C197A2E0076B648 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C9B190F1C197A2E0076B648 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -776,28 +673,13 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3A9F67E8F1A9667E4CFAC5BB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3E690F0A404A5DB562F88316 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -810,29 +692,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4FC6D76DD24B94674C2C71BE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumUITests/Pods-Austria-ForumUITests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumUITests/Pods-Austria-ForumUITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Austria-Forum/Pods-Austria-Forum-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5C268E1F1C1AE406007CC4CD /* ShellScript */ = {
@@ -846,110 +706,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" b36289702f0f75fc1d2e8f5793d30952d391bffd c1ece7467c67d7b735a98fb69d89f24fcec02f7d9971b2318eff5300b63aadb1\necho \"hallo\"\n\n${PODS_ROOT}/SwiftGen/bin/swiftgen storyboards -t swift4 ${PROJECT_DIR}/Austria-Forum > ${PROJECT_DIR}/Austria-Forum/Storyboards.swift\n${PODS_ROOT}/SwiftGen/bin/swiftgen strings -t structured-swift3 ${PROJECT_DIR}/Austria-Forum/Base.lproj/localizables.strings > ${PROJECT_DIR}/Austria-Forum/Localizations.swift\n\n${PODS_ROOT}/SwiftGen/bin/swiftgen colors -t swift3 ${PROJECT_DIR}/Austria-Forum/Colors.txt > ${PROJECT_DIR}/Austria-Forum/Colors.swift\n#/Users/paulneuhold/app_ios_austriaforum/Pods/SwiftGen/bin/swiftgen storyboards -t swift4 /Users/paulneuhold/app_ios_austriaforum/Austria-Forum >\n";
-		};
-		5EBC7B160A33F211BEEDD1DB /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumTests/Pods-Austria-ForumTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7A26A0CB3C026FD722AF0BE7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumTests/Pods-Austria-ForumTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumTests/Pods-Austria-ForumTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84E17E61C3BED566842EF414 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Austria-ForumUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		88F27F278A208DFDAB979301 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumTests/Pods-Austria-ForumTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AD16BBC6910DDF9CD89973D4 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Austria-ForumTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B10DCB60126228EFA969ABBD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Austria-ForumUITests/Pods-Austria-ForumUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" b36289702f0f75fc1d2e8f5793d30952d391bffd c1ece7467c67d7b735a98fb69d89f24fcec02f7d9971b2318eff5300b63aadb1\necho \"hallo\"\n\n${PODS_ROOT}/SwiftGen/bin/swiftgen config run --config ${PROJECT_DIR}/Austria-Forum/swiftgen.yml\n#${PODS_ROOT}/SwiftGen/bin/swiftgen strings -t structured-swift3 ${PROJECT_DIR}/Austria-Forum/Base.lproj/localizables.strings > ${PROJECT_DIR}/Austria-Forum/Localizations.swift\n\n#${PODS_ROOT}/SwiftGen/bin/swiftgen colors -t swift3 ${PROJECT_DIR}/Austria-Forum/Colors.txt > ${PROJECT_DIR}/Austria-Forum/Colors.swift\n#/Users/paulneuhold/app_ios_austriaforum/Pods/SwiftGen/bin/swiftgen storyboards -t swift4 /Users/paulneuhold/app_ios_austriaforum/Austria-Forum >\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -979,6 +736,7 @@
 				5CED9E5420AA1CD60026A419 /* SettingsViewModel.swift in Sources */,
 				5C4A6ADA1C3E63BA0010499B /* LoadingScreen.swift in Sources */,
 				5CE9EEFF1C199E1E0068825C /* FindPagesRequest.swift in Sources */,
+				8C48498C230E5A500048DB12 /* Storyboard Scenes.swift in Sources */,
 				5C6D334A20B2ABBC000E30DD /* Double+Extension.swift in Sources */,
 				5C55A5721C514D0100F86B37 /* LocationArticleResult.swift in Sources */,
 				5CE9EEFC1C19914A0068825C /* BaseRequest.swift in Sources */,
@@ -1009,43 +767,11 @@
 				5C4A6AE81C410E080010499B /* FavouritesHolder.swift in Sources */,
 				5C9B18F81C197A2E0076B648 /* DetailViewController.swift in Sources */,
 				5CED9E4820AA13A50026A419 /* AboutViewModel.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C9B19021C197A2E0076B648 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5C4601601D3EAA34008A5634 /* LicenseResult.swift in Sources */,
-				5CE5DA051D99AF3A005C036D /* SearchHolder.swift in Sources */,
-				5C9B190B1C197A2E0076B648 /* Austria_ForumTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5C9B190D1C197A2E0076B648 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5C4601611D3EAA34008A5634 /* LicenseResult.swift in Sources */,
-				5CE5DA061D99AF3B005C036D /* SearchHolder.swift in Sources */,
-				5C9B19161C197A2E0076B648 /* Austria_ForumUITests.swift in Sources */,
+				8C48498B230E5A500048DB12 /* Storyboard Segues.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		5C9B19081C197A2E0076B648 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5C9B18EC1C197A2E0076B648 /* Austria-Forum */;
-			targetProxy = 5C9B19071C197A2E0076B648 /* PBXContainerItemProxy */;
-		};
-		5C9B19131C197A2E0076B648 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5C9B18EC1C197A2E0076B648 /* Austria-Forum */;
-			targetProxy = 5C9B19121C197A2E0076B648 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5C9B18FE1C197A2E0076B648 /* LaunchScreen.storyboard */ = {
@@ -1205,8 +931,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1230,75 +955,8 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		5C9B191E1C197A2E0076B648 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55B776033DD596E4AFA6904C /* Pods-Austria-ForumTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "Austria-ForumTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-ForumTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Austria-Forum.app/Austria-Forum";
-			};
-			name = Debug;
-		};
-		5C9B191F1C197A2E0076B648 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF0E9B30E34F75B3F65FCBFE /* Pods-Austria-ForumTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "Austria-ForumTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-ForumTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Austria-Forum.app/Austria-Forum";
-			};
-			name = Release;
-		};
-		5C9B19211C197A2E0076B648 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E1A3AFC5FF9F30EF1849FB4 /* Pods-Austria-ForumUITests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				INFOPLIST_FILE = "Austria-ForumUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-ForumUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				TEST_TARGET_NAME = "Austria-Forum";
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		5C9B19221C197A2E0076B648 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B0C4190D484EE549041078C /* Pods-Austria-ForumUITests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				INFOPLIST_FILE = "Austria-ForumUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.paulneuhold.Austria-ForumUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				TEST_TARGET_NAME = "Austria-Forum";
-				USES_XCTRUNNER = YES;
 			};
 			name = Release;
 		};
@@ -1319,24 +977,6 @@
 			buildConfigurations = (
 				5C9B191B1C197A2E0076B648 /* Debug */,
 				5C9B191C1C197A2E0076B648 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5C9B191D1C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5C9B191E1C197A2E0076B648 /* Debug */,
-				5C9B191F1C197A2E0076B648 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5C9B19201C197A2E0076B648 /* Build configuration list for PBXNativeTarget "Austria-ForumUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5C9B19211C197A2E0076B648 /* Debug */,
-				5C9B19221C197A2E0076B648 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

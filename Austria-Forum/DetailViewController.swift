@@ -34,6 +34,9 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     @IBOutlet weak var licenseTag: UIButton!
     
+    @IBAction func homeAction(_ sender: Any) {
+        print("home action pressed")
+    }
     
     var scrollDirection : ScrollDirection?
     var lastScrollOffset : CGPoint?
@@ -85,6 +88,8 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         super.viewDidLoad()
         //start it
         self.initScene()
+        
+     //   fatalError("Currently toolbar is broken. If a link from within the wkwebkit is pressed. the toolbar items wont sent triggered action correctly to registered selector in Toolbar.swift. Quickfix:add ibactions directly from main.storyboard to controller. handle clicks. Better: think about ...")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -95,7 +100,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         
         self.setDetailItem()
         
-        if UIDeviceOrientationIsLandscape(UIDevice.current.orientation){
+        if UIDevice.current.orientation.isLandscape{
             isLandScape = true
         }
         
@@ -158,7 +163,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         self.pListWorker = ReadWriteToPList()
         
         //set the toolbar delegate for the top to properly display the hairline
-        self.topToolBar.delegate = self
+      //  self.topToolBar.delegate = self
         
         //Please Wait ... Screen
         self.loadingView = Bundle.main.loadNibNamed("LoadingScreen", owner: self, options: nil)![0] as? LoadingScreen
@@ -166,7 +171,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         //on start up hide progress bar - will be handled by the webkit
         self.progressBar.isHidden = true
         self.progressBar.progress = 0
-        self.progressBar.progressViewStyle = UIProgressViewStyle.bar
+        self.progressBar.progressViewStyle = UIProgressView.Style.bar
         
         //hide license tag on start up
         self.licenseTag.isHidden = true
@@ -179,11 +184,11 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     
     fileprivate func registerObserverForAppLaunchingFromLocalNotification(){
-        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewController.appBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewController.appBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     fileprivate func registerObserverForOrientationChange(){
-        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewController.deviceRotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailViewController.deviceRotated), name: UIDevice.orientationDidChangeNotification, object: nil)
 
     }
     
@@ -191,13 +196,13 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         self.webKitView.removeObserver(self, forKeyPath: "URL")
         self.webKitView.removeObserver(self, forKeyPath: "estimatedProgress")
         print("\n\n Removing Observers \n\n")
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     @objc public func deviceRotated(){
         print("Device rotated")
-        if(UIDeviceOrientationIsLandscape(UIDevice.current.orientation))
+        if(UIDevice.current.orientation.isLandscape)
         {
             if let disableToolbar = UserData.sharedInstance.disableToolbar{
                 if disableToolbar {
@@ -207,7 +212,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
             isLandScape = true
         }
         
-        if(UIDeviceOrientationIsPortrait(UIDevice.current.orientation))
+        if(UIDevice.current.orientation.isPortrait)
         {
             isLandScape = false
             showToolBars()
@@ -262,7 +267,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
                 answersAttributes["License"] = license.id
                 let url = URL(string: licenseUrl)!
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
                 } else {
                     UIApplication.shared.openURL(url)
                 }
@@ -272,7 +277,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
             answersAttributes["License"] = "AF"
             let url = URL(string: licenseUrl)!
             if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             } else {
                 UIApplication.shared.openURL(url)
             }
@@ -390,21 +395,21 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     
     func hintToSettings(inAppSetting: Bool) {
-        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum darf zur Zeit nicht auf ihren Standort zugreifen. Sie können dies in den Einstellungen ändern wenn Sie wollen.", preferredStyle: UIAlertControllerStyle.alert)
-        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.cancel, handler: {
+        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum darf zur Zeit nicht auf ihren Standort zugreifen. Sie können dies in den Einstellungen ändern wenn Sie wollen.", preferredStyle: UIAlertController.Style.alert)
+        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertAction.Style.cancel, handler: {
             cancleAction in
             print("pressed cancle")
             
         })
-        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.default, handler: {
+        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertAction.Style.default, handler: {
             alertAction  in
             print("go to settings")
             if inAppSetting{
                 self.performSegue(withIdentifier: "toSettings", sender: self)
             } else {
-                let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+                let settingsUrl = URL(string: UIApplication.openSettingsURLString)
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(settingsUrl!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
                 } else {
                     UIApplication.shared.openURL(settingsUrl!)
                 }
@@ -439,7 +444,7 @@ extension DetailViewController : ReachabilityDelegate {
             
             v.labelMessage.text = "Bitte überprüfen Sie ihre Internetverbindung."
             self.view.addSubview(v)
-            v.bringSubview(toFront: self.view)
+            v.bringSubviewToFront(self.view)
             v.activityIndicator.startAnimating()
             v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
             v.viewLoadingHolder.layer.cornerRadius = 5
@@ -619,7 +624,7 @@ extension DetailViewController : WKNavigationDelegate {
             if wkNavigatioinCount > 1 {
                 let url = navigationAction.request.url
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
                 } else {
                     UIApplication.shared.openURL(url!)
                 }
@@ -671,7 +676,7 @@ extension DetailViewController : WKNavigationDelegate {
             
             v.labelMessage.text = "Bitte Warten ..."
             self.view.addSubview(v)
-            v.bringSubview(toFront: self.view)
+            v.bringSubviewToFront(self.view)
             v.activityIndicator.startAnimating()
             v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
             v.viewLoadingHolder.layer.cornerRadius = 5
@@ -746,7 +751,7 @@ extension DetailViewController : WKNavigationDelegate {
             let licenseImageName = LicenseManager.getImageNameForLicense(license.css ?? "af")
             if let name = licenseImageName {
                 let image = UIImage(named: name)
-                self.licenseTag.setImage(image, for: UIControlState())
+                self.licenseTag.setImage(image, for: UIControl.State())
                 self.licenseTag.isHidden = false
             }
         } else {
@@ -754,7 +759,7 @@ extension DetailViewController : WKNavigationDelegate {
             let licenseImageName = LicenseManager.getImageNameForLicense("af")
             if let name = licenseImageName {
                 let image = UIImage(named: name)
-                self.licenseTag.setImage(image, for: UIControlState())
+                self.licenseTag.setImage(image, for: UIControl.State())
                 self.licenseTag.isHidden = false
             }
             
@@ -878,3 +883,8 @@ extension DetailViewController: ToolbarDelegate {
 
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}

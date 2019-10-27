@@ -15,7 +15,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     var viewModel : SettingsViewModel?
     
     class func create(viewModel: SettingsViewModel) -> SettingsViewController {
-        let controller = StoryboardScene.SettingsViewController.settingsViewController.instantiate()
+        let controller = StoryboardScene.Settings.settingsViewController.instantiate()
         controller.viewModel = viewModel
         return controller
     }
@@ -62,7 +62,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     private func setupUI(){
         self.tableView.backgroundColor = ColorName.background.color
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
+        self.navigationController?.isNavigationBarHidden = false
         self.viewModel?.delegate = self
         
         MyLocationManager.sharedInstance.optionsLocationDelegate = self
@@ -110,13 +110,13 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     
     func setPickerSelection(){
         guard let viewModel = viewModel else { return }
-        let pushTimeIndex = viewModel.pushPickerValues.index(of: UserData.sharedInstance.notificationIntervalInSeconds!)
+        let pushTimeIndex = viewModel.pushPickerValues.firstIndex(of: UserData.sharedInstance.notificationIntervalInSeconds!)
         intervalPicker.selectRow(pushTimeIndex!, inComponent: 0, animated: false)
         
-        let distanceIndex = viewModel.distancePickerValues.index(of: UserData.sharedInstance.locationChangeValue!)
+        let distanceIndex = viewModel.distancePickerValues.firstIndex(of: UserData.sharedInstance.locationChangeValue!)
         pushIntervalPicker.selectRow(distanceIndex!, inComponent: 0, animated: false)
         
-        let categoryIndex = viewModel.categoryPickerValues.index(of: UserData.sharedInstance.categorySelected!)
+        let categoryIndex = viewModel.categoryPickerValues.firstIndex(of: UserData.sharedInstance.categorySelected!)
         categoryPicker.selectRow(categoryIndex!, inComponent: 0, animated: false)
     }
     
@@ -150,7 +150,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     }
     
     fileprivate func registerObserverForSystemPreferenceChange () {
-        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.appBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SettingsViewController.appBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     @objc func appBecomeActive (){
@@ -269,8 +269,8 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     }
     
     fileprivate func showToSettingsPushHint() {
-        let alertController : UIAlertController = UIAlertController(title: "Mitteilungszentrale", message: "Austria-Forum darf zur Zeit keine vollständigen Mitteilungen schicken. Wenn Sie das ganze Potential ausschöpfen wollen, können sie diese in den System-Einstellungen aktivieren.", preferredStyle: UIAlertControllerStyle.alert)
-        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.cancel, handler: {
+        let alertController : UIAlertController = UIAlertController(title: "Mitteilungszentrale", message: "Austria-Forum darf zur Zeit keine vollständigen Mitteilungen schicken. Wenn Sie das ganze Potential ausschöpfen wollen, können sie diese in den System-Einstellungen aktivieren.", preferredStyle: UIAlertController.Style.alert)
+        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertAction.Style.cancel, handler: {
             cancleAction in
             print("pressed cancle")
             DispatchQueue.main.async(execute: {
@@ -278,13 +278,13 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
             })
             
         })
-        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.default, handler: {
+        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertAction.Style.default, handler: {
             alertAction  in
             print("go to settings")
             DispatchQueue.main.async(execute: {
-                let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+                let settingsUrl = URL(string: UIApplication.openSettingsURLString)
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(settingsUrl!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
                 } else {
                     UIApplication.shared.openURL(settingsUrl!)
                 }
@@ -297,8 +297,8 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     }
     
     fileprivate func hintToLocationSettings() {
-        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum hat derzeit keine Berechtigung Lokalisierung im Hintergrund durchzuführen. Wollen Sie das in den Einstellungen ändern?", preferredStyle: UIAlertControllerStyle.alert)
-        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.cancel, handler: {
+        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum hat derzeit keine Berechtigung Lokalisierung im Hintergrund durchzuführen. Wollen Sie das in den Einstellungen ändern?", preferredStyle: UIAlertController.Style.alert)
+        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertAction.Style.cancel, handler: {
             cancleAction in
             print("pressed cancle")
             DispatchQueue.main.async(execute: {
@@ -309,12 +309,12 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
             
             
         })
-        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.default, handler: {
+        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertAction.Style.default, handler: {
             alertAction  in
             print("go to settings")
-            let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+            let settingsUrl = URL(string: UIApplication.openSettingsURLString)
             if #available(iOS 10.0, *) {
-                UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                UIApplication.shared.open(settingsUrl!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             } else {
                 UIApplication.shared.openURL(settingsUrl!)
             }
@@ -393,3 +393,8 @@ extension SettingsViewController: ViewModelObserver {
 
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}

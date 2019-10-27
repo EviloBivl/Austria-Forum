@@ -14,7 +14,7 @@ class NearbyArticlesViewController: UITableViewController, LocationControllerDel
     var viewModel: NearbyArticlesViewModel?
     
     class func create(viewModel: NearbyArticlesViewModel) -> NearbyArticlesViewController {
-        let controller = StoryboardScene.NearbyArticlesViewController.nearbyArticlesViewController.instantiate()
+        let controller = StoryboardScene.NearbyArticles.nearbyArticlesViewController.instantiate()
         controller.viewModel = viewModel
         return controller
     }
@@ -47,7 +47,7 @@ class NearbyArticlesViewController: UITableViewController, LocationControllerDel
         
         //Register Pull to refresh
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: #selector(NearbyArticlesViewController.pullToRefresh), for: UIControlEvents.valueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(NearbyArticlesViewController.pullToRefresh), for: UIControl.Event.valueChanged)
         self.refreshControl?.beginRefreshing()
         
     }
@@ -87,7 +87,7 @@ class NearbyArticlesViewController: UITableViewController, LocationControllerDel
             
             v.labelMessage.text = "Bitte Warten ... "
             self.view.addSubview(v)
-            v.bringSubview(toFront: self.view)
+            v.bringSubviewToFront(self.view)
             v.activityIndicator.startAnimating()
             v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.8)
             v.viewLoadingHolder.layer.cornerRadius = 5
@@ -234,20 +234,20 @@ extension NearbyArticlesViewController : NetworkDelegation {
     }
     
     func hintToSettings(inAppSetting: Bool) {
-        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum darf zur Zeit nicht auf ihren Standort zugreifen. Sie können dies in den Einstellungen ändern wenn Sie wollen.", preferredStyle: UIAlertControllerStyle.alert)
-        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertActionStyle.cancel, handler: {
+        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum darf zur Zeit nicht auf ihren Standort zugreifen. Sie können dies in den Einstellungen ändern wenn Sie wollen.", preferredStyle: UIAlertController.Style.alert)
+        let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertAction.Style.cancel, handler: {
             cancleAction in
             _ = self.navigationController?.popViewController(animated: true)
         })
-        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.default, handler: {
+        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertAction.Style.default, handler: {
             alertAction  in
             print("go to settings")
             if inAppSetting{
                 self.performSegue(withIdentifier: "toSettings", sender: self)
             } else {
-                let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+                let settingsUrl = URL(string: UIApplication.openSettingsURLString)
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(settingsUrl!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
                 } else {
                     // Fallback on earlier versions
                     UIApplication.shared.openURL(settingsUrl!)
@@ -263,17 +263,17 @@ extension NearbyArticlesViewController : NetworkDelegation {
     
     
     func showLocationErrorDialog(){
-        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum konnte keine Artikel in der Nähe finden da aktuell nicht die Berechtigung für Ihren Standort geben ist. Wollen Sie dies in den Einstellungen ändern?", preferredStyle: UIAlertControllerStyle.alert)
-        let actionAbort : UIAlertAction = UIAlertAction(title: "Nein", style: UIAlertActionStyle.cancel, handler: {
+        let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum konnte keine Artikel in der Nähe finden da aktuell nicht die Berechtigung für Ihren Standort geben ist. Wollen Sie dies in den Einstellungen ändern?", preferredStyle: UIAlertController.Style.alert)
+        let actionAbort : UIAlertAction = UIAlertAction(title: "Nein", style: UIAlertAction.Style.cancel, handler: {
             cancleAction in
             _ = self.navigationController?.popViewController(animated: true)
             
         })
-        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.default, handler: {
+        let actionToSettings : UIAlertAction = UIAlertAction(title: "Einstellungen", style: UIAlertAction.Style.default, handler: {
             alertAction  in
-            let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+            let settingsUrl = URL(string: UIApplication.openSettingsURLString)
             if #available(iOS 10.0, *) {
-                UIApplication.shared.open(settingsUrl!, options: [:], completionHandler: nil)
+                UIApplication.shared.open(settingsUrl!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             } else {
                 UIApplication.shared.openURL(settingsUrl!)
             }
@@ -297,7 +297,7 @@ extension NearbyArticlesViewController : ReachabilityDelegate {
             
             v.labelMessage.text = "Bitte überprüfen Sie ihre Internetverbindung."
             self.view.addSubview(v)
-            v.bringSubview(toFront: self.view)
+            v.bringSubviewToFront(self.view)
             v.activityIndicator.startAnimating()
             v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
             v.viewLoadingHolder.layer.cornerRadius = 5
@@ -320,4 +320,9 @@ extension NearbyArticlesViewController : ReachabilityDelegate {
     func InternetBack() {
         hideNoInternetView()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

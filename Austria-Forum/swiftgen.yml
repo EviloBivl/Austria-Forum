@@ -1,0 +1,19 @@
+ib:
+  inputs: .
+  outputs:
+    - templateName: scenes-swift4
+      output: Storyboard Scenes.swift
+    - templateName: segues-swift4
+      output: Storyboard Segues.swift
+
+strings:
+  inputs: Base.lproj/localizables.strings
+  outputs:
+    templateName: structured-swift4
+    output: Localizations.swift
+
+colors:
+  inputs: Colors.txt
+  outputs:
+    templateName: swift4
+    output: Colors.swift

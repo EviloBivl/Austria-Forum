@@ -79,8 +79,8 @@ class RequestManager : NSObject {
         }
         
         
-        print("====== STARTING REQUEST ========= FOR ID:  \(req.requestBody["id"]!)    =====");
-        print("\(req.requestBody.debugDescription)")
+       // print("====== STARTING REQUEST ========= FOR ID:  \(req.requestBody["id"]!)    =====");
+       // print("\(req.requestBody.debugDescription)")
         
         self.alamo!.request(req.urlAF, method: .post, parameters: req.requestBody, encoding: JSONEncoding.default, headers: req.requestHeader ).responseJSON { /*[unowned delegate]*/
             
@@ -98,10 +98,10 @@ class RequestManager : NSObject {
                     if let idFromReq = responseJSON["id"] as? Int /*let results = responseJSON["result"] as? [String: AnyObject]*/{
                         
                         
-                        print("====== REQUEST STARTED WITH ===== FOR ID:  \(idFromReq)    =====")
-                        print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(idFromReq)    =====")
-                        print("\(String(describing: jsonResp.result.value))")
-                        print("=======================================================")
+//                        print("====== REQUEST STARTED WITH ===== FOR ID:  \(idFromReq)    =====")
+//                        print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(idFromReq)    =====")
+//                        print("\(String(describing: jsonResp.result.value))")
+//                        print("=======================================================")
                         let methodString = RequestID.getStringForRawValue(idFromReq)
                         
                         let responseInJson = JSON(value)
@@ -129,11 +129,11 @@ class RequestManager : NSObject {
                 }
                 
             } else if jsonResp.result.isFailure {
-                print("For now we are failing in the alamo closures - later send it to delegate")
+//                print("For now we are failing in the alamo closures - later send it to delegate")
             }
             
             
-            print("====== RESPONSE END         ============================")
+//            print("====== RESPONSE END         ============================")
             
             
         }

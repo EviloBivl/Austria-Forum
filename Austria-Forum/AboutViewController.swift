@@ -14,7 +14,7 @@ class AboutViewController: UIViewController {
     var viewModel: AboutViewModel?
     
     class func create(viewModel: AboutViewModel) -> AboutViewController {
-       let controller = StoryboardScene.AboutViewController.aboutViewController.instantiate()
+       let controller = StoryboardScene.About.aboutViewController.instantiate()
        controller.viewModel = viewModel
        return controller
     }
@@ -80,10 +80,15 @@ extension AboutViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         print("should interact with url: \(URL.absoluteString)")
         if #available(iOS 10.0, *) {
-            UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         } else {
             UIApplication.shared.openURL(URL)
         }
         return false
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

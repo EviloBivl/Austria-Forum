@@ -194,7 +194,7 @@ extension SearchTableViewController
             
             v.labelMessage.text = "Bitte überprüfen Sie ihre Internetverbindung."
             self.view.addSubview(v)
-            v.bringSubview(toFront: self.view)
+            v.bringSubviewToFront(self.view)
             v.activityIndicator.startAnimating()
             v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
             v.viewLoadingHolder.layer.cornerRadius = 5
