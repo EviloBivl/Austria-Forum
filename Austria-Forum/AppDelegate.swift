@@ -69,8 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let sr = Helper.getSearchResultNotificationUserInfoNoLicense(userinfo: notificationUserInfo)
         SearchHolder.sharedInstance.selectedItem = sr
-        Answers.logCustomEvent(withName: DetailViewController.answersEventFromPush, customAttributes: ["Article" : notificationUserInfo["title"] ?? "nil", "Distance" : notificationUserInfo["distance"] ?? "nil"])
-        
         completionHandler()
     }
     
@@ -89,49 +87,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 print("started with url: \(sr["url"] as! String)")
                 //Note: We ignore the license for now - because we load it in getPageInfo afterwards anyway
                 SearchHolder.sharedInstance.selectedItem = Helper.getSearchResultNotificationUserInfoNoLicense(userinfo: sr)
-                Answers.logCustomEvent(withName: DetailViewController.answersEventFromPush, customAttributes: ["Article" : sr["title"] ?? "nil", "Distance" : sr["distance"] ?? "nil" ])
-                
             }
         }
     }
-    
-//    func fireNotificationFromTerminated(){
-//        let localNotification : UILocalNotification = UILocalNotification()
-//        //==
-//        let calendar = NSCalendar.init(calendarIdentifier: NSCalendarIdentifierGregorian)
-//        let currentHour = (calendar?.component(NSCalendarUnit.Hour, fromDate: NSDate()))!
-//        let currentMinute = (calendar?.component(NSCalendarUnit.Minute, fromDate: NSDate()))!
-//        let currentSecond = (calendar?.component(NSCalendarUnit.Second, fromDate: NSDate()))!
-//        //let writer = ReadWriteToPList()
-//        //writer.loadFavourites()
-//        //==
-//        
-//        localNotification.fireDate = NSDate()
-//        localNotification.soundName = UILocalNotificationDefaultSoundName
-//        localNotification.alertBody = "Push From Terminated - \(currentHour):\(currentMinute):\(currentSecond)"
-//        localNotification.timeZone = NSTimeZone.defaultTimeZone()
-//        localNotification.applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
-//        //print("previous app badge number: \(UIApplication.sharedApplication().applicationIconBadgeNumber)")
-//        
-//        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-//
-//    }
-    
-    //this is so iOS 9 and shall be refactored ignored for now
-    /*
-     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-     print("didRevieceLocalNotification")
-     if let sr = notification.userInfo{
-     if let _ = sr["url"]{
-     print("started with url: \(sr["url"] as! String)")
-     //Note: We ignore the license for now - because we load it in getPageInfo afterwards anyway
-     SearchHolder.sharedInstance.selectedItem = Helper.getSearchResultNotificationUserInfoNoLicense(userinfo: sr)
-     Answers.logCustomEvent(withName: DetailViewController.answersEventFromPush, customAttributes: ["Article" : sr["title"]!, "Distance" : sr["distance"]! ])
-     
-     }
-     }
-     }
-     */
-    
 }
 

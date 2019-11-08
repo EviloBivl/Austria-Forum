@@ -16,9 +16,6 @@ enum ReachabilityType {
 }
 
 class ReachabilityHelper {
-    
-    
-    
     static let sharedInstance = ReachabilityHelper()
     var reachability : Reachability?
     
@@ -35,11 +32,9 @@ class ReachabilityHelper {
             print("Unable to create Reachability || Unable to startNotifier")
             return
         }
-        
     }
     
     fileprivate func addObserver(){
-        
         NotificationCenter.default.addObserver(forName: Notification.Name.reachabilityChanged, object: nil, queue: OperationQueue.main, using: {
             notification in
             self.reachabilityChanged(notification)
@@ -48,27 +43,17 @@ class ReachabilityHelper {
     }
     
     func reachabilityChanged(_ note: Notification) {
-        
         let reachability = note.object as! Reachability
-        
-        if reachability.isReachable {
-            if reachability.isReachableViaWiFi {
-                print("Reachable via WiFi")
-                self.connection = .wifi
-            } else {
-                print("Reachable via Cellular")
-                self.connection = .cellular
-            }
-            if let del = self.delegate {
-                del.InternetBack()
-            }
-        } else {
-            print("Not reachable")
+        switch reachability.connection {
+        case .wifi:
+            self.connection = .wifi
+            delegate?.InternetBack()
+        case .cellular:
+            self.connection = .cellular
+            delegate?.InternetBack()
+        case .none:
             self.connection = .no_INTERNET
-            if let del = self.delegate {
-                del.noInternet()
-            }
-            //No internet connection present a view
+            delegate?.noInternet()
         }
     }
     
@@ -78,7 +63,5 @@ class ReachabilityHelper {
                                                   name: Notification.Name.reachabilityChanged,
                                                   object: reachability)
     }
-    
-    
 }
 

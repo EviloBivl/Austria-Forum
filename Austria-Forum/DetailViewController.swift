@@ -63,22 +63,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     var wkNavigatioinCount : Int = 0
     
-    let userActionEvent = "User Action"
-    let userNavigation = "Navigation"
-    
-    ///Answer Constants
-    public static let answersEventLicense = "License"
-    public static let answersEventRandom = "Random Article"
-    public static let answersEventMonthly = "Monthly Article"
-    public static let answersEventAddFavs = "Add Favourite"
-    public static let answersEventFromPush = "Start From Push"
-    public static let answersEventLocation = "Location Articles"
-    public static let answersEventHome = "Home Navigation"
-    public static let answersEventFavs = "Open Favourites"
-    public static let answersEventShare = "Share Article"
-    public static let answersEventSearch = "Search Articles"
-    
-    
     
     var toolBarsHidden : Bool = false
     var isLandScape : Bool = false
@@ -252,12 +236,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         }
     }
     
-    ///This logs the User action to fabric.io but for now we don't use it
-    ///Because we instead use the GA API
-    fileprivate func logToAnswers(_ message: String, customAttributes: [String : AnyObject]?){
-        Answers.logCustomEvent(withName: message, customAttributes: customAttributes)
-    }
-    
     fileprivate func isRightNowAWebBookLoaded() -> Bool{
         if let currentUrl = webKitView.url?.absoluteString {
             if currentUrl.contains("Web_Books") || currentUrl.contains("web_books") || currentUrl.contains("web-books") {
@@ -272,51 +250,40 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     // MARK: - IBActions
     @IBAction func loadLicenseButton(_ sender: UIButton) {
         
-        var answersAttributes : [String: String] = [:]
         
         if let license = SearchHolder.sharedInstance.selectedItem?.licenseResult{
             if let licenseUrl = license.url{
-                answersAttributes["License"] = license.id
                 let url = URL(string: licenseUrl)!
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+                    UIApplication.shared.open(url)
                 } else {
                     UIApplication.shared.openURL(url)
                 }
             }
         } else if let licenseUrl = LicenseManager.getLinkForLicense("AF"){
             // fallbacl license url
-            answersAttributes["License"] = "AF"
             let url = URL(string: licenseUrl)!
             if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+                UIApplication.shared.open(url)
             } else {
                 UIApplication.shared.openURL(url)
             }
         }
-        self.logToAnswers(DetailViewController.answersEventLicense, customAttributes: answersAttributes as [String : AnyObject]?)
-        Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventLicense, action: answersAttributes["License"]!)
     }
     
     func loadRandomArticle() {
-        self.logToAnswers(DetailViewController.answersEventRandom, customAttributes: ["Rnd Article - Category" : UserData.sharedInstance.categorySelected! as AnyObject])
-        Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventRandom, action: UserData.sharedInstance.categorySelected!)
         self.showLoadingScreen()
         RequestManager.sharedInstance.getRandomArticle(self, categories: [UserData.sharedInstance.categorySelected!])
     }
     
     func loadArticleFromMonthlyPool() {
-        self.logToAnswers(DetailViewController.answersEventMonthly, customAttributes: ["Monthly Article" : "requested" as AnyObject])
-        
         if UserData.sharedInstance.checkIfArticleOfTheMonthNeedsReload() {
             self.showLoadingScreen()
             RequestManager.sharedInstance.getArticleFromMonthlyPool(self, month: "notset", year: "notset")
-            Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventMonthly, action: "Load Article From Server")
-        } else {
+         } else {
             if (ReachabilityHelper.sharedInstance.connection == ReachabilityType.no_INTERNET){
                 self.noInternet()
             } else {
-                Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventMonthly, action: "Load Article from Storage")
                 self.detailItem = UserData.sharedInstance.articleOfTheMonth
             }
         }
@@ -331,14 +298,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     }
     
     func shareContentButton() {
-        if let sr = SearchHolder.sharedInstance.selectedItem {
-            Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventShare, action: sr.title ?? "got Nil Title", label: sr.url ?? "got Nil Url")
-            self.logToAnswers(DetailViewController.answersEventShare, customAttributes: ["Article" : sr.title as AnyObject? ?? "got Nil Title" as AnyObject])
-        } else if let currentUrl = self.webKitView.url?.absoluteString {
-            Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventShare, action: "Webbook" , label: currentUrl )
-            self.logToAnswers(DetailViewController.answersEventShare, customAttributes: ["Article" : "Webbook" as AnyObject])
-        }
-        
         if let currentAfUrl = self.webKitView.url?.absoluteString {
             if currentAfUrl != "" {
                 let stringUrl = currentAfUrl.removeAFSkin()
@@ -383,29 +342,11 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         }
         
         SearchHolder.sharedInstance.selectedItem = SearchResult(title: "Austria-Forum", name: "Austria-Forum", url: UserData.AF_URL, score: 100, licenseResult: nil)
-        self.logToAnswers(DetailViewController.answersEventHome, customAttributes: nil)
-        Helper.trackAnalyticsEvent(withCategory: DetailViewController.answersEventHome, action: "Going Home")
         self.setDetailItem()
     }
     
     
     //MARK: Prepare for Segue - Before Transistion hints
-    
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        
-        if identifier == "toLocationArticles" {
-            self.logToAnswers(DetailViewController.answersEventLocation, customAttributes: nil)
-        } else if identifier == "toSearchArticle" {
-            self.logToAnswers(DetailViewController.answersEventSearch, customAttributes: nil )
-        } else if identifier == "toFavourites"{
-            self.logToAnswers(DetailViewController.answersEventFavs, customAttributes: nil )
-        }
-        print("performing segue \(identifier)")
-        
-        return true
-    }
-    
-    
     func hintToSettings(inAppSetting: Bool) {
         let alertController : UIAlertController = UIAlertController(title: "Ortungsdienste", message: "Austria-Forum darf zur Zeit nicht auf ihren Standort zugreifen. Sie können dies in den Einstellungen ändern wenn Sie wollen.", preferredStyle: UIAlertController.Style.alert)
         let actionAbort : UIAlertAction = UIAlertAction(title: "Abbruch", style: UIAlertAction.Style.cancel, handler: {
@@ -421,7 +362,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
             } else {
                 let settingsUrl = URL(string: UIApplication.openSettingsURLString)
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(settingsUrl!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+                    UIApplication.shared.open(settingsUrl!)
                 } else {
                     UIApplication.shared.openURL(settingsUrl!)
                 }
@@ -433,11 +374,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         self.present(alertController, animated: true, completion: nil)
         
     }
-    
-    
-    
-    
-    
     
 }
 
@@ -635,7 +571,7 @@ extension DetailViewController : WKNavigationDelegate {
             if wkNavigatioinCount > 1 {
                 let url = navigationAction.request.url
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+                    UIApplication.shared.open(url!)
                 } else {
                     UIApplication.shared.openURL(url!)
                 }
@@ -846,21 +782,6 @@ extension DetailViewController : NetworkDelegation {
     }
     
 }
-/**
- case settings = 10
- case random = 11
- case monthly = 12
- case location = 13
- case search = 14
- case home = 15
- 
- //bottom toolbartags
- case back = 20
- case forward = 21
- case like = 22
- case favourites = 23
- case share = 24
- */
 
 extension DetailViewController: ToolbarDelegate {
     func didPressToolbarButton(with itemType: ToolBar.ToolbarItemType) {
@@ -888,13 +809,4 @@ extension DetailViewController: ToolbarDelegate {
             shareContentButton()
         }
     }
-}
-
-
-
-
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

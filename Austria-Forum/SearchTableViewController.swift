@@ -47,8 +47,6 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         super.viewDidLoad()
         
       //  startRequestTesting()
-      //  Answers.logContentViewWithName("MasterViewController", contentType: "Data", contentId: "1234", customAttributes: ["Favorites Count":20, "Screen Orientation":"Landscape"])
-
         //set up searchcontroller properties and delegates
         self.searchController.searchResultsUpdater = self
         self.searchController.dimsBackgroundDuringPresentation = false

@@ -33,7 +33,7 @@ class SettingsSelectionViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellType = viewModel?.cellType(at: indexPath) else { return UITableViewCell()}
+        guard let _ = viewModel?.cellType(at: indexPath) else { return UITableViewCell()}
         
         let cell = UITableViewCell()
         cell.textLabel?.text = viewModel?.content(at: indexPath)
