@@ -30,7 +30,6 @@ class FavouritesTableViewController: UITableViewController {
         //Always set the current controller as the delegate to ReachabilityHelper
         ReachabilityHelper.sharedInstance.delegate = self
         
-        self.trackViewControllerTitleToAnalytics()
     }
     
     // MARK: - Table view data source

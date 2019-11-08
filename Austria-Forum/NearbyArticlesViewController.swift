@@ -114,7 +114,6 @@ class NearbyArticlesViewController: UITableViewController, LocationControllerDel
         
         MyLocationManager.sharedInstance.refreshToCurrentLocation(self, numberOfResults: self.numberOfReults)
         
-        self.trackViewControllerTitleToAnalytics()
     }
     
     

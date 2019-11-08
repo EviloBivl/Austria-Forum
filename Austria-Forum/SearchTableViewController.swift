@@ -88,7 +88,6 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         //Always set the current controller as the delegate to ReachabilityHelper
         ReachabilityHelper.sharedInstance.delegate = self
         
-        self.trackViewControllerTitleToAnalytics()
     }
     
     

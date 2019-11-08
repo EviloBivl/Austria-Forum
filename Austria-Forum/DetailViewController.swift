@@ -24,6 +24,24 @@ enum ScrollDirection : Int {
 
 class DetailViewController: UIViewController,  UIToolbarDelegate {
     
+    //MARK: - Toolbar Actions
+    @IBAction func didPressHome(_ sender: Any) { loadHome() }
+    @IBAction func didPressRandom(_ sender: Any) { loadRandomArticle() }
+    @IBAction func didPressMonthly(_ sender: Any) { loadArticleFromMonthlyPool() }
+    @IBAction func didPressLocation(_ sender: Any) { push(type: .location) }
+    @IBAction func didPressSearch(_ sender: Any) { push(type: .search)}
+    @IBAction func didPressSettings(_ sender: Any) { push(type: .settings) }
+    @IBAction func didPressBack(_ sender: Any) { back() }
+    @IBAction func didPressForward(_ sender: Any) { forward() }
+    @IBAction func didPressFavourite(_ sender: Any) { saveArticleAsFavourite() }
+    @IBAction func didPressFavouriteList(_ sender: Any) { push(type: .favourites) }
+    @IBAction func didPressShare(_ sender: Any) { shareContentButton() }
+    
+    private func push(type: ToolBar.ToolbarItemType) {
+        guard let controller = type.viewController else { return }
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
     // MARK: - Properties
     @IBOutlet weak var topToolBar: ToolBar!
     @IBOutlet weak var bottomToolBar: ToolBar!
@@ -33,10 +51,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     @IBOutlet weak var constraintBottomToolBar: NSLayoutConstraint!
     
     @IBOutlet weak var licenseTag: UIButton!
-    
-    @IBAction func homeAction(_ sender: Any) {
-        print("home action pressed")
-    }
     
     var scrollDirection : ScrollDirection?
     var lastScrollOffset : CGPoint?
@@ -104,7 +118,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
             isLandScape = true
         }
         
-        self.trackViewControllerTitleToAnalytics()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -226,7 +239,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     func setDetailItem(){
         self.detailItem = SearchHolder.sharedInstance.selectedItem
-        
     }
     
     
@@ -564,7 +576,6 @@ extension DetailViewController : WKNavigationDelegate {
         view.addConstraints([topVertical, bottomVertical,leadingSpace,trailingSpace])
         
         
-        
         //set the delegates
         self.webKitView.navigationDelegate = self
         self.webKitView.scrollView.delegate = self
@@ -611,7 +622,7 @@ extension DetailViewController : WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void){
-        
+     
         print("url of property:\(String(describing: self.webKitView.url?.absoluteString))")
         print("request of navigation \(String(describing: navigationAction.request.url?.absoluteString))")
         
@@ -657,7 +668,6 @@ extension DetailViewController : WKNavigationDelegate {
         //      self.refreshWebView()
         //     return
         // }
-        
         SearchHolder.sharedInstance.currentUrl = self.webKitView.url?.absoluteString
         let currentCategory : String? = CategoriesListed.GetBeautyCategoryFromUrlString((self.webKitView.url?.absoluteString)!)
         SearchHolder.sharedInstance.currentCategory = currentCategory

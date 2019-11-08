@@ -14,6 +14,7 @@ protocol ToolbarDelegate: class {
 
 class ToolBar: UIToolbar {
     
+    
     public enum ToolbarItemType : Int {
         //toptoolbar tags
         case settings = 10
@@ -72,7 +73,7 @@ class ToolBar: UIToolbar {
     
     
     
-    fileprivate func setUpIcons(){
+    public func setUpIcons(){
         
         likedImage =  UIImage.renderedImageInGraphicContext("Hearts_Filled.png", size: size)
         notLikedImage =  UIImage.renderedImageInGraphicContext("Hearts.png", size: size)
@@ -80,7 +81,9 @@ class ToolBar: UIToolbar {
         if let items = self.items {
             for item in items {
                 if let itemTag = ToolbarItemType.init(rawValue: item.tag) {
-                item.action = #selector(didPressToolbarButton(sender:))
+                    //for some strange reason the action added this way stops working after link
+                    //navigation within the webkit
+                    //item.action = #selector(didPressToolbarButton(sender:))
                 switch itemTag {
                 case .settings:
                     item.image = UIImage.renderedImageInGraphicContext("Settings_3.png", size: size)

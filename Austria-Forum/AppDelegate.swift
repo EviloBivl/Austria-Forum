@@ -58,10 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func applicationWillTerminate(_ application: UIApplication) {
         //remove the Observer
-        print("will Terminate")
         ReachabilityHelper.sharedInstance.removeObserver()
         MyLocationManager.sharedInstance.startIfAllowed()
-        
     }
     
     @available(iOS 10.0, *)

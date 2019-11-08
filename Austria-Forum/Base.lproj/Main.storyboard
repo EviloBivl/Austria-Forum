@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wSM-cl-X97">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wSM-cl-X97">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -55,15 +53,35 @@
                                     <constraint firstAttribute="height" constant="44" id="8Br-yp-uNk"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem tag="20" title="B" id="DAA-Wl-4qM"/>
+                                    <barButtonItem tag="20" title="B" id="DAA-Wl-4qM">
+                                        <connections>
+                                            <action selector="didPressBack:" destination="k5S-Qj-ZYD" id="E2p-DQ-hB3"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="8QW-SC-n76"/>
-                                    <barButtonItem tag="21" title="F" id="dGM-Rm-ibp"/>
+                                    <barButtonItem tag="21" title="F" id="dGM-Rm-ibp">
+                                        <connections>
+                                            <action selector="didPressForward:" destination="k5S-Qj-ZYD" id="qaB-oh-3Qw"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hSN-DU-cKK"/>
-                                    <barButtonItem tag="22" title="L" id="KPc-Ae-vns"/>
+                                    <barButtonItem tag="22" title="L" id="KPc-Ae-vns">
+                                        <connections>
+                                            <action selector="didPressFavourite:" destination="k5S-Qj-ZYD" id="bNL-KA-ILy"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Yht-FX-09I"/>
-                                    <barButtonItem tag="23" title="F" id="IUF-FN-giH"/>
+                                    <barButtonItem tag="23" title="F" id="IUF-FN-giH">
+                                        <connections>
+                                            <action selector="didPressFavouriteList:" destination="k5S-Qj-ZYD" id="lo3-yC-CbM"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="87P-Eg-wFZ"/>
-                                    <barButtonItem tag="24" title="U" id="YoC-Oc-Ol9"/>
+                                    <barButtonItem tag="24" title="U" id="YoC-Oc-Ol9">
+                                        <connections>
+                                            <action selector="didPressShare:" destination="k5S-Qj-ZYD" id="Sbp-bD-qrg"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEE-VP-jOh" customClass="ToolBar" customModule="Austria_Forum" customModuleProvider="target">
@@ -72,17 +90,41 @@
                                     <constraint firstAttribute="height" constant="44" id="vDl-kv-m8u"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem tag="15" title="H" id="kK2-HC-D4f"/>
+                                    <barButtonItem tag="15" title="H" id="kK2-HC-D4f">
+                                        <connections>
+                                            <action selector="didPressHome:" destination="k5S-Qj-ZYD" id="bad-5Y-q57"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="zvg-jy-R9a"/>
-                                    <barButtonItem tag="11" title="R" id="BPu-Bn-7oW"/>
+                                    <barButtonItem tag="11" title="R" id="BPu-Bn-7oW">
+                                        <connections>
+                                            <action selector="didPressRandom:" destination="k5S-Qj-ZYD" id="xCY-NA-38Y"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="y20-R4-VBj"/>
-                                    <barButtonItem tag="12" title="M" id="V8s-rY-B4s"/>
+                                    <barButtonItem tag="12" title="M" id="V8s-rY-B4s">
+                                        <connections>
+                                            <action selector="didPressMonthly:" destination="k5S-Qj-ZYD" id="liU-FA-Zh4"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="P2C-RU-Lug"/>
-                                    <barButtonItem tag="13" title="L" id="WoR-RL-Z3A"/>
+                                    <barButtonItem tag="13" title="L" id="WoR-RL-Z3A">
+                                        <connections>
+                                            <action selector="didPressLocation:" destination="k5S-Qj-ZYD" id="HGU-iF-Sbn"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="A70-oi-Tch"/>
-                                    <barButtonItem tag="14" title="S" id="gUl-qk-DD1"/>
+                                    <barButtonItem tag="14" title="S" id="gUl-qk-DD1">
+                                        <connections>
+                                            <action selector="didPressSearch:" destination="k5S-Qj-ZYD" id="o6S-XL-sF3"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="bBS-rD-rT0"/>
-                                    <barButtonItem tag="10" title="S" id="cq9-xe-N8R"/>
+                                    <barButtonItem tag="10" title="S" id="cq9-xe-N8R">
+                                        <connections>
+                                            <action selector="didPressSettings:" destination="k5S-Qj-ZYD" id="ee0-ty-iks"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
