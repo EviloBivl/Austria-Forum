@@ -6,19 +6,7 @@
 //  Copyright © 2015 Paul Neuhold. All rights reserved.
 //
 
-
-/* 
-
-Stuff to think about -
-Track users search words or better track the selected Article after searching with crashlytics ?
-
-*/
-
 import UIKit
-import CoreData
-import Fabric
-import Crashlytics
-
 
 protocol ArticleSelectionDelegate {
     func articleSelected(_ article: SearchResult);

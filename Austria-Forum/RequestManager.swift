@@ -36,7 +36,6 @@ class RequestManager : NSObject {
     func getRandomArticle(_ delegate: NetworkDelegation, categories: [String]){
         let getRandomArticleRequest : GetRandomArticleRequest = GetRandomArticleRequest(categories: categories)
         performRequest(getRandomArticleRequest, delegate: delegate)
-        
     }
     
     func getArticleFromMonthlyPool(_ delegate: NetworkDelegation, month: String? = nil, year: String? = nil){
@@ -81,7 +80,6 @@ class RequestManager : NSObject {
         
        // print("====== STARTING REQUEST ========= FOR ID:  \(req.requestBody["id"]!)    =====");
        // print("\(req.requestBody.debugDescription)")
-        
         self.alamo!.request(req.urlAF, method: .post, parameters: req.requestBody, encoding: JSONEncoding.default, headers: req.requestHeader ).responseJSON { /*[unowned delegate]*/
             
             jsonResp in
@@ -98,33 +96,15 @@ class RequestManager : NSObject {
                     if let idFromReq = responseJSON["id"] as? Int /*let results = responseJSON["result"] as? [String: AnyObject]*/{
                         
                         
-//                        print("====== REQUEST STARTED WITH ===== FOR ID:  \(idFromReq)    =====")
-//                        print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(idFromReq)    =====")
-//                        print("\(String(describing: jsonResp.result.value))")
-//                        print("=======================================================")
+                        print("====== REQUEST STARTED WITH ===== FOR ID:  \(idFromReq)    =====")
+                        print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(idFromReq)    =====")
+                        print("\(String(describing: jsonResp.result.value))")
+                        print("=======================================================")
                         let methodString = RequestID.getStringForRawValue(idFromReq)
                         
                         let responseInJson = JSON(value)
                         req.parseResponse(responseInJson)
                         delegate.onRequestSuccess(methodString)
-                        
-//                        if let list = results["list"] as? [AnyObject]{
-//                            if let mapDict = list.first as? [String: AnyObject]{
-//                                if let map = mapDict["map"] as? [String: AnyObject]{
-//                                    if let query = map["query"] as? String, let name = map["name"] as? String, let title = map["title"] as? String, let url = map["url"] as? String {
-//                                        // print("executet query was: \(query)")
-//                                        // var license = "AF"
-//                                        // if let newlicense = map["license"] as? String{
-//                                        // license = newlicense
-//                                        // }
-//                                        let searchResult = SearchResult(title: title, name: name, url: url, score: 100, license: nil)
-//                                        SearchHolder.sharedInstance.selectedItem = searchResult
-//                                        //   req.sendValue(query)
-//                                        // delegate.onRequestSuccess("search.getPageInfo")
-//                                    }
-//                                }
-//                            }
-//                        }
                     }
                 }
                 
@@ -133,9 +113,7 @@ class RequestManager : NSObject {
             }
             
             
-//            print("====== RESPONSE END         ============================")
-            
-            
+            print("====== RESPONSE END         ============================")
         }
     }
 }

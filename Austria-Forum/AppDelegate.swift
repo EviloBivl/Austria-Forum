@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Fabric
-import Crashlytics
 import UserNotifications
     
 @UIApplicationMain
@@ -37,10 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //start the Reachability Observer
         let _ : ReachabilityHelper = ReachabilityHelper.sharedInstance
         
-        //init crashlytics
-        Fabric.with([Crashlytics.self])
-        self.logUser()
-        
+     
         if UserData.sharedInstance.wasPushPermissionAsked! {
             MyLocationManager.sharedInstance.startIfAllowed()
         }
@@ -70,14 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let sr = Helper.getSearchResultNotificationUserInfoNoLicense(userinfo: notificationUserInfo)
         SearchHolder.sharedInstance.selectedItem = sr
         completionHandler()
-    }
-    
-    func logUser() {
-        let name = UIDevice.current.name
-        let model = UIDevice.current.model
-        let iosVersion = UIDevice.current.systemVersion
-        let user = "\(name) - \(model) - iOS:\(iosVersion)"
-        Crashlytics.sharedInstance().setUserName(user)
     }
     
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
