@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreLocation
-import SwiftyJSON
 
 class GetArticlesByLocationRequest: BaseRequest {
     
@@ -37,11 +36,11 @@ class GetArticlesByLocationRequest: BaseRequest {
         self.requestBody["params"] = paramsArray as AnyObject?
     }
     
-    override func parseResponse(_ response: JSON) {
+    override func parseResponse(_ response: Data) {
         LocationArticleHolder.sharedInstance.articles.removeAll()
         
         do {
-            let nearbyResults = try JSONDecoder().decode(AustriaFormBaseResponse<ResultList<ResultMap<NearbyArticle>>>.self, from: response.rawData()).result.list
+            let nearbyResults = try JSONDecoder().decode(AustriaFormBaseResponse<ResultList<ResultMap<NearbyArticle>>>.self, from: response).result.list
             LocationArticleHolder.sharedInstance.articles = nearbyResults.compactMap {
                 return LocationArticleResult(title: $0.map.title,
                                              name: $0.map.page,

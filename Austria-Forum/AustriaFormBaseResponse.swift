@@ -13,6 +13,10 @@ public struct AustriaFormBaseResponse<T>: Decodable where T: Decodable {
     public let result: T
 }
 
+public struct AustriaForumConcreteResponse: Decodable {
+    public let id: Int
+}
+
 public struct ResultMap<T>: Decodable where T: Decodable {
     public let map: T
 }

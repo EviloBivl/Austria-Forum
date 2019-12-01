@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 class GetPageInfoFromUrls : BaseRequest{
     
@@ -17,10 +16,6 @@ class GetPageInfoFromUrls : BaseRequest{
     
     override init(){
         super.init()
-    }
-    
-    deinit {
-        print("\(self.description) deinit")
     }
     
     convenience init(urls: [String]?) {
@@ -43,10 +38,10 @@ class GetPageInfoFromUrls : BaseRequest{
 
     }
     
-    override func parseResponse(_ response: JSON) {
+    override func parseResponse(_ response: Data) {
         do {
             let pageInfoList = try JSONDecoder().decode(AustriaFormBaseResponse<ResultList<ResultMap<PageInfo>>>.self,
-                from: response.rawData()).result.list
+                from: response).result.list
             guard let pageInfo = pageInfoList.first?.map else { return }
             
             if pageInfo.ResultCode == "0" {

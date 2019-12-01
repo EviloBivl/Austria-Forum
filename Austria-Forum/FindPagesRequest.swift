@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 class FindPagesRequest : BaseRequest {
     
@@ -42,11 +41,11 @@ class FindPagesRequest : BaseRequest {
         
     }
     
-    override func parseResponse(_ response: JSON) {
+    override func parseResponse(_ response: Data) {
         SearchHolder.sharedInstance.searchResults.removeAll()
         
         do {
-            let searchResultList = try JSONDecoder().decode(AustriaFormBaseResponse<ResultList<ResultMap<SearchArticle>>>.self, from: response.rawData()).result.list
+            let searchResultList = try JSONDecoder().decode(AustriaFormBaseResponse<ResultList<ResultMap<SearchArticle>>>.self, from: response).result.list
             SearchHolder.sharedInstance.searchResults = searchResultList.filter({ return $0.map.score > 1 }).compactMap {
                 return SearchResult(title: $0.map.title,
                                     name: $0.map.page,

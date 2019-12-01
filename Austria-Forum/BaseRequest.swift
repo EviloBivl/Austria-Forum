@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
 
 
 class BaseRequest : NSObject {
@@ -34,7 +33,7 @@ class BaseRequest : NSObject {
         fatalError("\(self.description) must override addAdditionalRequestInfo()")
     }
     
-    func parseResponse (_ response: JSON){
+    func parseResponse(_ response: Data){
         fatalError("\(self.description) must override parseResponse(response: JSON)")
     }
     func sendValue(_ response: AnyObject){
@@ -42,12 +41,9 @@ class BaseRequest : NSObject {
         print("Response BASEREQUEST: \(response)")
     }
     
-    func handleResponseError(_ errorFrom: String, article: [String:JSON] = [String:JSON]()){
+    func handleResponseError(_ errorFrom: String, article: [String:AnyObject] = [String:AnyObject]()){
         //TODO implement better handling
         SearchHolder.sharedInstance.resultMessage = errorFrom
         SearchHolder.sharedInstance.selectedItem = nil
-    }
-    deinit {
-        print("\(self.description) deinit")
     }
 }

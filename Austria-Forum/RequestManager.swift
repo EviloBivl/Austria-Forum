@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
 import CoreLocation
 
 /** RequestManager Class
@@ -71,48 +70,40 @@ class RequestManager : NSObject {
     
     fileprivate func performRequest(_ req: BaseRequest, delegate: NetworkDelegation) -> Void {
         
-        
-        if ReachabilityHelper.sharedInstance.connection == ReachabilityType.no_INTERNET{
+        if ReachabilityHelper.sharedInstance.connection == ReachabilityType.no_INTERNET {
             delegate.noInternet?()
             return
         }
         
-        
-       // print("====== STARTING REQUEST ========= FOR ID:  \(req.requestBody["id"]!)    =====");
-       // print("\(req.requestBody.debugDescription)")
-        self.alamo!.request(req.urlAF, method: .post, parameters: req.requestBody, encoding: JSONEncoding.default, headers: req.requestHeader ).responseJSON { /*[unowned delegate]*/
+        print("====== STARTING REQUEST ========= FOR ID:  \(req.requestBody["id"]!)    =====");
+        self.alamo!.request(req.urlAF, method: .post, parameters: req.requestBody, encoding: JSONEncoding.default, headers: req.requestHeader ).responseData {
+            dataResp in
             
-            jsonResp in
-            
-            
-            if let error = jsonResp.result.error {
+            if let error = dataResp.result.error {
                 print(error.localizedDescription)
                 delegate.onRequestFailed()
                 return
             }
                 
-            else if jsonResp.result.isSuccess {
-                if let responseJSON = jsonResp.result.value as? [String: AnyObject], let value = jsonResp.result.value {
-                    if let idFromReq = responseJSON["id"] as? Int /*let results = responseJSON["result"] as? [String: AnyObject]*/{
-                        
-                        
-                        print("====== REQUEST STARTED WITH ===== FOR ID:  \(idFromReq)           =====")
-                        print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(idFromReq)  \(req.requestBody["method"]!)  =====")
-                        print("\(String(describing: jsonResp.result.value))")
-                        print("=======================================================")
-                        let methodString = RequestID.getStringForRawValue(idFromReq)
-                        
-                        let responseInJson = JSON(value)
-                        req.parseResponse(responseInJson)
-                        delegate.onRequestSuccess(methodString)
-                    }
-                }
-                
-            } else if jsonResp.result.isFailure {
-//                print("For now we are failing in the alamo closures - later send it to delegate")
+            guard dataResp.result.isSuccess,
+                let data = dataResp.data else {
+                    delegate.onRequestFailed()
+                    return
             }
+                do {
+                    let baseResponse = try JSONDecoder().decode(AustriaForumConcreteResponse.self, from: data)
             
-            
+                    print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(baseResponse.id)  \(req.requestBody["method"]!)  =====")
+                    print("\(String(data: data, encoding: .utf8) ?? "No Valid Data Response")")
+                    print("=======================================================")
+                    
+                    let methodString = RequestID.getStringForRawValue(baseResponse.id)
+                    req.parseResponse(data)
+                    delegate.onRequestSuccess(methodString)
+                } catch (let error) {
+                    print("====== REQUEST PARSING ERROR AFConcreteResponse =====\n\(error)")
+                }
+               
             print("====== RESPONSE END         ============================")
         }
     }

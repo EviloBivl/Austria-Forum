@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 class GetArticleFromMonthlyPool: BaseRequest {
     
@@ -44,10 +43,10 @@ class GetArticleFromMonthlyPool: BaseRequest {
         self.requestBody["params"] = paramsArray as AnyObject?
     }
     
-    override func parseResponse (_ response : JSON){
+    override func parseResponse(_ response : Data){
         do {
             let monthlyArticle = try JSONDecoder().decode(AustriaFormBaseResponse<ResultMap<MonthlyArticle>>.self,
-                                                          from: response.rawData()).result.map
+                                                          from: response).result.map
             if monthlyArticle.ResultCode == "0" {
                 let result : SearchResult = SearchResult(title: monthlyArticle.title,
                                                          name: monthlyArticle.page,

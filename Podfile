@@ -4,7 +4,6 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'Austria-Forum' do
-pod 'SwiftyJSON'
 pod 'Alamofire'
 pod 'ReachabilitySwift'
 pod 'SwiftGen'

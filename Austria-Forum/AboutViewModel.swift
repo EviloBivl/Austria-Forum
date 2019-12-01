@@ -63,12 +63,12 @@ class AboutViewModel: ViewModel {
         alamoLink.addAttribute(NSAttributedString.Key.link, value: L10n.urlAlalmofire, range: NSMakeRange(0, alamoLink.length))
         alamoLicense.addAttribute(NSAttributedString.Key.link, value: L10n.licenseAlmofire, range: NSMakeRange(0, alamoLicense.length))
         
-        let swiftyJSONLink : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleSwiftyjson)
-        let siwftyJSONLizenz : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleLicense)
-        
-        swiftyJSONLink.addAttribute(NSAttributedString.Key.link, value: L10n.urlSwiftyjson, range: NSMakeRange(0, swiftyJSONLink.length))
-        siwftyJSONLizenz.addAttribute(NSAttributedString.Key.link, value: L10n.licenseSwiftyjson, range: NSMakeRange(0, siwftyJSONLizenz.length))
-        
+//        let swiftyJSONLink : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleSwiftyjson)
+//        let siwftyJSONLizenz : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleLicense)
+//
+//        swiftyJSONLink.addAttribute(NSAttributedString.Key.link, value: L10n.urlSwiftyjson, range: NSMakeRange(0, swiftyJSONLink.length))
+//        siwftyJSONLizenz.addAttribute(NSAttributedString.Key.link, value: L10n.licenseSwiftyjson, range: NSMakeRange(0, siwftyJSONLizenz.length))
+//
         let reachabilityLink : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleReachability)
         let reachabilityLizenz : NSMutableAttributedString = NSMutableAttributedString(string: L10n.titleLicense)
         
@@ -88,7 +88,7 @@ class AboutViewModel: ViewModel {
         let fullUsedLibContent = NSMutableAttributedString(string: "")
         let attributedStrings : [NSMutableAttributedString] =
             [alamoLink,openBracket,alamoLicense,closeBracket,comma,
-            swiftyJSONLink,openBracket,siwftyJSONLizenz,closeBracket,comma,
+           // swiftyJSONLink,openBracket,siwftyJSONLizenz,closeBracket,comma,
             reachabilityLink,openBracket,reachabilityLizenz,closeBracket,comma,
             fabricLink,openBracket,fabricLizenz,closeBracket]
         

@@ -27,20 +27,4 @@ class LoadingScreen: UIView {
         self.backgroundColor = UIColor(white: 1, alpha: 0.0)
         
     }
-    
-    
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-    deinit {
-        print("DEINIT Loading")
-        self.activityIndicator.stopAnimating()
-        
-        
-    }
 }

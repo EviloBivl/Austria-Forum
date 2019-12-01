@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 class GetRandomArticleRequest: BaseRequest {
     
@@ -39,9 +38,10 @@ class GetRandomArticleRequest: BaseRequest {
         self.requestBody["params"] = paramsArray as AnyObject?
     }
     
-    override func parseResponse (_ response : JSON){
+    override func parseResponse (_ response : Data){
         do {
-            let randomArticle = try JSONDecoder().decode(AustriaFormBaseResponse<ResultMap<RandomArticle>>.self, from: response.rawData()).result.map
+            let randomArticle = try JSONDecoder().decode(AustriaFormBaseResponse<ResultMap<RandomArticle>>.self,
+                                                         from: response).result.map
             if randomArticle.ResultCode == "0" {
                 let result : SearchResult = SearchResult(title: randomArticle.title,
                                                          name: randomArticle.page,
