@@ -14,13 +14,13 @@ public struct SearchResult {
     fileprivate(set) var name : String?
     fileprivate(set) var url: String?
     fileprivate(set) var score : Int = 0;
-    var licenseResult : LicenseResult?
+    var licenseResult : License?
     
     fileprivate init(){
         
     }
     
-    init(title: String?, name: String?, url: String?, score: Int, licenseResult: LicenseResult?) {
+    init(title: String?, name: String?, url: String?, score: Int, licenseResult: License?) {
         self.init()
         self.title = title
         self.name = name

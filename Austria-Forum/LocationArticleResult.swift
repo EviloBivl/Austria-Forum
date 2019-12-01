@@ -15,14 +15,14 @@ class LocationArticleResult {
     fileprivate(set) var url: String = ""
     fileprivate(set) var distanceString : String = ""
     fileprivate(set) var distanceValue : Int = 0
-    fileprivate(set) var licenseResult: LicenseResult?
+    fileprivate(set) var licenseResult: License?
     
     
     fileprivate init(){
         
     }
     
-    convenience init(title: String, name: String, url: String, distanceStr: String, distanceVal : Int, licenseResult: LicenseResult?) {
+    convenience init(title: String, name: String, url: String, distanceStr: String, distanceVal : Int, licenseResult: License?) {
         self.init()
         self.title = title
         self.name = name

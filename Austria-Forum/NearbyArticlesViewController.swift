@@ -31,9 +31,9 @@ class NearbyArticlesViewController: UITableViewController, LocationControllerDel
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
         // Do any additional setup after loading the view.
-        MyLocationManager.sharedInstance.requestWhenInUse()
         MyLocationManager.sharedInstance.articlesByLocationDelegate = self
         MyLocationManager.sharedInstance.locationErrorDelegate = self
+        MyLocationManager.sharedInstance.requestWhenInUse()
         
     
         //Register Custom Cell

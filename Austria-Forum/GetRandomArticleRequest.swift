@@ -9,7 +9,6 @@
 import Foundation
 import SwiftyJSON
 
-
 class GetRandomArticleRequest: BaseRequest {
     
     var method: String = "search.getRandomPage"
@@ -28,16 +27,6 @@ class GetRandomArticleRequest: BaseRequest {
         self.addAdditionalRequestInfo()
     }
     
-    /*
-    //provide a dummy paramter so that JSON-RPC can handle the incoming call
-    var paramsArray : Array<AnyObject> = [];
-    if (self.categories.count > 0){
-    paramsArray.append(self.categories)
-    } else {
-    paramsArray.append(NSNull())
-    }
-    
-    */
     override func addAdditionalRequestInfo() {
         self.requestBody["method"] = self.method as AnyObject?
         //provide a dummy paramter so that JSON-RPC can handle the incoming call
@@ -51,45 +40,21 @@ class GetRandomArticleRequest: BaseRequest {
     }
     
     override func parseResponse (_ response : JSON){
-        //print("Request : \(self.description)\nResponseData: \(response.description)")
-        //do somthing usefull with the result
-        
-        if let map = response["result"]["map"].dictionary {
-            if map["ResultCode"]?.string == "0"{
-                let name = map["name"]?.string
-                let title = map["title"]?.string
-                let url = map["url"]?.string
-                let score = 100
-                
-                var licenseResult: LicenseResult? = .none
-                if let lic = map["license"]?.dictionary {
-                    if let licenseMap = lic["map"]?.dictionary {
-                        let licCss = licenseMap["css"]?.string
-                        let licUrl = licenseMap["url"]?.string
-                        let licId = licenseMap["id"]?.string
-                        let licTitle = licenseMap["title"]?.string
-                        licenseResult = LicenseResult(withCss: licCss, withTitle: licTitle, withUrl: licUrl, withId: licId)
-                        
-                    }
-                }
-                
-                let result : SearchResult = SearchResult(title: title, name: name, url: url, score: score, licenseResult: licenseResult)
+        do {
+            let randomArticle = try JSONDecoder().decode(AustriaFormBaseResponse<ResultMap<RandomArticle>>.self, from: response.rawData()).result.map
+            if randomArticle.ResultCode == "0" {
+                let result : SearchResult = SearchResult(title: randomArticle.title,
+                                                         name: randomArticle.page,
+                                                         url: randomArticle.url,
+                                                         score: 100,
+                                                         licenseResult: randomArticle.license?.map ?? .none)
                 SearchHolder.sharedInstance.selectedItem = result
             } else {
-                super.handleResponseError(self.description, article: map)
-                SearchHolder.sharedInstance.resultMessage = "Zur Zeit können leider keine Zufallsartikel vom Server generiert werden."
+                super.handleResponseError("Zur Zeit können leider keine Zufallsartikel vom Server generiert werden.")
             }
-            
+        } catch (let error) {
+            print(" ===================== DECODE ERROR : =====================\n\(error)")
+            super.handleResponseError("Zur Zeit können leider keine Zufallsartikel vom Server generiert werden.")
         }
-        
-        
-        
-        
     }
-    
-    deinit {
-        print("\(self.description) deinit")
-    }
-    
-    
 }

@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+
 class BaseRequest : NSObject {
     
     let urlAF: String = "https://austria-forum.org/JSON-RPC"
@@ -41,9 +42,9 @@ class BaseRequest : NSObject {
         print("Response BASEREQUEST: \(response)")
     }
     
-    func handleResponseError(_ errorFrom: String, article: [String:JSON]){
-        print("Error from \(errorFrom) with ResultCode: \(String(describing: article["ResultCode"]?.string)) and Message: \(String(describing: article["ResultDescription"]))")
-        //set the article to nil to provide the error message and proper handling of relaoding on failed requests
+    func handleResponseError(_ errorFrom: String, article: [String:JSON] = [String:JSON]()){
+        //TODO implement better handling
+        SearchHolder.sharedInstance.resultMessage = errorFrom
         SearchHolder.sharedInstance.selectedItem = nil
     }
     deinit {

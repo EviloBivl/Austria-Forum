@@ -46,6 +46,9 @@
                                     <constraint firstAttribute="height" constant="30" id="wxn-h8-h6x"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="publicdomain.png"/>
+                                <connections>
+                                    <action selector="loadLicenseButton:" destination="k5S-Qj-ZYD" eventType="touchUpInside" id="ghQ-d3-0Aq"/>
+                                </connections>
                             </button>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veV-Go-xHX" customClass="ToolBar" customModule="Austria_Forum" customModuleProvider="target">
                                 <rect key="frame" x="-4" y="734" width="383" height="44"/>

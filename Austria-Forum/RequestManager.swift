@@ -32,7 +32,6 @@ class RequestManager : NSObject {
         
     }
     
-    
     func getRandomArticle(_ delegate: NetworkDelegation, categories: [String]){
         let getRandomArticleRequest : GetRandomArticleRequest = GetRandomArticleRequest(categories: categories)
         performRequest(getRandomArticleRequest, delegate: delegate)
@@ -56,6 +55,7 @@ class RequestManager : NSObject {
         performRequest(findPagesReq, delegate: delegate)
         
     }
+    
     
     func getArticlesByLocation (_ delegate: NetworkDelegation, location: CLLocationCoordinate2D, numberOfResults: Int){
         let getArticlesByLocationRequest : GetArticlesByLocationRequest = GetArticlesByLocationRequest(coordinates: location, numberOfResults: numberOfResults)
@@ -96,8 +96,8 @@ class RequestManager : NSObject {
                     if let idFromReq = responseJSON["id"] as? Int /*let results = responseJSON["result"] as? [String: AnyObject]*/{
                         
                         
-                        print("====== REQUEST STARTED WITH ===== FOR ID:  \(idFromReq)    =====")
-                        print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(idFromReq)    =====")
+                        print("====== REQUEST STARTED WITH ===== FOR ID:  \(idFromReq)           =====")
+                        print("====== RESPONSE DESCRIPTION ===== FOR ID:  \(idFromReq)  \(req.requestBody["method"]!)  =====")
                         print("\(String(describing: jsonResp.result.value))")
                         print("=======================================================")
                         let methodString = RequestID.getStringForRawValue(idFromReq)

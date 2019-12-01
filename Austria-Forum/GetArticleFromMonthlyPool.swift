@@ -45,38 +45,23 @@ class GetArticleFromMonthlyPool: BaseRequest {
     }
     
     override func parseResponse (_ response : JSON){
-        // print("Request : \(self.description)\nResponseData: \(response.description)")
-        //do somthing usefull with the result
-        
-        if let map = response["result"]["map"].dictionary {
-            if map["ResultCode"]?.string == "0"{
-                let name = map["name"]?.string
-                let title = map["title"]?.string
-                let url = map["url"]?.string
-                let score = 100
-                
-                var licenseResult: LicenseResult? = .none
-                if let lic = map["license"]?.dictionary {
-                    if let licenseMap = lic["map"]?.dictionary {
-                        let licCss = licenseMap["css"]?.string
-                        let licUrl = licenseMap["url"]?.string
-                        let licId = licenseMap["id"]?.string
-                        let licTitle = licenseMap["title"]?.string
-                        licenseResult = LicenseResult(withCss: licCss, withTitle: licTitle, withUrl: licUrl, withId: licId)
-                        
-                    }
-                }
-                let result : SearchResult = SearchResult(title: title, name: name, url: url, score: score, licenseResult: licenseResult)
+        do {
+            let monthlyArticle = try JSONDecoder().decode(AustriaFormBaseResponse<ResultMap<MonthlyArticle>>.self,
+                                                          from: response.rawData()).result.map
+            if monthlyArticle.ResultCode == "0" {
+                let result : SearchResult = SearchResult(title: monthlyArticle.title,
+                                                         name: monthlyArticle.page,
+                                                         url: monthlyArticle.url,
+                                                         score: 100,
+                                                         licenseResult: monthlyArticle.license?.map)
                 SearchHolder.sharedInstance.selectedItem = result
                 UserData.sharedInstance.articleOfTheMonth = result
             } else {
-                super.handleResponseError(self.description, article: map)
-                SearchHolder.sharedInstance.resultMessage = "Für dieses Monat wurde noch kein \"Artikel des Monats\" gesetzt bitte versuchen Sie es später noch einmal."
+                super.handleResponseError("Für dieses Monat wurde noch kein \"Artikel des Monats\" gesetzt bitte versuchen Sie es später noch einmal.")
             }
+        } catch (let error){
+            print(" ===================== DECODE ERROR : =====================\n\(error)")
+            super.handleResponseError("Für dieses Monat wurde noch kein \"Artikel des Monats\" gesetzt bitte versuchen Sie es später noch einmal.")
         }
-    }
-    
-    deinit {
-        print("\(self.description) deinit")
     }
 }

@@ -180,9 +180,9 @@ class UserData : NSObject {
     var articleOfTheMonth : SearchResult?  {
         get{
             if let val = self.getValueForKey(UserDefaultKeys.kArticleOfTheMonthSearchResult) as? NSDictionary {
-                var licenseResult : LicenseResult? = .none
+                var licenseResult : License? = .none
                 if let license = val["licenseResult"] as? NSDictionary{
-                    licenseResult = LicenseResult(withCss: license["css"] as? String, withTitle: license["title"] as? String, withUrl: license["url"] as? String, withId: license["id"]as? String)
+                    licenseResult = License(css: license["css"] as? String, title: license["title"] as? String, url: license["url"] as? String, id: license["id"]as? String)
                 }
                 return SearchResult(title: val.value(forKey: "title") as? String, name: val.value(forKey: "name") as? String, url: val.value(forKey: "url") as? String, score: 100, licenseResult: licenseResult )
             } else{
