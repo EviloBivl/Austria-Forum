@@ -7,6 +7,7 @@ target 'Austria-Forum' do
 pod 'Alamofire'
 pod 'ReachabilitySwift'
 pod 'SwiftGen'
+pod 'PKHUD'
 
 end
 

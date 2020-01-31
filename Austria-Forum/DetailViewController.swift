@@ -51,6 +51,8 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     @IBOutlet weak var licenseTag: UIButton!
     
+    @IBOutlet weak var visualEffectView: UIVisualEffectView!
+    @IBOutlet weak var visualEffectViewHeight: NSLayoutConstraint!
     var scrollDirection : ScrollDirection?
     var lastScrollOffset : CGPoint?
     var loadingView : LoadingScreen?
@@ -96,6 +98,12 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         ReachabilityHelper.sharedInstance.delegate = self
         
         self.setDetailItem()
+        
+        if #available(iOS 11.0, *) {
+           visualEffectViewHeight.constant = self.view.safeAreaInsets.top
+        } else {
+           visualEffectViewHeight.constant = UIApplication.shared.statusBarFrame.height
+        }
         
         if UIDevice.current.orientation.isLandscape{
             isLandScape = true
@@ -145,7 +153,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         //properties configurations
         self.configureProperties()
         //webkit
-        self.pleaseSetupUpThisWebKitForMeDearXCodeAndFuckThisStupidLeakyWebViewShit()
+        self.setupWebkitView()
         self.registerObserverForAppLaunchingFromLocalNotification()
         self.registerObserverForOrientationChange()
        
@@ -175,7 +183,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         //set delegates
         topToolBar.customDelegate = self
         bottomToolBar.customDelegate = self
-        
     }
     
     
@@ -452,35 +459,37 @@ extension DetailViewController : UIScrollViewDelegate {
     }
     
     fileprivate func hideToolBars(){
-        if self.toolBarsHidden {
-            //do nothing leave it as it is
-        } else {
-            //hide it
-            self.constraintTopToolBar.constant = -44
-            self.constraintBottomToolBar.constant = -44
+        guard !toolBarsHidden else { return }
+            if #available(iOS 11.0, *) {
+                let insets = self.view.safeAreaInsets
+                self.constraintBottomToolBar.constant = -(self.bottomToolBar.frame.height + insets.bottom )
+                self.constraintTopToolBar.constant = -(self.topToolBar.frame.height + insets.top)
+            } else {
+                self.constraintBottomToolBar.constant = -self.bottomToolBar.frame.height
+                self.constraintTopToolBar.constant = -self.topToolBar.frame.height
+            }
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
                 self.view.layoutIfNeeded()
                 }, completion: {
                     completed in
                     self.topToolBar.alpha = 0.0
+                    self.bottomToolBar.alpha = 0.0
                     self.toolBarsHidden = true
             })
-        }
     }
+    
     fileprivate func showToolBars(){
-        if self.toolBarsHidden{
+        guard self.toolBarsHidden else { return }
             self.constraintTopToolBar.constant = 0
             self.constraintBottomToolBar.constant = 0
             self.topToolBar.alpha = 1
+            self.bottomToolBar.alpha = 1
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
                 self.view.layoutIfNeeded()
                 }, completion: {
                     completed in
                     self.toolBarsHidden = false
             })
-        } else {
-            //nothing leave it as it is
-        }
     }
 }
 
@@ -496,9 +505,10 @@ extension DetailViewController : WKNavigationDelegate {
     
     
     
-    fileprivate func pleaseSetupUpThisWebKitForMeDearXCodeAndFuckThisStupidLeakyWebViewShit(){
+    fileprivate func setupWebkitView(){
         //add the webview to hirarchy
         self.view.insertSubview(webKitView, belowSubview: self.progressBar)
+        self.view.bringSubviewToFront(visualEffectView)
         
         //so that our constraint work
         webKitView.translatesAutoresizingMaskIntoConstraints = false

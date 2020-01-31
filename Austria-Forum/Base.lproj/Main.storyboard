@@ -131,15 +131,29 @@
                                 </items>
                                 <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rei-Bs-OIh">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="AUZ-Tv-xpY">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="36R-EF-XxK"/>
+                                </constraints>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="veV-Go-xHX" secondAttribute="trailing" constant="-20" id="1E6-Yw-1Ga"/>
                             <constraint firstItem="XEE-VP-jOh" firstAttribute="leading" secondItem="apR-DP-xfu" secondAttribute="leadingMargin" constant="-20" id="2XU-eh-Uc4"/>
                             <constraint firstItem="veV-Go-xHX" firstAttribute="leading" secondItem="apR-DP-xfu" secondAttribute="leadingMargin" constant="-20" id="4eJ-OG-RNL"/>
+                            <constraint firstItem="rei-Bs-OIh" firstAttribute="leading" secondItem="apR-DP-xfu" secondAttribute="leading" id="58Q-iu-lvb"/>
                             <constraint firstItem="9qp-am-cE3" firstAttribute="top" secondItem="veV-Go-xHX" secondAttribute="bottom" id="9gQ-q1-FWP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ICI-FP-GzO" secondAttribute="trailing" constant="-12" id="RfI-sG-gWc"/>
+                            <constraint firstItem="rei-Bs-OIh" firstAttribute="top" secondItem="apR-DP-xfu" secondAttribute="top" id="VpX-VN-Co8"/>
                             <constraint firstItem="XEE-VP-jOh" firstAttribute="top" secondItem="kqQ-t2-hyg" secondAttribute="bottom" symbolic="YES" id="ZSB-g3-MTb"/>
+                            <constraint firstAttribute="trailing" secondItem="rei-Bs-OIh" secondAttribute="trailing" id="ayv-rY-jnY"/>
                             <constraint firstItem="eIM-Zx-M2D" firstAttribute="top" secondItem="XEE-VP-jOh" secondAttribute="bottom" id="fAd-AA-tXe"/>
                             <constraint firstItem="veV-Go-xHX" firstAttribute="top" secondItem="ICI-FP-GzO" secondAttribute="bottom" constant="8" id="fPo-T5-Kzw"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XEE-VP-jOh" secondAttribute="trailing" constant="-20" id="oC1-Ug-yBq"/>
@@ -155,6 +169,8 @@
                         <outlet property="licenseTag" destination="ICI-FP-GzO" id="Bjb-8E-WOl"/>
                         <outlet property="progressBar" destination="eIM-Zx-M2D" id="wMA-nt-6sk"/>
                         <outlet property="topToolBar" destination="XEE-VP-jOh" id="zor-FZ-9mk"/>
+                        <outlet property="visualEffectView" destination="rei-Bs-OIh" id="QMC-jJ-9AW"/>
+                        <outlet property="visualEffectViewHeight" destination="36R-EF-XxK" id="NAX-s4-WaI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rxN-Cm-CTh" userLabel="First Responder" sceneMemberID="firstResponder"/>
