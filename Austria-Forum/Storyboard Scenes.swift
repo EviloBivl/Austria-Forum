@@ -27,6 +27,16 @@ internal enum StoryboardScene {
 
     internal static let initialScene = InitialSceneType<UIKit.UIViewController>(storyboard: LaunchScreen.self)
   }
+  internal enum LibLicenses: StoryboardType {
+    internal static let storyboardName = "LibLicenses"
+
+    internal static let licenseViewController = SceneType<Austria_Forum.LicenseViewController>(storyboard: LibLicenses.self, identifier: "LicenseViewController")
+  }
+  internal enum LocationArticlesViewController: StoryboardType {
+    internal static let storyboardName = "LocationArticlesViewController"
+
+    internal static let locationArticlesViewController = SceneType<Austria_Forum.LocationArticlesViewController>(storyboard: LocationArticlesViewController.self, identifier: "LocationArticlesViewController")
+  }
   internal enum Main: StoryboardType {
     internal static let storyboardName = "Main"
 
@@ -34,8 +44,11 @@ internal enum StoryboardScene {
   }
   internal enum NearbyArticles: StoryboardType {
     internal static let storyboardName = "NearbyArticles"
+  }
+  internal enum PopoverViewController: StoryboardType {
+    internal static let storyboardName = "PopoverViewController"
 
-    internal static let nearbyArticlesViewController = SceneType<Austria_Forum.NearbyArticlesViewController>(storyboard: NearbyArticles.self, identifier: "NearbyArticlesViewController")
+    internal static let popoverViewController = SceneType<Austria_Forum.PopoverViewController>(storyboard: PopoverViewController.self, identifier: "PopoverViewController")
   }
   internal enum SearchViewController: StoryboardType {
     internal static let storyboardName = "SearchViewController"

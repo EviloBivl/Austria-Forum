@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import PKHUD
 
 class FavouritesTableViewController: UITableViewController {
-    var noInternetView: LoadingScreen?
     var viewModel: FavouritesViewModel?
     
     class func create(viewModel: FavouritesViewModel) -> FavouritesTableViewController {
@@ -128,40 +128,4 @@ class FavouritesTableViewController: UITableViewController {
     }
     */
     
-}
-
-extension FavouritesTableViewController : ReachabilityDelegate {
-    func noInternet() {
-        
-        self.noInternetView = Bundle.main.loadNibNamed("LoadingScreen", owner: self, options: nil)![0] as? LoadingScreen
-        self.noInternetView?.frame = self.view.frame
-        self.noInternetView?.frame.origin.y  -= 100
-        self.noInternetView?.tag = 99
-        
-        if let v = self.noInternetView {
-            
-            v.labelMessage.text = "Bitte überprüfen Sie ihre Internetverbindung."
-            self.view.addSubview(v)
-            v.bringSubviewToFront(self.view)
-            v.activityIndicator.startAnimating()
-            v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
-            v.viewLoadingHolder.layer.cornerRadius = 5
-            v.viewLoadingHolder.layer.masksToBounds = true;
-            print("added no Internet Notification")
-        }
-        self.perform(#selector(FavouritesTableViewController.hideNoInternetView), with: self, afterDelay: 1)
-    }
-    
-    @objc func hideNoInternetView(){
-        print("hided no internet notification")
-        for v in self.view.subviews {
-            if v.tag == 99{
-                v.removeFromSuperview()
-            }
-        }
-    }
-    
-    func InternetBack() {
-        hideNoInternetView()
-    }
 }

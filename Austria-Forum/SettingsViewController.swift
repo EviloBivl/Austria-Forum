@@ -13,13 +13,14 @@ import UserNotifications
 class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, OptionsLocationDelegate {
     
     var viewModel : SettingsViewModel?
+    var locationRequestHelper: LocationRequestHelper?
     
     class func create(viewModel: SettingsViewModel) -> SettingsViewController {
         let controller = StoryboardScene.Settings.settingsViewController.instantiate()
         controller.viewModel = viewModel
         return controller
     }
-
+    
     
     //    let sectionTitlePretty : [String] = ["Ortungseinstellungen", "Zufalls Artikel Einstellungen"]
     //
@@ -45,6 +46,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
     @IBOutlet weak var pushIntervalPicker: UIPickerView!
     @IBOutlet weak var categoryPicker: UIPickerView!
     @IBOutlet weak var aboutCell: UITableViewCell!
+    @IBOutlet weak var liblicenseCell: UITableViewCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,15 +69,20 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
         
         MyLocationManager.sharedInstance.optionsLocationDelegate = self
         MyLocationManager.sharedInstance.requestAlways()
-        self.askUserForPushAllowence()
-        
-        
+        if let didAsk = UserData.sharedInstance.wasPushPermissionAsked, !didAsk {
+            self.askForPushPermission(didAsk: storeAskedForPushPermission, didNotAsk: storeAskedForPushPermission)
+        }
         self.synchronizeAppSettingsWithSystemSettings()
         self.setPickerSelection()
         
         self.tableView.allowsSelection = true
         self.adaptPickerAlpha()
+        self.locationRequestHelper = LocationRequestHelper(executingController: self)
         
+    }
+    
+    func storeAskedForPushPermission(){
+        UserData.sharedInstance.wasPushPermissionAsked = true
     }
     
     func receivedAlwaysPermissions() {
@@ -94,6 +101,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
         super.viewDidAppear(animated)
         self.registerObserverForSystemPreferenceChange()
         synchronizeAppSettingsWithSystemSettings()
+        fatalError("\n\n\n Check out location auht status check TODO \n\n")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -179,16 +187,18 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
             activateBackgroundLocationBasedOnSettings()
         } else {
             switchAllowPushNotificationOutlet.setOn(false, animated: true)
-            self.showToSettingsPushHint()
+            self.askForPushPermission()
         }
         self.adaptPickerAlpha()
     }
     
     @IBAction func switchAllowBackgroundLocationAction(_ sender: UISwitch) {
+        //TODO we need to check the authoriztaion status if its whenInUse, since allowAlways does not work directly in iOS 14 it will be triggered from the sytem anytime
+        //so only show dialog when its "allowonce" in order to get it when in use. improve also texts
         let locationAuthorizationSystemSetting = isLocationAllowedBySystem()
         if locationAuthorizationSystemSetting == false{
             switchAllowBackgroundLocation.setOn(false, animated: true)
-            self.hintToLocationSettings()
+            locationRequestHelper?.showGPSPopover()
         } else {
             UserData.sharedInstance.locationDistanceChangeAllowed = sender.isOn
             if sender.isOn {
@@ -203,7 +213,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
         let locationAuthorizationSystemSetting = isLocationAllowedBySystem()
         if locationAuthorizationSystemSetting == false{
             switchAllowSignificantChange.setOn(false, animated: true)
-            self.hintToLocationSettings()
+            locationRequestHelper?.showGPSPopoverForAlwaysPermission()
         } else {
             UserData.sharedInstance.locationSignifacantChangeAllowed = sender.isOn
             if sender.isOn {
@@ -243,15 +253,15 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
                 self.pushIntervalPicker.alpha = 0.2
             })
         }
-       
+        
         if !switchAllowPushNotificationOutlet.isOn {
             UIView.animate(withDuration: 0.2, animations: {
-            self.intervalPicker.alpha = 0.2
+                self.intervalPicker.alpha = 0.2
             })
             self.intervalPicker.isUserInteractionEnabled = false
         } else {
             UIView.animate(withDuration: 0.2, animations: {
-            self.intervalPicker.alpha = 1
+                self.intervalPicker.alpha = 1
             })
             self.intervalPicker.isUserInteractionEnabled = true
         }
@@ -325,32 +335,16 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
         
     }
     
-    fileprivate func askUserForPushAllowence(){
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().requestAuthorization(
-                options: [.alert,.sound,.badge],
-                completionHandler: { (granted,error) in
-                    if !UserData.sharedInstance.wasPushPermissionAsked! {
-                        UserData.sharedInstance.wasPushPermissionAsked = true
-                        self.setAFPushSetting(granted: granted)
-                    }
-            })
-        } else {
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [UIUserNotificationType.alert,  UIUserNotificationType.badge , UIUserNotificationType.sound], categories: nil))
-        }
-    
-    }
-    
     private func setAFPushSetting(granted: Bool){
         if granted {
             print("changed Notification setting to : \(granted)")
             UserData.sharedInstance.allowPushNotification = true
-            } else {
+        } else {
             print("changed Notification setting to : \(granted)")
             UserData.sharedInstance.allowPushNotification = false
         }
         DispatchQueue.main.async(execute: {
-                self.synchronizeAppSettingsWithSystemSettings()
+            self.synchronizeAppSettingsWithSystemSettings()
         })
         
     }
@@ -361,7 +355,12 @@ class SettingsViewController: UITableViewController, UIPickerViewDelegate, UIPic
         if cell == aboutCell {
             let controller = AboutViewController.create(viewModel: AboutViewModel())
             navigationController?.pushViewController(controller, animated: true)
+        } else if cell == liblicenseCell {
+            let controller = LicenseViewController.create(viewModel: LicenseViewModel())
+            navigationController?.pushViewController(controller, animated: true)
+            
         }
+        
     }
     
     
@@ -390,11 +389,7 @@ extension SettingsViewController: ViewModelObserver {
 }
 
 
-
-
-
-
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

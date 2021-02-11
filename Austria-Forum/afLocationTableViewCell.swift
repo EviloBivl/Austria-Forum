@@ -9,11 +9,26 @@
 import UIKit
 
 class afLocationTableViewCell: UITableViewCell {
-
+    static let xibName: String = "afLocationTableViewCell"
+    
+    
     @IBOutlet weak var labelTitel: UILabel!
     @IBOutlet weak var labelCategory: UILabel!
     @IBOutlet weak var labelDistance: UILabel!
     @IBOutlet weak var ivResult: UIImageView!
+    
+    struct Content {
+        var title: String
+        var category: String
+        var distance: String
+        var url: String
+    }
+    
+    var content: Content? {
+        didSet {
+            updateUI()
+        }
+    }
     
     
     override func awakeFromNib() {
@@ -24,10 +39,11 @@ class afLocationTableViewCell: UITableViewCell {
         self.labelDistance.text = ""
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    private func updateUI(){
+        guard let content = content else { return }
+        self.labelTitel.text = content.title
+        self.labelCategory.text = content.category
+        self.labelDistance.text = content.distance
     }
 
 }

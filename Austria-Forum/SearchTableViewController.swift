@@ -19,7 +19,6 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
     var categories : Array<String> = []
     var delegate: ArticleSelectionDelegate?
     let searchController = UISearchController(searchResultsController: nil)
-    var noInternetView : LoadingScreen?
     var viewModel: SearchViewModel?
     
     class func create(viewModel: SearchViewModel) -> SearchTableViewController {
@@ -39,6 +38,7 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         self.searchController.searchResultsUpdater = self
         self.searchController.dimsBackgroundDuringPresentation = false
         self.searchController.searchBar.delegate = self
+        self.tableView.tableFooterView = UIView()
        
         
         self.definesPresentationContext = true
@@ -49,8 +49,7 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         //Register Custom Cell
         let nib = UINib(nibName: "afTableCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "afTableCell")
-        self.tableView.rowHeight = 65
-        
+        self.tableView.rowHeight = UITableView.automaticDimension
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +72,6 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
         super.viewDidAppear(animated)
         //Always set the current controller as the delegate to ReachabilityHelper
         ReachabilityHelper.sharedInstance.delegate = self
-        
     }
     
     
@@ -164,45 +162,3 @@ class SearchTableViewController: UITableViewController, NetworkDelegation, UISea
     
     
 }
-
-//MARK: Extension
-extension SearchTableViewController
-: ReachabilityDelegate {
-    func noInternet() {
-        
-        self.noInternetView = Bundle.main.loadNibNamed("LoadingScreen", owner: self, options: nil)![0] as? LoadingScreen
-        self.noInternetView?.frame = self.view.frame
-        self.noInternetView?.frame.origin.y  -= 100
-        self.noInternetView?.tag = 99
-      
-        if let v = self.noInternetView {
-            
-            v.labelMessage.text = "Bitte überprüfen Sie ihre Internetverbindung."
-            self.view.addSubview(v)
-            v.bringSubviewToFront(self.view)
-            v.activityIndicator.startAnimating()
-            v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
-            v.viewLoadingHolder.layer.cornerRadius = 5
-            v.viewLoadingHolder.layer.masksToBounds = true;
-            print("added no Internet Notification")
-        }
-        self.perform(#selector(SearchTableViewController.hideNoInternetView), with: self, afterDelay: 1)
-    }
-    
-    @objc func hideNoInternetView(){
-        print("hided no internet notification")
-        for v in self.view.subviews {
-            if v.tag == 99{
-                v.removeFromSuperview()
-            }
-        }
-    }
-    
-    func InternetBack() {
-        hideNoInternetView()
-    }
-
-}
-
-
-

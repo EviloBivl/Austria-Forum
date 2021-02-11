@@ -36,7 +36,7 @@ class ToolBar: UIToolbar {
             case .settings:
                 return SettingsViewController.create(viewModel: SettingsViewModel())
             case .location:
-                return NearbyArticlesViewController.create(viewModel: NearbyArticlesViewModel())
+                return LocationArticlesViewController.create(viewModel: LocationArticlesViewModel(locationManager: MyLocationManager.sharedInstance))
             case .search:
                 return SearchTableViewController.create(viewModel: SearchViewModel())
             case .favourites:

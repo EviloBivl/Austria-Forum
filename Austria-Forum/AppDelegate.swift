@@ -19,8 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.current().delegate = self
-        } else {
-           //nothing here...
         }
         
         // Handle launching with options

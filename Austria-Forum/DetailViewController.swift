@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import WebKit
+import PKHUD
 
 
 enum ScrollDirection : Int {
@@ -55,9 +56,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     @IBOutlet weak var visualEffectViewHeight: NSLayoutConstraint!
     var scrollDirection : ScrollDirection?
     var lastScrollOffset : CGPoint?
-    var loadingView : LoadingScreen?
     var pListWorker : ReadWriteToPList?
-    var noInternetView : LoadingScreen?
     let favouriteIconTag = 22
     var webKitView: WKWebView
     let toolBarIconSize : CGSize = CGSize(width: 30, height: 30)
@@ -124,12 +123,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.resizeLoadingScreenSizeAfterSubViewsWereLayout()
-    }
-    
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
@@ -167,10 +160,7 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
         self.pListWorker = ReadWriteToPList()
         
         //set the toolbar delegate for the top to properly display the hairline
-      //  self.topToolBar.delegate = self
-        
-        //Please Wait ... Screen
-        self.loadingView = Bundle.main.loadNibNamed("LoadingScreen", owner: self, options: nil)![0] as? LoadingScreen
+        //self.topToolBar.delegate = self
         
         //on start up hide progress bar - will be handled by the webkit
         self.progressBar.isHidden = true
@@ -229,11 +219,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     
     func setDetailItem(){
         self.detailItem = SearchHolder.sharedInstance.selectedItem
-    }
-    
-    
-    fileprivate func resizeLoadingScreenSizeAfterSubViewsWereLayout (){
-        self.loadingView?.frame = self.view.frame
     }
     
     fileprivate func saveCurrentArticleAsFavourite(webBook: Bool? = false){
@@ -382,51 +367,6 @@ class DetailViewController: UIViewController,  UIToolbarDelegate {
     }
     
 }
-
-
-//MARK: - Reachability Delegation
-extension DetailViewController : ReachabilityDelegate {
-    
-    func noInternet() {
-        
-        self.noInternetView = Bundle.main.loadNibNamed("LoadingScreen", owner: self, options: nil)![0] as? LoadingScreen
-        self.noInternetView?.frame = self.view.frame
-        self.noInternetView?.frame.origin.y  -= 100
-        self.noInternetView?.tag = 99
-        self.hideLoadingScreen()
-        if let v = self.noInternetView {
-            
-            v.labelMessage.text = "Bitte überprüfen Sie ihre Internetverbindung."
-            self.view.addSubview(v)
-            v.bringSubviewToFront(self.view)
-            v.activityIndicator.startAnimating()
-            v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
-            v.viewLoadingHolder.layer.cornerRadius = 5
-            v.viewLoadingHolder.layer.masksToBounds = true;
-            print("added no Internet Notification")
-        }
-        self.perform(#selector(DetailViewController.hideNoInternetView), with: self, afterDelay: 1)
-    }
-    
-    func InternetBack() {
-        if hideNoInternetView(){
-            self.refreshWebView()
-        }
-    }
-    
-    @objc func hideNoInternetView() -> Bool {
-        print("hided no internet notification")
-        for v in self.view.subviews {
-            if v.tag == 99{
-                v.removeFromSuperview()
-                return true
-            }
-        }
-        return false
-    }
-}
-
-
 
 //MARK: - UIScrollViewDelegate
 extension DetailViewController : UIScrollViewDelegate {
@@ -623,28 +563,6 @@ extension DetailViewController : WKNavigationDelegate {
         self.getPageInfoFromUrl(SearchHolder.sharedInstance.currentUrl!.removeAFSkin())
     }
     
-    
-    func showLoadingScreen() {
-        
-        if let v = self.loadingView {
-            print("adding \(v) now")
-            
-            v.labelMessage.text = "Bitte Warten ..."
-            self.view.addSubview(v)
-            v.bringSubviewToFront(self.view)
-            v.activityIndicator.startAnimating()
-            v.viewLoadingHolder.backgroundColor = UIColor(white: 0.4, alpha: 0.9)
-            v.viewLoadingHolder.layer.cornerRadius = 5
-            v.viewLoadingHolder.layer.masksToBounds = true;
-            
-            
-        } else {
-            print("did not add \(String(describing: self.loadingView?.debugDescription))")
-        }
-        
-    }
-    
-    
     func updateFavouriteIcon() {
         let toolBarItems = self.bottomToolBar.items!
         for item in toolBarItems {
@@ -732,12 +650,6 @@ extension DetailViewController : WKNavigationDelegate {
         self.progressBar.setProgress(0, animated: false)
     }
     
-    
-    @objc func hideLoadingScreen() {
-        self.loadingView?.activityIndicator.stopAnimating()
-        self.loadingView?.removeFromSuperview()
-    }
-    
     //MARK: injecting JS to webview
     func loadTitleViaJS() -> String{
         
@@ -754,9 +666,7 @@ extension DetailViewController : WKNavigationDelegate {
 //MARK: - NetworkDelegate
 extension DetailViewController : NetworkDelegation {
     func onRequestFailed(){
-        self.loadingView?.labelMessage.text = "Ups! Der Austria-Forum Server ist zur Zeit nicht erreichbar"
-        self.perform(#selector(DetailViewController.hideLoadingScreen), with: nil, afterDelay: 3)
-        print("\(#function) loading \(UserData.sharedInstance.lastVisitedString!)")
+        self.flashErrorMessage(title: nil, message: "Webservice nicht verfügbar")
         self.webKitView.load(URLRequest(url: URL(string: (UserData.sharedInstance.lastVisitedString?.getSkinnedAFUrl())!)!))
     }
     func onRequestSuccess(_ from: String){
@@ -780,9 +690,7 @@ extension DetailViewController : NetworkDelegation {
             self.hideLoadingScreen()
             
         } else {
-            self.loadingView?.labelMessage.text = SearchHolder.sharedInstance.resultMessage
-            self.perform(#selector(DetailViewController.hideLoadingScreen), with: nil, afterDelay: 3)
-            print("\(#function) loading \(UserData.sharedInstance.lastVisitedString!)")
+            self.flashErrorMessage(title: nil, message: SearchHolder.sharedInstance.resultMessage)
             self.webKitView.load(URLRequest(url: URL(string: (UserData.sharedInstance.lastVisitedString?.getSkinnedAFUrl())!)!))
         }
         

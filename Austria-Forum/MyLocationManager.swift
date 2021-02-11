@@ -11,13 +11,16 @@ import UIKit
 import CoreLocation
 import UserNotifications
 
+protocol MyLocationManagerObserver: Observer {
+    func didUpdateLocation(location: CLLocationCoordinate2D)
+    func didChangeAuthorizationStatus(status: CLAuthorizationStatus)
+}
 
-
-
-/** MyLocationManager Class
- 
- */
-class MyLocationManager : NSObject{
+class MyLocationManager : NSObject, Observable {
+    typealias ObserverType = MyLocationManagerObserver
+    
+    var weakObservers = [WeakBox<AnyObject>]()
+    
     
     static let sharedInstance = MyLocationManager()
   //  let localNotification : UILocalNotification = UILocalNotification()
@@ -28,6 +31,7 @@ class MyLocationManager : NSObject{
     weak var optionsLocationDelegate : OptionsLocationDelegate?
     weak var locationErrorDelegate : LocationErrorDelegate?
     var numberOfLocationWSResult : Int = 100
+    var authorizationStatus: CLAuthorizationStatus
     
     let locationManager: CLLocationManager! = {
         let manager = CLLocationManager()
@@ -36,7 +40,9 @@ class MyLocationManager : NSObject{
     
     
     func requestWhenInUse(){
-         locationManager.requestWhenInUseAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        locationManager.requestLocation()
     }
     
     func requestAlways(){
@@ -44,10 +50,10 @@ class MyLocationManager : NSObject{
     }
     
     fileprivate override init(){
+        authorizationStatus = CLLocationManager.authorizationStatus()
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        //  locationManager.activityType = .Fitness
     }
     
     //if we run in background or foreground we can make use of that distancefilter
@@ -156,6 +162,7 @@ class MyLocationManager : NSObject{
 extension MyLocationManager : CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        self.authorizationStatus = status
         if status == .authorizedAlways {
             if !UserData.sharedInstance.wasPushPermissionAsked! {
                 self.optionsLocationDelegate?.receivedAlwaysPermissions()
@@ -163,6 +170,11 @@ extension MyLocationManager : CLLocationManagerDelegate {
         } else if status == .authorizedWhenInUse {
             self.locationArticlesDelegate?.receivedPermissionResult()
         }
+        
+        observers.forEach {
+            $0.didChangeAuthorizationStatus(status: status)
+        }
+        
     }
     
     
@@ -171,6 +183,11 @@ extension MyLocationManager : CLLocationManagerDelegate {
         
         
         self.lastCoordinates = locations.last?.coordinate
+        if let coords = self.lastCoordinates {
+            observers.forEach {
+                $0.didUpdateLocation(location: coords)
+            }
+        }
         
         if self.requestCurrentLocation {
             if let cords = locations.last?.coordinate, let delegate = self.articlesByLocationDelegate {

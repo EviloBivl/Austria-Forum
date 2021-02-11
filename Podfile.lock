@@ -1,13 +1,19 @@
 PODS:
   - Alamofire (4.8.2)
+  - lottie-ios (3.1.6)
   - PKHUD (5.3.0)
+  - QuickLayout (3.0.0)
   - ReachabilitySwift (4.3.1)
+  - SwiftEntryKit (1.2.3):
+    - QuickLayout (= 3.0.0)
   - SwiftGen (6.1.0)
 
 DEPENDENCIES:
   - Alamofire
+  - lottie-ios
   - PKHUD
   - ReachabilitySwift
+  - SwiftEntryKit
   - SwiftGen
 
 SPEC REPOS:
@@ -16,14 +22,20 @@ SPEC REPOS:
     - ReachabilitySwift
     - SwiftGen
   trunk:
+    - lottie-ios
     - PKHUD
+    - QuickLayout
+    - SwiftEntryKit
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
+  QuickLayout: 07b45a72b10083fee3f095990cfed1c1e7b27f0a
   ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
+  SwiftEntryKit: 340713c2e4a6662c5149629990bf1088bf5f0389
   SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
 
-PODFILE CHECKSUM: a59a2c88f17abb65d9d5e11597eccf460b2fb25e
+PODFILE CHECKSUM: c49a79350bee4126869edf00866d3838d9f57b1c
 
 COCOAPODS: 1.8.4

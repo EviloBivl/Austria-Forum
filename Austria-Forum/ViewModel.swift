@@ -13,5 +13,5 @@ protocol ViewModelObserver: class {
 }
 
 class ViewModel {
-    weak var delegate: ViewModelObserver?
+    weak var delegate: ViewModelObserver? 
 }
